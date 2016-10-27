@@ -1,0 +1,16 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Tetris Scripts\InputManger.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Tetris Scripts\TetrisGame.cs" Line="50" Column="29" />
+      <File FileName="Assets\Scripts\Tetris Scripts\Tetronimo.cs" Line="88" Column="47" />
+      <File FileName="Assets\Scripts\Tetris Scripts\TetrisBlockScript.cs" Line="20" Column="31" />
+      <File FileName="Assets\Scripts\Tetris Scripts\InputManger.cs" Line="16" Column="32" />
+      <File FileName="Assets\Scripts\Tetris Scripts\TetrisAction.cs" Line="6" Column="2" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
