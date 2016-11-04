@@ -186,8 +186,7 @@ public class Tetronimo
 		for( int i = 0; i < 4; i++ )
 		{
 			int[] offsets = RotateOffset( TETRONIMOS[(int)t, i, 0], TETRONIMOS[(int)t, i, 1], rotation );
-			if( y + offsets[1] >= 0 )
-				yield return new int[]{ (x + offsets[0]), (y + offsets[1]) };
+			yield return new int[]{ (x + offsets[0]), (y + offsets[1]) };
 		}
 	}
 
@@ -200,7 +199,8 @@ public class Tetronimo
 	{
 		foreach( int[] point in GetBlockLocations( t, x, y, rotation) )
 		{
-			yield return space[point[1], point[0]];
+			if( point[1] >= 0 )
+				yield return space[point[1], point[0]];
 		}
 	}
 
@@ -208,9 +208,8 @@ public class Tetronimo
 	{
 		foreach( int[] point in GetBlockLocations( t, x, y, rotation ) )
 		{
-			if( point[0] < 0 || point[0] >= space.GetLength( 1 ) ||
-			    point[1] < 0 || point[1] >= space.GetLength( 0 ) ||
-				space[point[1], point[0]].Occupied )
+			if( point[0] < 0 || point[0] >= space.GetLength( 1 ) || point[1] >= space.GetLength( 0 ) ||
+				(point[1] >= 0 && space[point[1], point[0]].Occupied) )
 			{
 				return false;
 			}
