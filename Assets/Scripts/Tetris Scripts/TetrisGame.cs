@@ -44,19 +44,17 @@ public class TetrisGame : MonoBehaviour
 		}
 
 		UpdateBlocks();
-		blockScripts[height - 1, 3].BlockColor = Color.black;
-		blockScripts[height - 1, 5].BlockColor = Color.black;
-		blockScripts[height - 2, 3].BlockColor = Color.black;
-		blockScripts[height - 6, 7].BlockColor = Color.black;
 		currentBlock = Tetronimo.CreateRandomTetronimo( blockScripts );
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		UpdateBlocks();
 		TetrisAction action = InputManager.HandleInput();
 
-		if(currentBlock != null) currentBlock.Update( action );
+		if( currentBlock == null ) currentBlock = Tetronimo.CreateRandomTetronimo( blockScripts );
+		if( currentBlock != null ) currentBlock = currentBlock.Update( action );
 	}
 
 	void UpdateBlocks()

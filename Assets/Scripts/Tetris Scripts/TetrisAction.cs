@@ -2,5 +2,8 @@
 {
 	Left,
 	Right,
+	Down,
+	RotateRight,
+	Drop,
 	None
 }

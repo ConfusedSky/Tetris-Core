@@ -21,6 +21,7 @@ public class Tetronimo
 	private int x;
 	private int y;
 	private int shadowY = -1;
+	private int rotation = 0;
 
 	// Define a table containing tetronimos represented as an array of offsets
 	// +y is down +x is right
@@ -75,9 +76,13 @@ public class Tetronimo
 		Place();
 	}
 
-	public void Update( TetrisAction action = TetrisAction.None )
+	public Tetronimo Update( TetrisAction action = TetrisAction.None )
 	{
-		if( action == TetrisAction.Left )
+		// If there is no action don't check for action
+		if( action == TetrisAction.None )
+		{
+		}
+		else if( action == TetrisAction.Left )
 		{
 			Move( -1, 0 );
 		}
@@ -85,17 +90,27 @@ public class Tetronimo
 		{
 			Move( 1, 0 );
 		}
-		else if( Input.GetKeyDown( KeyCode.Space ) )
+		else if( action == TetrisAction.Down )
 		{
-			Clear();
-			type = (TetronimoType)(((int)type + 1) % TETRONIMO_COUNT);
-			Place();
+			if( !Move( 0, 1 ) )
+				return null;
 		}
+		else if( action == TetrisAction.Drop )
+		{
+			Move( 0, shadowY - y );
+			return null;
+		}
+		else if( action == TetrisAction.RotateRight )
+		{
+			Rotate();
+		}
+
+		return this;
 	}
 
 	public bool ValidPlacement( int xOffset, int yOffset )
 	{
-		return ValidPlacement( space, type, x + xOffset, y + yOffset );
+		return ValidPlacement( space, type, x + xOffset, y + yOffset, rotation );
 	}
 
 	public bool Move( int xOffset, int yOffset )
@@ -112,6 +127,15 @@ public class Tetronimo
 		return result;
 	}
 
+	public bool Rotate()
+	{
+		Clear();
+		rotation++;
+		rotation %= 4;
+		Place();
+		return true;
+	}
+
 	private void SetBlockColor( Color? c )
 	{
 		foreach( TetrisBlockScript block in GetBlocks() )
@@ -124,16 +148,16 @@ public class Tetronimo
 	{
 		shadowY = y;
 		// Find the actual place to cast the shadow
-		while( shadowY < space.GetLength(0) && ValidPlacement( space, type, x, shadowY ) ) shadowY++;
+		while( shadowY < space.GetLength(0) && ValidPlacement( space, type, x, shadowY, rotation ) ) shadowY++;
 		shadowY--;
-		if( !ValidPlacement( space, type, x, shadowY ) ) shadowY = -1;
+		if( !ValidPlacement( space, type, x, shadowY, rotation ) ) shadowY = -1;
 	}
 
 	public void SetShadowColor( Color? color )
 	{
 		if( shadowY >= 0 && shadowY < space.GetLength(0) )
 		{
-			foreach( TetrisBlockScript block in GetBlocks( space, type, x, shadowY ) )
+			foreach( TetrisBlockScript block in GetBlocks( space, type, x, shadowY, rotation ) )
 				block.BackgroundColor = color;
 		}
 	}
@@ -154,44 +178,35 @@ public class Tetronimo
 
 	public System.Collections.IEnumerable GetBlockLocations()
 	{
-		return GetBlockLocations( type, x, y );
+		return GetBlockLocations( type, x, y, rotation );
 	}
 
-	public static System.Collections.IEnumerable GetBlockLocations( TetronimoType t, int x, int y )
+	public static System.Collections.IEnumerable GetBlockLocations( TetronimoType t, int x, int y, int rotation = 0 )
 	{
 		for( int i = 0; i < 4; i++ )
 		{
-			yield return new int[]{ (x + TETRONIMOS[(int)t, i, 0]), (y + TETRONIMOS[(int)t, i, 1]) };
+			int[] offsets = RotateOffset( TETRONIMOS[(int)t, i, 0], TETRONIMOS[(int)t, i, 1], rotation );
+			if( y + offsets[1] >= 0 )
+				yield return new int[]{ (x + offsets[0]), (y + offsets[1]) };
 		}
 	}
 
 	public System.Collections.IEnumerable GetBlocks()
 	{
-		return GetBlocks( space, type, x, y );
+		return GetBlocks( space, type, x, y, rotation );
 	}
 
-	public static System.Collections.IEnumerable GetBlocks( TetrisBlockScript[,] space, TetronimoType t, int x, int y )
+	public static System.Collections.IEnumerable GetBlocks( TetrisBlockScript[,] space, TetronimoType t, int x, int y, int rotation = 0 )
 	{
-		foreach( int[] point in GetBlockLocations(t,x,y) )
+		foreach( int[] point in GetBlockLocations( t, x, y, rotation) )
 		{
 			yield return space[point[1], point[0]];
 		}
 	}
 
-	public static bool ValidPlacement( TetrisBlockScript[,] space, TetronimoType t, int x, int y )
+	public static bool ValidPlacement( TetrisBlockScript[,] space, TetronimoType t, int x, int y, int rotation = 0 )
 	{
-		//for( int i = 0; i < 4; i++ )
-		//{
-		//	int ix = (x + TETRONIMOS[(int)t, i, 0]);
-		//	int iy = (y + TETRONIMOS[(int)t, i, 1]);
-		//	if( ix < 0 || ix >= space.GetLength( 1 ) ||
-		//		iy < 0 || iy >= space.GetLength( 0 ) ||
-		//	    space[iy, ix].Occupied )
-		//	{
-		//		return false;
-		//	}
-		//}
-		foreach( int[] point in GetBlockLocations( t, x, y ) )
+		foreach( int[] point in GetBlockLocations( t, x, y, rotation ) )
 		{
 			if( point[0] < 0 || point[0] >= space.GetLength( 1 ) ||
 			    point[1] < 0 || point[1] >= space.GetLength( 0 ) ||
@@ -201,6 +216,32 @@ public class Tetronimo
 			}
 		}
 		return true;
+	}
+
+	public static int[] RotateOffset( int xOffset, int yOffset, int rotation )
+	{
+		int[] result;
+
+		switch( rotation )
+		{
+		case 0:
+			result = new int[]{ xOffset, yOffset };
+			break;
+		case 1:
+			result = new int[]{ -yOffset, xOffset };
+			break;
+		case 2:
+			result = new int[]{ -xOffset, -yOffset };
+			break;
+		case 3:
+			result = new int[]{ yOffset, -xOffset };
+			break;
+		default:
+			result = new int[]{ xOffset, yOffset };
+			break;
+		}
+
+		return result;
 	}
 		
 	public static Tetronimo CreateRandomTetronimo( TetrisBlockScript[,] space )

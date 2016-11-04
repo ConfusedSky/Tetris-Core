@@ -12,12 +12,15 @@ public class InputManger
 	}
 
 	[Header("Repeater Parameters:")]
-	public float RepeatDelay = 0.1f;
-	public float RepeatRate = 0.03f;
+	public float RepeatDelay = 0.15f;
+	public float RepeatRate = 0.05f;
 
 	[Header("Controls:")]
 	public string LeftButton = "Left";
 	public string RightButton = "Right";
+	public string DownButton = "Down";
+	public string DropButton = "Drop";
+	public string RotateRightButton = "RotateRight";
 
 	private InputState state = InputState.None;
 	private float timeTillRepeat = 0;
@@ -26,7 +29,11 @@ public class InputManger
 	{
 		timeTillRepeat -= Time.deltaTime;
 
-		if( Input.GetButtonDown( LeftButton ) )
+		if( Input.GetButtonDown( DropButton ) )
+		{
+			return TetrisAction.Drop;
+		}
+		else if( Input.GetButtonDown( LeftButton ) )
 		{
 			state = InputState.LeftDown;
 			timeTillRepeat = RepeatDelay;
@@ -37,6 +44,14 @@ public class InputManger
 			state = InputState.RightDown;
 			timeTillRepeat = RepeatDelay;
 			return TetrisAction.Right;
+		}
+		else if( Input.GetButtonDown( DownButton ) )
+		{
+			return TetrisAction.Down;
+		}
+		else if( Input.GetButtonDown( RotateRightButton ) )
+		{
+			return TetrisAction.RotateRight;
 		}
 		else if( state == InputState.LeftDown )
 		{
