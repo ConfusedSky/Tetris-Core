@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class TetrisGame : MonoBehaviour
 {
@@ -47,14 +48,87 @@ public class TetrisGame : MonoBehaviour
 		currentBlock = Tetronimo.CreateRandomTetronimo( blockScripts );
 	}
 
+	public bool Lost
+	{
+		get
+		{
+			for( int i = 0; i < width; i++ )
+			{
+				if( blockScripts[0, i].Occupied )
+					return true;
+			}
+			return false;
+		}
+	}
+
+	TetronimoType? heldBlock = null;
+
 	// Update is called once per frame
 	void Update()
 	{
-		UpdateBlocks();
 		TetrisAction action = InputManager.HandleInput();
 
-		if( currentBlock == null ) currentBlock = Tetronimo.CreateRandomTetronimo( blockScripts );
+		if( currentBlock == null )
+		{
+			// Check for loss conditions if loss reset the board
+			if( Lost )
+			{
+				Reset();
+			}
+			// if the previous frame had a drop that cleared resolve the clear
+			foreach( int i in CheckClears() )
+			{
+				CollapseRow( i );
+			}
+			currentBlock = Tetronimo.CreateRandomTetronimo( blockScripts );
+		}
+
 		if( currentBlock != null ) currentBlock = currentBlock.Update( action );
+	}
+
+	public void Reset()
+	{
+		foreach( TetrisBlockScript b in blockScripts )
+		{
+			b.Clear();
+		}
+	}
+
+	public void CollapseRow( int row )
+	{
+		for( int i = 0; i < width; i++ )
+		{
+			blockScripts[row, i].Clear();
+		}
+
+		for( int i = row; i >= 1; i-- )
+		{
+			for( int j = 0; j < width; j++ )
+			{
+				blockScripts[i - 1, j].MoveTo( blockScripts[i, j] );
+			}
+		}
+	}
+
+	public IList CheckClears()
+	{
+		ArrayList result = new ArrayList();
+
+		for( int i = 0; i < height; i++ )
+		{
+			bool clearable = true;
+
+			for( int j = 0; j < width; j++ )
+			{
+				if( !blockScripts[i, j].Occupied )
+					clearable = false;
+			}
+
+			if( clearable )
+				result.Add( i );
+		}
+
+		return result;
 	}
 
 	void UpdateBlocks()

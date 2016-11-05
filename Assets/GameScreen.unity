@@ -102,8 +102,6 @@ GameObject:
   - 92: {fileID: 1048823531}
   - 124: {fileID: 1048823530}
   - 81: {fileID: 1048823529}
-  - 114: {fileID: 1048823535}
-  - 114: {fileID: 1048823534}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -180,116 +178,11 @@ Transform:
   - {fileID: 1188371772}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &1048823534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1048823528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d7473dc8e17abb4689a89c6c0e0c5d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1048823535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1048823528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2625b3081916b9d448ee169eb05b0543, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  width: 10
-  height: 20
-  StartingLocation: {x: 4.14, y: 4.56, z: 2.3}
-  PrefabSize: {x: 0.48, y: 0.48}
-  bgColor1: {r: 0.38039216, g: 0.38039216, b: 0.38039216, a: 1}
-  bgColor2: {r: 0.15294118, g: 0.15294118, b: 0.15294118, a: 1}
-  BlockPrefab: {fileID: 1000011956556832, guid: 82f510f9971d74346873f92d24963627,
-    type: 2}
-  InputManager:
-    RepeatDelay: 0.15
-    RepeatRate: 0.05
-    LeftButton: Left
-    RightButton: Right
-    DownButton: Down
-    DropButton: Drop
-    RotateRightButton: RotateRight
---- !u!4 &1188371772
+--- !u!4 &1188371772 stripped
 Transform:
-  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 4000012781306786, guid: 367f874d38f529549934379a5468217b,
     type: 2}
   m_PrefabInternal: {fileID: 1432697862}
-  m_GameObject: {fileID: 1381093865}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.04, y: 4.56, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 1048823533}
-  m_RootOrder: 0
---- !u!1 &1381093865
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1000012255361060, guid: 367f874d38f529549934379a5468217b,
-    type: 2}
-  m_PrefabInternal: {fileID: 1432697862}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1188371772}
-  - 114: {fileID: 1381093867}
-  - 114: {fileID: 1381093866}
-  m_Layer: 0
-  m_Name: Tetris Panel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1381093866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114000012107664400, guid: 367f874d38f529549934379a5468217b,
-    type: 2}
-  m_PrefabInternal: {fileID: 1432697862}
-  m_GameObject: {fileID: 1381093865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d7473dc8e17abb4689a89c6c0e0c5d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1381093867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
-    type: 2}
-  m_PrefabInternal: {fileID: 1432697862}
-  m_GameObject: {fileID: 1381093865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2625b3081916b9d448ee169eb05b0543, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  width: 10
-  height: 20
-  StartingLocation: {x: 0, y: 0, z: 0}
-  PrefabSize: {x: 0.48, y: 0.48}
-  bgColor1: {r: 0.38039216, g: 0.38039216, b: 0.38039216, a: 1}
-  bgColor2: {r: 0.15294118, g: 0.15294118, b: 0.15294118, a: 1}
-  BlockPrefab: {fileID: 1000011956556832, guid: 82f510f9971d74346873f92d24963627,
-    type: 2}
-  InputManager:
-    RepeatDelay: 0.15
-    RepeatRate: 0.05
-    LeftButton: Left
-    RightButton: Right
-    DownButton: Down
-    DropButton: Drop
-    RotateRightButton: RotateRight
 --- !u!1001 &1432697862
 Prefab:
   m_ObjectHideFlags: 0
@@ -299,11 +192,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4000012781306786, guid: 367f874d38f529549934379a5468217b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 4.04
+      value: 3.37
       objectReference: {fileID: 0}
     - target: {fileID: 4000012781306786, guid: 367f874d38f529549934379a5468217b, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4.56
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4000012781306786, guid: 367f874d38f529549934379a5468217b, type: 2}
       propertyPath: m_LocalPosition.z
@@ -329,21 +222,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1000012255361060, guid: 367f874d38f529549934379a5468217b, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
-        type: 2}
-      propertyPath: StartingLocation.x
-      value: 0
+    - target: {fileID: 4000010959236346, guid: 367f874d38f529549934379a5468217b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.68
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 367f874d38f529549934379a5468217b, type: 2}
-  m_RootGameObject: {fileID: 1381093865}
   m_IsPrefabParent: 0

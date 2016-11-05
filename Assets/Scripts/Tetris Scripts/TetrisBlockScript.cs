@@ -49,6 +49,19 @@ public class TetrisBlockScript : MonoBehaviour
 		if( colorChanged ) ColorChange();
 	}
 
+	public void MoveTo( TetrisBlockScript destination )
+	{
+		destination.BlockColor = BlockColor;
+
+		Clear();
+	}
+
+	public void Clear()
+	{
+		BlockColor = null;
+		BackgroundColor = null;
+	}
+
 	void ColorChange()
 	{
 		sr.color = BlockColor ?? BackgroundColor ?? DefaultColor;

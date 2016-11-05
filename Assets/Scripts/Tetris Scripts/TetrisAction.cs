@@ -5,5 +5,6 @@
 	Down,
 	RotateRight,
 	Drop,
+	Hold,
 	None
 }

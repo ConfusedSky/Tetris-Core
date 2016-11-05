@@ -23,6 +23,14 @@ public class Tetronimo
 	private int shadowY = -1;
 	private int rotation = 0;
 
+	public TetronimoType BlockType
+	{
+		get
+		{
+			return type;
+		}
+	}
+
 	// Define a table containing tetronimos represented as an array of offsets
 	// +y is down +x is right
 	public static readonly int[,,] TETRONIMOS = new int[7, 4, 2] { 
@@ -31,11 +39,11 @@ public class Tetronimo
 		// O
 		{ { 0, 0 }, { 1, 0 }, { 0, 1 }, { 1, 1 } },
 		// T
-		{ { 0, 0 }, { 0, 1 }, { -1, 1 }, { 1, 1 } },
+		{ { 0, 0 }, { 0, -1 }, { -1, 0 }, { 1, 0 } },
 		// J
-		{ { 0, 0 }, { 0, 1 }, { 0, 2 }, { -1, 2 } },
+		{ { 0, 0 }, { 0, -1 }, { 0, 1 }, { -1, 1 } },
 		// L
-		{ { 0, 0 }, { 0, 1 }, { 0, 2 }, { 1, 2 } },
+		{ { 0, 0 }, { 0, -1 }, { 0, 1 }, { 1, 1 } },
 		// S
 		{ { 0, 0 }, { 1, 0 }, { 0, 1 }, { -1, 1 } },
 		// Z
@@ -108,9 +116,9 @@ public class Tetronimo
 		return this;
 	}
 
-	public bool ValidPlacement( int xOffset, int yOffset )
+	public bool ValidPlacement( int xOffset, int yOffset, int rotationOffset = 0 )
 	{
-		return ValidPlacement( space, type, x + xOffset, y + yOffset, rotation );
+		return ValidPlacement( space, type, x + xOffset, y + yOffset, (rotation + rotationOffset)%4 );
 	}
 
 	public bool Move( int xOffset, int yOffset )
@@ -129,8 +137,14 @@ public class Tetronimo
 
 	public bool Rotate()
 	{
+		int rotationOffset = 1;
 		Clear();
-		rotation++;
+		while( rotationOffset != 0 && !ValidPlacement( 0, 0, rotationOffset ) )
+		{
+			rotationOffset++;
+			rotationOffset %= 4;
+		}
+		rotation += rotationOffset;
 		rotation %= 4;
 		Place();
 		return true;
