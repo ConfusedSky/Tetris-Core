@@ -2,11 +2,13 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Tetris Scripts\TetrisGame.cs">
     <Files>
-      <File FileName="Assets\Scripts\Tetris Scripts\TetrisGame.cs" Line="71" Column="30" />
-      <File FileName="Assets\Scripts\Tetris Scripts\Tetronimo.cs" Line="38" Column="31" />
-      <File FileName="Assets\Scripts\Tetris Scripts\TetrisBlockScript.cs" Line="35" Column="2" />
-      <File FileName="Assets\Scripts\Tetris Scripts\InputManger.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Tetris Scripts\TetrisAction.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Tetris Scripts\TetrisGame.cs" Line="65" Column="59" />
+      <File FileName="Assets\Scripts\Tetris Scripts\Tetronimo.cs" Line="169" Column="3" />
+      <File FileName="Assets\Scripts\Tetris Scripts\TetrisBlockScript.cs" Line="54" Column="39" />
+      <File FileName="Assets\Scripts\Tetris Scripts\InputManger.cs" Line="55" Column="29" />
+      <File FileName="Assets\Scripts\Tetris Scripts\TetrisAction.cs" Line="8" Column="7" />
+      <File FileName="Assets\Scripts\Tetris Scripts\TetronimoType.cs" Line="15" Column="15" />
+      <File FileName="Assets\Scripts\Tetris Scripts\HeldBlockDisplay.cs" Line="33" Column="69" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

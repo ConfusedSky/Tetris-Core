@@ -162,7 +162,7 @@ public class Tetronimo
 	{
 		SetShadowLocation();
 		SetShadowColor( new Color( .7f, .7f, .7f ) );
-		SetBlockColor( type.Color );
+		SetBlockColor( type.Color() );
 	}
 
 	public void Clear()

@@ -116,8 +116,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000010959236346}
   - 114: {fileID: 114000013377740602}
+  - 114: {fileID: 114000011164784660}
   m_Layer: 0
-  m_Name: Next Block
+  m_Name: Held Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -296,7 +297,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012079307756}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.0299997, y: -0.52, z: 0}
+  m_LocalPosition: {x: -0.68, y: -0.52, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -454,6 +455,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &114000011164784660
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012079307756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e302cc8369f9147459b3727490fdeb6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TetrisPanel: {fileID: 1000012255361060}
 --- !u!114 &114000011180863880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -493,6 +506,7 @@ MonoBehaviour:
     DownButton: Down
     DropButton: Drop
     RotateRightButton: RotateRight
+    HoldButton: Hold
 --- !u!114 &114000012107664400
 MonoBehaviour:
   m_ObjectHideFlags: 1

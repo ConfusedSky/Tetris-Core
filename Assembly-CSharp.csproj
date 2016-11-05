@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Tetris Scripts\HeldBlockDisplay.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\InputManger.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\TetrisAction.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\TetrisBlockScript.cs" />

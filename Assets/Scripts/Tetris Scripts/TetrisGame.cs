@@ -63,6 +63,7 @@ public class TetrisGame : MonoBehaviour
 
 	private TetronimoType? heldBlock = null;
 	public TetronimoType? HeldBlock{ get{ return heldBlock; } }
+	public event System.EventHandler OnHold;
 
 	void Hold()
 	{
@@ -73,6 +74,8 @@ public class TetrisGame : MonoBehaviour
 		else
 			currentBlock = null;
 		heldBlock = temp;
+
+		if( OnHold != null ) OnHold( this, System.EventArgs.Empty );
 	}
 
 	// Update is called once per frame
@@ -84,16 +87,18 @@ public class TetrisGame : MonoBehaviour
 
 		if( currentBlock == null )
 		{
-			// Check for loss conditions if loss reset the board
-			if( Lost )
-			{
-				Reset();
-			}
 			// if the previous frame had a drop that cleared resolve the clear
 			foreach( int i in CheckClears() )
 			{
 				CollapseRow( i );
 			}
+
+			// Check for loss conditions if loss reset the board
+			if( Lost )
+			{
+				Reset();
+			}
+
 			currentBlock = Tetronimo.CreateRandomTetronimo( blockScripts );
 		}
 
@@ -106,6 +111,9 @@ public class TetrisGame : MonoBehaviour
 		{
 			b.Clear();
 		}
+
+		heldBlock = null;
+		OnHold( this, System.EventArgs.Empty );
 	}
 
 	public void CollapseRow( int row )
