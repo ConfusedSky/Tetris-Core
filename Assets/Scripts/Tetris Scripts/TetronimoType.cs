@@ -12,7 +12,7 @@ public enum TetronimoType : int
 	Z = 6
 }
 
-public class TetronimoTypeFunctions
+public static class TetronimoTypeFunctions
 {
 	public static Color Color(this TetronimoType type )
 	{
