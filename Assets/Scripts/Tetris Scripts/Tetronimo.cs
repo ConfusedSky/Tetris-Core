@@ -1,17 +1,5 @@
 ﻿using UnityEngine;
 
-[System.Serializable]
-public enum TetronimoType : int
-{
-	I = 0,
-	O = 1,
-	T = 2,
-	J = 3,
-	L = 4,
-	S = 5,
-	Z = 6
-}
-
 public class Tetronimo
 {
 	public Color ShadowColor = Color.white;
@@ -23,13 +11,7 @@ public class Tetronimo
 	private int shadowY = -1;
 	private int rotation = 0;
 
-	public TetronimoType BlockType
-	{
-		get
-		{
-			return type;
-		}
-	}
+	public TetronimoType BlockType { get { return type; } }
 
 	// Define a table containing tetronimos represented as an array of offsets
 	// +y is down +x is right

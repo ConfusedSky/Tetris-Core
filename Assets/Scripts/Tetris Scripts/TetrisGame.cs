@@ -61,12 +61,26 @@ public class TetrisGame : MonoBehaviour
 		}
 	}
 
-	TetronimoType? heldBlock = null;
+	private TetronimoType? heldBlock = null;
+	public TetronimoType? HeldBlock{ get{ return heldBlock; } }
+
+	void Hold()
+	{
+		currentBlock.Clear();
+		TetronimoType? temp = (currentBlock != null) ? (TetronimoType?)currentBlock.BlockType : null;
+		if( heldBlock != null )
+			currentBlock = Tetronimo.CreateNewTetronimo( blockScripts, heldBlock.GetValueOrDefault() );
+		else
+			currentBlock = null;
+		heldBlock = temp;
+	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		TetrisAction action = InputManager.HandleInput();
+
+		if( action == TetrisAction.Hold ) Hold();
 
 		if( currentBlock == null )
 		{
