@@ -2,7 +2,7 @@
 
 public class Tetronimo
 {
-	public Color ShadowColor = Color.white;
+	public static Color ShadowColor = Color.white;
 
 	private TetrisBlockScript[,] space;
 	private TetronimoType type;
@@ -161,7 +161,7 @@ public class Tetronimo
 	public void Place()
 	{
 		SetShadowLocation();
-		SetShadowColor( new Color( .7f, .7f, .7f ) );
+		SetShadowColor( ShadowColor );
 		SetBlockColor( type.Color() );
 	}
 

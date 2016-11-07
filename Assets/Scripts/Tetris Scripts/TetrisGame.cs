@@ -5,14 +5,15 @@ using System.Collections.Generic;
 public class TetrisGame : MonoBehaviour
 {
 	[Header("Dimensions:")]
-	public int width = 10;
-	public int height = 20;
+	public int Width = 10;
+	public int Height = 20;
 	public Vector3 StartingLocation = new Vector3( 0, 0 );
 	public Vector2 PrefabSize = new Vector2();
 
 	[Header("Colors:")]
-	public Color bgColor1;
-	public Color bgColor2;
+	public Color BGColor1;
+	public Color BGColor2;
+	public Color ShadowColor;
 
 	[Header("Prefab")]
 	public GameObject BlockPrefab;
@@ -27,12 +28,12 @@ public class TetrisGame : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		blocks = new GameObject[height, width];
-		blockScripts = new TetrisBlockScript[height, width];
+		blocks = new GameObject[Height, Width];
+		blockScripts = new TetrisBlockScript[Height, Width];
 
-		for( int i = 0; i < height; i++ )
+		for( int i = 0; i < Height; i++ )
 		{
-			for( int j = 0; j < width; j++ )
+			for( int j = 0; j < Width; j++ )
 			{
 				blocks[i, j] = (GameObject)Instantiate(
 					BlockPrefab,
@@ -40,10 +41,11 @@ public class TetrisGame : MonoBehaviour
 				);
 
 				blockScripts[i, j] = blocks[i, j].GetComponent<TetrisBlockScript>();
-				blockScripts[i, j].DefaultColor = (((j + i % 2) % 2 == 0) ? (bgColor1) : (bgColor2));
+				blockScripts[i, j].DefaultColor = (((j + i % 2) % 2 == 0) ? (BGColor1) : (BGColor2));
 			}
 		}
 
+		Tetronimo.ShadowColor = ShadowColor;
 		UpdateBlocks();
 		currentBlock = Tetronimo.CreateRandomTetronimo( blockScripts );
 	}
@@ -52,7 +54,7 @@ public class TetrisGame : MonoBehaviour
 	{
 		get
 		{
-			for( int i = 0; i < width; i++ )
+			for( int i = 0; i < Width; i++ )
 			{
 				if( blockScripts[0, i].Occupied )
 					return true;
@@ -118,14 +120,14 @@ public class TetrisGame : MonoBehaviour
 
 	public void CollapseRow( int row )
 	{
-		for( int i = 0; i < width; i++ )
+		for( int i = 0; i < Width; i++ )
 		{
 			blockScripts[row, i].Clear();
 		}
 
 		for( int i = row; i >= 1; i-- )
 		{
-			for( int j = 0; j < width; j++ )
+			for( int j = 0; j < Width; j++ )
 			{
 				blockScripts[i - 1, j].MoveTo( blockScripts[i, j] );
 			}
@@ -136,11 +138,11 @@ public class TetrisGame : MonoBehaviour
 	{
 		ArrayList result = new ArrayList();
 
-		for( int i = 0; i < height; i++ )
+		for( int i = 0; i < Height; i++ )
 		{
 			bool clearable = true;
 
-			for( int j = 0; j < width; j++ )
+			for( int j = 0; j < Width; j++ )
 			{
 				if( !blockScripts[i, j].Occupied )
 					clearable = false;
@@ -155,9 +157,9 @@ public class TetrisGame : MonoBehaviour
 
 	void UpdateBlocks()
 	{
-		for( int i = 0; i < height; i++ )
+		for( int i = 0; i < Height; i++ )
 		{
-			for( int j = 0; j < width; j++ )
+			for( int j = 0; j < Width; j++ )
 			{
 				Vector3 position = new Vector3(
 					                   StartingLocation.x + PrefabSize.x * j,

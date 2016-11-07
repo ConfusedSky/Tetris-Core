@@ -8,8 +8,8 @@ public class TetrisSizeGizmo : MonoBehaviour
 	{
 		TetrisGame game = gameObject.GetComponent<TetrisGame>();
 
-		float width = game.width * game.PrefabSize.x;
-		float height = game.height * game.PrefabSize.y;
+		float width = game.Width * game.PrefabSize.x;
+		float height = game.Height * game.PrefabSize.y;
 		Vector3 size = new Vector3( width, height, 0 );
 
 		float x = transform.position.x + game.StartingLocation.x + 
