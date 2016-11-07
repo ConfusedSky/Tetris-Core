@@ -24,9 +24,30 @@ public class TetrisGame : MonoBehaviour
 	private GameObject[,] blocks;
 	private TetrisBlockScript[,] blockScripts;
 	private Tetronimo currentBlock;
+	private TetronimoType? heldBlock = null;
+	private TetronimoQueue queue;
+
+	public bool Lost
+	{
+		get
+		{
+			for( int i = 0; i < Width; i++ )
+			{
+				if( blockScripts[0, i].Occupied )
+					return true;
+			}
+			return false;
+		}
+	}
+		
+	public TetronimoType? HeldBlock{ get{ return heldBlock; } }
+	public TetronimoType[] QueuedBlocks{ get{ return queue.GetTypes(); } }
+
+	public event System.EventHandler OnHold;
+	public event System.EventHandler OnBlockDropped;
 
 	// Use this for initialization
-	void Start()
+	void Awake()
 	{
 		blocks = new GameObject[Height, Width];
 		blockScripts = new TetrisBlockScript[Height, Width];
@@ -47,27 +68,11 @@ public class TetrisGame : MonoBehaviour
 
 		Tetronimo.ShadowColor = ShadowColor;
 		UpdateBlocks();
-		currentBlock = Tetronimo.CreateRandomTetronimo( blockScripts );
+		queue = new TetronimoQueue();
+		currentBlock = Tetronimo.CreateNewTetronimo( blockScripts, queue.GetNextBlock() );
 	}
 
-	public bool Lost
-	{
-		get
-		{
-			for( int i = 0; i < Width; i++ )
-			{
-				if( blockScripts[0, i].Occupied )
-					return true;
-			}
-			return false;
-		}
-	}
-
-	private TetronimoType? heldBlock = null;
-	public TetronimoType? HeldBlock{ get{ return heldBlock; } }
-	public event System.EventHandler OnHold;
-
-	void Hold()
+	private void Hold()
 	{
 		currentBlock.Clear();
 		TetronimoType? temp = (currentBlock != null) ? (TetronimoType?)currentBlock.BlockType : null;
@@ -100,8 +105,10 @@ public class TetrisGame : MonoBehaviour
 			{
 				Reset();
 			}
+				
+			currentBlock = Tetronimo.CreateNewTetronimo( blockScripts, queue.GetNextBlock() );
 
-			currentBlock = Tetronimo.CreateRandomTetronimo( blockScripts );
+			if( OnBlockDropped != null ) OnBlockDropped( this, System.EventArgs.Empty );
 		}
 
 		if( currentBlock != null ) currentBlock = currentBlock.Update( action );
@@ -116,6 +123,8 @@ public class TetrisGame : MonoBehaviour
 
 		heldBlock = null;
 		OnHold( this, System.EventArgs.Empty );
+
+		queue.Reset();
 	}
 
 	public void CollapseRow( int row )
@@ -155,7 +164,7 @@ public class TetrisGame : MonoBehaviour
 		return result;
 	}
 
-	void UpdateBlocks()
+	private void UpdateBlocks()
 	{
 		for( int i = 0; i < Height; i++ )
 		{

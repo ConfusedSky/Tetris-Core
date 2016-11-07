@@ -15,7 +15,7 @@ public class Tetronimo
 
 	// Define a table containing tetronimos represented as an array of offsets
 	// +y is down +x is right
-	public static readonly int[,,] TETRONIMOS = new int[7, 4, 2] { 
+	public static int[,,] TETRONIMOS = new int[7, 4, 2] { 
 		// I
 		{ { 0, 0 }, { -1, 0 }, { -2, 0 }, { 1, 0 } },
 		// O
@@ -32,7 +32,7 @@ public class Tetronimo
 		{ { 0, 0 }, { -1, 0 }, { 0, 1 }, { 1, 1 } }
 	};
 
-	public static readonly Color[] TETRONIMO_COLORS = new Color[7] {
+	public static Color[] TETRONIMO_COLORS = new Color[7] {
 		// I
 		Color.cyan,
 		// O
@@ -82,8 +82,7 @@ public class Tetronimo
 		}
 		else if( action == TetrisAction.Down )
 		{
-			if( !Move( 0, 1 ) )
-				return null;
+			Move( 0, 1 );
 		}
 		else if( action == TetrisAction.Drop )
 		{

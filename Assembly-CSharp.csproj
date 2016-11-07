@@ -52,7 +52,9 @@
      <Compile Include="Assets\Scripts\Tetris Scripts\TetrisGame.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\TetrisSizeGizmo.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Tetronimo.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\TetronimoQueue.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\TetronimoType.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\UpcomingBlocksDisplay.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -50,7 +50,7 @@ public class InputManger
 		{
 			return TetrisAction.Down;
 		}
-		else if( Input.GetButtonDown(HoldButton) )
+		else if( Input.GetButtonDown( HoldButton ) )
 		{
 			return TetrisAction.Hold;
 		}

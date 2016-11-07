@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000010530838486}
   - 114: {fileID: 114000011180863880}
+  - 114: {fileID: 114000010320196924}
   m_Layer: 0
   m_Name: Block 4
   m_TagString: Untagged
@@ -133,6 +134,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000012552240040}
   - 114: {fileID: 114000013934167946}
+  - 114: {fileID: 114000013590941236}
   m_Layer: 0
   m_Name: Block 3
   m_TagString: Untagged
@@ -166,6 +168,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000011354558986}
   - 114: {fileID: 114000012254747900}
+  - 114: {fileID: 114000010053768298}
   m_Layer: 0
   m_Name: Block 1
   m_TagString: Untagged
@@ -182,6 +185,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000010265505196}
   - 114: {fileID: 114000010555853480}
+  - 114: {fileID: 114000013774770008}
   m_Layer: 0
   m_Name: Block 2
   m_TagString: Untagged
@@ -229,6 +233,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000011463184818}
   - 114: {fileID: 114000010469576388}
+  - 114: {fileID: 114000013390483108}
   m_Layer: 0
   m_Name: Block 0
   m_TagString: Untagged
@@ -431,6 +436,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4000010959236346}
   m_RootOrder: 0
+--- !u!114 &114000010053768298
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012759001946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fe706ed451589247aa3ab5bbbdac69c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TetrisPanel: {fileID: 1000012255361060}
+  Number: 1
+--- !u!114 &114000010320196924
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010824671574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fe706ed451589247aa3ab5bbbdac69c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TetrisPanel: {fileID: 1000012255361060}
+  Number: 4
 --- !u!114 &114000010469576388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -500,7 +531,7 @@ MonoBehaviour:
   BlockPrefab: {fileID: 1000011956556832, guid: 82f510f9971d74346873f92d24963627,
     type: 2}
   InputManager:
-    RepeatDelay: 0.2
+    RepeatDelay: 0.15
     RepeatRate: 0.045
     LeftButton: Left
     RightButton: Right
@@ -543,6 +574,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &114000013390483108
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014039025854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fe706ed451589247aa3ab5bbbdac69c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TetrisPanel: {fileID: 1000012255361060}
+  Number: 0
+--- !u!114 &114000013590941236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012179252632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fe706ed451589247aa3ab5bbbdac69c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TetrisPanel: {fileID: 1000012255361060}
+  Number: 3
+--- !u!114 &114000013774770008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012967762402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fe706ed451589247aa3ab5bbbdac69c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TetrisPanel: {fileID: 1000012255361060}
+  Number: 2
 --- !u!114 &114000013934167946
 MonoBehaviour:
   m_ObjectHideFlags: 1
