@@ -42,6 +42,8 @@ public class TetrisGame : MonoBehaviour
 		
 	public TetronimoType? HeldBlock{ get{ return heldBlock; } }
 	public TetronimoType[] QueuedBlocks{ get{ return queue.GetTypes(); } }
+	public GameObject[,] Blocks{ get{ return blocks; } }
+	public TetrisBlockScript[,] Scripts{ get{ return blockScripts; } }
 
 	public event System.EventHandler OnHold;
 	public event System.EventHandler OnBlockDropped;
