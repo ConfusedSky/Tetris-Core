@@ -1,14 +1,16 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Tetris Scripts\TetrisGame.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Tetris Scripts\UpcomingBlocksDisplay.cs">
     <Files>
-      <File FileName="Assets\Scripts\Tetris Scripts\TetrisGame.cs" Line="16" Column="27" />
-      <File FileName="Assets\Scripts\Tetris Scripts\Tetronimo.cs" Line="5" Column="16" />
+      <File FileName="Assets\Scripts\Tetris Scripts\TetrisGame.cs" Line="164" Column="17" />
+      <File FileName="Assets\Scripts\Tetris Scripts\TetronimoQueue.cs" Line="14" Column="41" />
+      <File FileName="Assets\Scripts\Tetris Scripts\Tetronimo.cs" Line="243" Column="21" />
       <File FileName="Assets\Scripts\Tetris Scripts\TetrisBlockScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Tetris Scripts\InputManger.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Tetris Scripts\InputManger.cs" Line="53" Column="44" />
       <File FileName="Assets\Scripts\Tetris Scripts\TetrisAction.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Tetris Scripts\TetronimoType.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Tetris Scripts\HeldBlockDisplay.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Tetris Scripts\HeldBlockDisplay.cs" Line="23" Column="18" />
+      <File FileName="Assets\Scripts\Tetris Scripts\UpcomingBlocksDisplay.cs" Line="26" Column="50" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
