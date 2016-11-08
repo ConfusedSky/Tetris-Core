@@ -45,8 +45,19 @@ public class TetrisGame : MonoBehaviour
 	public GameObject[,] Blocks{ get{ return blocks; } }
 	public TetrisBlockScript[,] Scripts{ get{ return blockScripts; } }
 
+	public class RowCollapseEventArgs : System.EventArgs
+	{
+		public int RowNumber{ get; private set; }
+
+		public RowCollapseEventArgs( int row )
+		{
+			RowNumber = row;
+		}
+	}
+
 	public event System.EventHandler OnHold;
 	public event System.EventHandler OnBlockDropped;
+	public event System.EventHandler<RowCollapseEventArgs> OnRowCollapse;
 
 	// Use this for initialization
 	void Awake()
@@ -143,6 +154,8 @@ public class TetrisGame : MonoBehaviour
 				blockScripts[i - 1, j].MoveTo( blockScripts[i, j] );
 			}
 		}
+
+		if( OnRowCollapse != null ) OnRowCollapse( this, new RowCollapseEventArgs( row ) );
 	}
 
 	public IList CheckClears()
