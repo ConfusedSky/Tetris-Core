@@ -2,25 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(TetrisBoard))]
 public class TetrisGame : MonoBehaviour
 {
-	[Header("Dimensions:")]
-	public int Width = 10;
-	public int Height = 20;
-	public Vector3 StartingLocation = new Vector3( 0, 0 );
-	public Vector2 PrefabSize = new Vector2();
-
 	[Header("Colors:")]
-	public Color BGColor1;
-	public Color BGColor2;
 	public Color ShadowColor;
-
-	[Header("Prefab")]
-	public GameObject BlockPrefab;
 
 	[Header("Input Manager:")]
 	public InputManger InputManager;
 
+	private TetrisBoard board;
 	private GameObject[,] blocks;
 	private TetrisBlockScript[,] blockScripts;
 	private Tetronimo currentBlock;
@@ -45,6 +36,17 @@ public class TetrisGame : MonoBehaviour
 	public GameObject[,] Blocks{ get{ return blocks; } }
 	public TetrisBlockScript[,] Scripts{ get{ return blockScripts; } }
 
+	// These properties only exist for backwards compatibility
+	public int Width{ get{ return board.Width; } }
+	public int Height{ get { return board.Height; } }
+	public Vector3 StartingLocation{ get{ return board.StartingLocation; } }
+	public Vector2 PrefabSize{ get{ return board.PrefabSize; } }
+
+	public Color BGColor1{ get{ return board.BGColor1; } }
+	public Color BGColor2{ get{ return board.BGColor2; } }
+
+	public GameObject BlockPrefab{ get{ return board.BlockPrefab; } }
+
 	public class RowCollapseEventArgs : System.EventArgs
 	{
 		public int RowNumber{ get; private set; }
@@ -62,6 +64,7 @@ public class TetrisGame : MonoBehaviour
 	// Use this for initialization
 	void Awake()
 	{
+		board = gameObject.GetComponent<TetrisBoard>();
 		blocks = new GameObject[Height, Width];
 		blockScripts = new TetrisBlockScript[Height, Width];
 

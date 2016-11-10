@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Tetris Scripts\RowCollapseAnimation.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\TetrisAction.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\TetrisBlockScript.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\TetrisBoard.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\TetrisGame.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\TetrisSizeGizmo.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Tetronimo.cs" />
