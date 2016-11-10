@@ -16,13 +16,67 @@ public class TetrisBoard : MonoBehaviour
 	[Header("Prefab")]
 	public GameObject BlockPrefab;
 
-	// Use this for initialization
-	void Start () {
-	
+	private GameObject[,] blocks;
+	private TetrisBlockScript[,] scripts;
+
+	public GameObject[,] Blocks{ get{ return blocks; } }
+	public TetrisBlockScript[,] Scripts{ get { return scripts; } }
+
+	void Awake()
+	{
+		blocks = new GameObject[Height, Width];
+		scripts = new TetrisBlockScript[Height, Width];
+
+
+		for( int i = 0; i < Height; i++ )
+		{
+			for( int j = 0; j < Width; j++ )
+			{
+				Blocks[i, j] = (GameObject)Instantiate(
+					BlockPrefab,
+					gameObject.transform
+				);
+
+				Scripts[i, j] = Blocks[i, j].GetComponent<TetrisBlockScript>();
+				Scripts[i, j].DefaultColor = (((j + i % 2) % 2 == 0) ? (BGColor1) : (BGColor2));
+			}
+		}
+	}
+
+	void Start()
+	{
+
+		UpdateBlocks();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 	
+	}
+
+	public void Reset()
+	{
+		foreach( TetrisBlockScript b in Scripts )
+		{
+			b.Clear();
+		}
+	}
+
+	private void UpdateBlocks()
+	{
+		for( int i = 0; i < Height; i++ )
+		{
+			for( int j = 0; j < Width; j++ )
+			{
+				Vector3 position = new Vector3(
+					StartingLocation.x + PrefabSize.x * j,
+					StartingLocation.y - PrefabSize.y * i,
+					StartingLocation.z
+				);
+
+				Blocks[i, j].transform.localPosition = position;
+			}
+		}
 	}
 }

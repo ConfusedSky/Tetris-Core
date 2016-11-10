@@ -24,7 +24,7 @@ public class TetrisGame : MonoBehaviour
 		{
 			for( int i = 0; i < Width; i++ )
 			{
-				if( blockScripts[0, i].Occupied )
+				if( Scripts[0, i].Occupied )
 					return true;
 			}
 			return false;
@@ -33,8 +33,8 @@ public class TetrisGame : MonoBehaviour
 		
 	public TetronimoType? HeldBlock{ get{ return heldBlock; } }
 	public TetronimoType[] QueuedBlocks{ get{ return queue.GetTypes(); } }
-	public GameObject[,] Blocks{ get{ return blocks; } }
-	public TetrisBlockScript[,] Scripts{ get{ return blockScripts; } }
+	public GameObject[,] Blocks{ get{ return board.Blocks; } }
+	public TetrisBlockScript[,] Scripts{ get{ return board.Scripts; } }
 
 	// These properties only exist for backwards compatibility
 	public int Width{ get{ return board.Width; } }
@@ -65,27 +65,13 @@ public class TetrisGame : MonoBehaviour
 	void Awake()
 	{
 		board = gameObject.GetComponent<TetrisBoard>();
-		blocks = new GameObject[Height, Width];
-		blockScripts = new TetrisBlockScript[Height, Width];
-
-		for( int i = 0; i < Height; i++ )
-		{
-			for( int j = 0; j < Width; j++ )
-			{
-				blocks[i, j] = (GameObject)Instantiate(
-					BlockPrefab,
-					gameObject.transform
-				);
-
-				blockScripts[i, j] = blocks[i, j].GetComponent<TetrisBlockScript>();
-				blockScripts[i, j].DefaultColor = (((j + i % 2) % 2 == 0) ? (BGColor1) : (BGColor2));
-			}
-		}
-
 		Tetronimo.ShadowColor = ShadowColor;
-		UpdateBlocks();
 		queue = new TetronimoQueue();
-		currentBlock = Tetronimo.CreateNewTetronimo( blockScripts, queue.GetNextBlock() );
+	}
+
+	void Start()
+	{
+		currentBlock = Tetronimo.CreateNewTetronimo( Scripts, queue.GetNextBlock() );
 	}
 
 	private void Hold()
@@ -93,7 +79,7 @@ public class TetrisGame : MonoBehaviour
 		currentBlock.Clear();
 		TetronimoType? temp = (currentBlock != null) ? (TetronimoType?)currentBlock.BlockType : null;
 		if( heldBlock != null )
-			currentBlock = Tetronimo.CreateNewTetronimo( blockScripts, heldBlock.GetValueOrDefault() );
+			currentBlock = Tetronimo.CreateNewTetronimo( Scripts, heldBlock.GetValueOrDefault() );
 		else
 			currentBlock = null;
 		heldBlock = temp;
@@ -122,7 +108,7 @@ public class TetrisGame : MonoBehaviour
 				Reset();
 			}
 				
-			currentBlock = Tetronimo.CreateNewTetronimo( blockScripts, queue.GetNextBlock() );
+			currentBlock = Tetronimo.CreateNewTetronimo( Scripts, queue.GetNextBlock() );
 
 			if( OnBlockDropped != null ) OnBlockDropped( this, System.EventArgs.Empty );
 		}
@@ -132,10 +118,7 @@ public class TetrisGame : MonoBehaviour
 
 	public void Reset()
 	{
-		foreach( TetrisBlockScript b in blockScripts )
-		{
-			b.Clear();
-		}
+		board.Reset();
 
 		heldBlock = null;
 		OnHold( this, System.EventArgs.Empty );
@@ -147,14 +130,14 @@ public class TetrisGame : MonoBehaviour
 	{
 		for( int i = 0; i < Width; i++ )
 		{
-			blockScripts[row, i].Clear();
+			Scripts[row, i].Clear();
 		}
 
 		for( int i = row; i >= 1; i-- )
 		{
 			for( int j = 0; j < Width; j++ )
 			{
-				blockScripts[i - 1, j].MoveTo( blockScripts[i, j] );
+				Scripts[i - 1, j].MoveTo( Scripts[i, j] );
 			}
 		}
 
@@ -171,7 +154,7 @@ public class TetrisGame : MonoBehaviour
 
 			for( int j = 0; j < Width; j++ )
 			{
-				if( !blockScripts[i, j].Occupied )
+				if( !Scripts[i, j].Occupied )
 					clearable = false;
 			}
 
@@ -180,23 +163,6 @@ public class TetrisGame : MonoBehaviour
 		}
 
 		return result;
-	}
-
-	private void UpdateBlocks()
-	{
-		for( int i = 0; i < Height; i++ )
-		{
-			for( int j = 0; j < Width; j++ )
-			{
-				Vector3 position = new Vector3(
-					                   StartingLocation.x + PrefabSize.x * j,
-					                   StartingLocation.y - PrefabSize.y * i,
-					                   StartingLocation.z
-				                   );
-
-				blocks[i, j].transform.localPosition = position;
-			}
-		}
 	}
 		
 }
