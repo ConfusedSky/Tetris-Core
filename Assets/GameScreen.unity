@@ -222,16 +222,15 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114000010137189986, guid: 367f874d38f529549934379a5468217b,
+    - target: {fileID: 4000012733662084, guid: 367f874d38f529549934379a5468217b, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013417292696, guid: 367f874d38f529549934379a5468217b,
         type: 2}
-      propertyPath: BackgroundFolder
-      value: 
-      objectReference: {fileID: 1737577349}
+      propertyPath: DropSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 367f874d38f529549934379a5468217b, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1737577349 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1000011245381436, guid: 367f874d38f529549934379a5468217b,
-    type: 2}
-  m_PrefabInternal: {fileID: 1737577348}

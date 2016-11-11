@@ -6,6 +6,9 @@ public class RowCollapseAnimation : MonoBehaviour
 {
 	private TetrisGame game;
 	private GameObject[,] blocks;
+	private int numCollapses = 0;
+
+	public float DropSpeed = 10;
 
 	// Use this for initialization
 	void Awake() 
@@ -34,7 +37,8 @@ public class RowCollapseAnimation : MonoBehaviour
 
 		moveAllAbove( row, game.PrefabSize.y);
 
-		IEnumerator c = moveOverTime( row, game.PrefabSize.y, 10 );
+		numCollapses++;
+		IEnumerator c = moveOverTime( row, game.PrefabSize.y, DropSpeed );
 		StartCoroutine( c );
 	}
 
@@ -43,11 +47,13 @@ public class RowCollapseAnimation : MonoBehaviour
 		float location = 0;
 		while( location < distance )
 		{
-			moveAllAbove( rowNumber, -speed * Time.deltaTime );
-			location += speed * Time.deltaTime;
+			float change = (speed/numCollapses) * Time.deltaTime;
+			moveAllAbove( rowNumber, -change );
+			location += change;
 			yield return null;
 		}
 		moveAllAbove( rowNumber, location-distance );
+		numCollapses--;
 	}
 
 	private void moveAllAbove( int rowNumber, float distance )
