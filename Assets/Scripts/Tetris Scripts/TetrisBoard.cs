@@ -3,6 +3,10 @@ using System.Collections;
 
 public class TetrisBoard : MonoBehaviour 
 {
+	[Header("Parent Objects:")]
+	public GameObject BlockFolder;
+	public GameObject BackgroundFolder;
+
 	[Header("Dimensions:")]
 	public int Width = 10;
 	public int Height = 20;
@@ -16,6 +20,7 @@ public class TetrisBoard : MonoBehaviour
 	[Header("Prefab")]
 	public GameObject BlockPrefab;
 
+	private GameObject[,] background;
 	private GameObject[,] blocks;
 	private TetrisBlockScript[,] scripts;
 
@@ -24,9 +29,9 @@ public class TetrisBoard : MonoBehaviour
 
 	void Awake()
 	{
+		background = new GameObject[Height, Width];
 		blocks = new GameObject[Height, Width];
 		scripts = new TetrisBlockScript[Height, Width];
-
 
 		for( int i = 0; i < Height; i++ )
 		{
@@ -34,18 +39,25 @@ public class TetrisBoard : MonoBehaviour
 			{
 				Blocks[i, j] = (GameObject)Instantiate(
 					BlockPrefab,
-					gameObject.transform
+					BlockFolder.transform
 				);
 
 				Scripts[i, j] = Blocks[i, j].GetComponent<TetrisBlockScript>();
-				Scripts[i, j].DefaultColor = (((j + i % 2) % 2 == 0) ? (BGColor1) : (BGColor2));
+				Scripts[i, j].DefaultColor = new Color( 0, 0, 0, 0 );
+
+				background[i, j] = (GameObject)Instantiate(
+					BlockPrefab,
+					BackgroundFolder.transform
+				);
+
+				background[i, j].GetComponent<TetrisBlockScript>().DefaultColor = 
+					(((j + i % 2) % 2 == 0) ? (BGColor1) : (BGColor2));
 			}
 		}
 	}
 
 	void Start()
 	{
-
 		UpdateBlocks();
 	}
 	
@@ -76,6 +88,7 @@ public class TetrisBoard : MonoBehaviour
 				);
 
 				Blocks[i, j].transform.localPosition = position;
+				background[i, j].transform.localPosition = position;
 			}
 		}
 	}

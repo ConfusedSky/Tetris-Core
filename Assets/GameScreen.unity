@@ -224,65 +224,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114000010137189986, guid: 367f874d38f529549934379a5468217b,
         type: 2}
-      propertyPath: Height
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010137189986, guid: 367f874d38f529549934379a5468217b,
-        type: 2}
-      propertyPath: PrefabSize.x
-      value: 0.48
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010137189986, guid: 367f874d38f529549934379a5468217b,
-        type: 2}
-      propertyPath: PrefabSize.y
-      value: 0.48
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010137189986, guid: 367f874d38f529549934379a5468217b,
-        type: 2}
-      propertyPath: BlockPrefab
+      propertyPath: BackgroundFolder
       value: 
-      objectReference: {fileID: 1000011956556832, guid: 82f510f9971d74346873f92d24963627,
-        type: 2}
-    - target: {fileID: 114000010137189986, guid: 367f874d38f529549934379a5468217b,
-        type: 2}
-      propertyPath: BGColor1.r
-      value: 0.6838235
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010137189986, guid: 367f874d38f529549934379a5468217b,
-        type: 2}
-      propertyPath: BGColor1.g
-      value: 0.6838235
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010137189986, guid: 367f874d38f529549934379a5468217b,
-        type: 2}
-      propertyPath: BGColor1.b
-      value: 0.6838235
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010137189986, guid: 367f874d38f529549934379a5468217b,
-        type: 2}
-      propertyPath: BGColor1.a
-      value: 0.19607843
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010137189986, guid: 367f874d38f529549934379a5468217b,
-        type: 2}
-      propertyPath: BGColor2.r
-      value: 0.19117647
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010137189986, guid: 367f874d38f529549934379a5468217b,
-        type: 2}
-      propertyPath: BGColor2.g
-      value: 0.19117647
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010137189986, guid: 367f874d38f529549934379a5468217b,
-        type: 2}
-      propertyPath: BGColor2.b
-      value: 0.19117647
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010137189986, guid: 367f874d38f529549934379a5468217b,
-        type: 2}
-      propertyPath: BGColor2.a
-      value: 0.19607843
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1737577349}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 367f874d38f529549934379a5468217b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1737577349 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000011245381436, guid: 367f874d38f529549934379a5468217b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1737577348}
