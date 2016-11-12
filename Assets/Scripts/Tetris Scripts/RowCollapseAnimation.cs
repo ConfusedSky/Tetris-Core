@@ -33,21 +33,28 @@ public class RowCollapseAnimation : MonoBehaviour
 
 	void CollapseAnimation( object sender, TetrisGame.RowCollapseEventArgs args )
 	{
-		int row = args.RowNumber;
+		ArrayList list = new ArrayList( args.ClearedRows );
+		list.Sort();
+		list.Reverse();
 
-		moveAllAbove( row, game.PrefabSize.y);
+		int offset = 0;
+		foreach( int row in list )
+		{
+			moveAllAbove( row + offset, game.PrefabSize.y );
 
-		numCollapses++;
-		IEnumerator c = moveOverTime( row, game.PrefabSize.y, DropSpeed );
-		StartCoroutine( c );
+			IEnumerator c = moveOverTime( row + offset, game.PrefabSize.y );
+			StartCoroutine( c );
+			offset++;
+		}
 	}
 
-	private IEnumerator moveOverTime( int rowNumber, float distance, float speed )
+	private IEnumerator moveOverTime( int rowNumber, float distance )
 	{
 		float location = 0;
+		numCollapses++;
 		while( location < distance )
 		{
-			float change = (speed/numCollapses) * Time.deltaTime;
+			float change = (DropSpeed/numCollapses) * Time.deltaTime;
 			moveAllAbove( rowNumber, -change );
 			location += change;
 			yield return null;

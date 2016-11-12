@@ -49,11 +49,11 @@ public class TetrisGame : MonoBehaviour
 
 	public class RowCollapseEventArgs : System.EventArgs
 	{
-		public int RowNumber{ get; private set; }
+		public IList ClearedRows{ get; private set; }
 
-		public RowCollapseEventArgs( int row )
+		public RowCollapseEventArgs( IList clearedRows )
 		{
-			RowNumber = row;
+			ClearedRows = clearedRows;
 		}
 	}
 
@@ -96,11 +96,13 @@ public class TetrisGame : MonoBehaviour
 
 		if( currentBlock == null )
 		{
+			IList clears = CheckClears();
 			// if the previous frame had a drop that cleared resolve the clear
-			foreach( int i in CheckClears() )
+			foreach( int i in clears )
 			{
 				CollapseRow( i );
 			}
+			if( clears.Count > 0 && OnRowCollapse != null ) OnRowCollapse( this, new RowCollapseEventArgs( clears ) );
 
 			// Check for loss conditions if loss reset the board
 			if( Lost )
@@ -140,8 +142,6 @@ public class TetrisGame : MonoBehaviour
 				Scripts[i - 1, j].MoveTo( Scripts[i, j] );
 			}
 		}
-
-		if( OnRowCollapse != null ) OnRowCollapse( this, new RowCollapseEventArgs( row ) );
 	}
 
 	public IList CheckClears()
