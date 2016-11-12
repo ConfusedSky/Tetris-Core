@@ -9,6 +9,9 @@ public class RowCollapseAnimation : MonoBehaviour
 	private int numCollapses = 0;
 
 	public float DropSpeed = 10;
+	// Divide the checks and movements per frame by this number to make 
+	// faster drop speeds smoother and 
+	// to stop the blocks from going to far and clipping
 	public int DivisionsPerFrame = 4;
 
 	// Use this for initialization
@@ -59,7 +62,7 @@ public class RowCollapseAnimation : MonoBehaviour
 			float change = (DropSpeed/numCollapses) * Time.deltaTime / DivisionsPerFrame;
 			moveAllAbove( rowNumber, -change );
 			location += change;
-			if( division == 0 )yield return null;
+			if( division == 0 ) yield return null;
 
 			division = (division + 1) % DivisionsPerFrame;
 		}
