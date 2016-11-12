@@ -9,6 +9,7 @@ public class RowCollapseAnimation : MonoBehaviour
 	private int numCollapses = 0;
 
 	public float DropSpeed = 10;
+	public int DivisionsPerFrame = 4;
 
 	// Use this for initialization
 	void Awake() 
@@ -50,14 +51,17 @@ public class RowCollapseAnimation : MonoBehaviour
 
 	private IEnumerator moveOverTime( int rowNumber, float distance )
 	{
+		int division = 0;
 		float location = 0;
 		numCollapses++;
 		while( location < distance )
 		{
-			float change = (DropSpeed/numCollapses) * Time.deltaTime;
+			float change = (DropSpeed/numCollapses) * Time.deltaTime / DivisionsPerFrame;
 			moveAllAbove( rowNumber, -change );
 			location += change;
-			yield return null;
+			if( division == 0 )yield return null;
+
+			division = (division + 1) % DivisionsPerFrame;
 		}
 		moveAllAbove( rowNumber, location-distance );
 		numCollapses--;
