@@ -249,7 +249,7 @@ public class Tetronimo
 	{
 		if( !ValidPlacement( space, t, space.GetLength( 1 ) / 2, 0 ) )
 		{
-			return null;
+			return new Tetronimo( space, t, space.GetLength( 1 ) / 2, -1 );
 		}
 
 		return new Tetronimo( space, t, space.GetLength( 1 ) / 2, 0 );

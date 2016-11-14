@@ -92,7 +92,7 @@ public class TetrisGame : MonoBehaviour
 	{
 		TetrisAction action = InputManager.HandleInput();
 
-		if( action == TetrisAction.Hold ) Hold();
+		if( action == TetrisAction.Hold && currentBlock != null ) Hold();
 
 		if( currentBlock == null )
 		{
