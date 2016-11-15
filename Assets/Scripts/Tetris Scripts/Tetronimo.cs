@@ -122,8 +122,27 @@ public class Tetronimo
 		Clear();
 		while( rotationOffset != 0 && !ValidPlacement( 0, 0, rotationOffset ) )
 		{
-			rotationOffset++;
-			rotationOffset %= 4;
+			// try to find a valid offset in which this rotation works
+			bool works = false;
+			foreach( int[] offsets in new int[][]{ new int[]{  0,  1 },
+				                                   new int[]{  1,  0 }, 
+				                                   new int[]{ -1,  0 }, 
+				                                   new int[]{  0, -1 } } )
+			{
+				if( ValidPlacement( offsets[0], offsets[1], rotationOffset ) )
+				{
+					x += offsets[0];
+					y += offsets[1];
+					works = true;
+					break;
+				}
+			}
+
+			if( !works )
+			{
+				rotationOffset++;
+				rotationOffset %= 4;
+			}
 		}
 		rotation += rotationOffset;
 		rotation %= 4;

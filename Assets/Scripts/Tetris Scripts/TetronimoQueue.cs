@@ -1,22 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 
+[Serializable]
 public class TetronimoQueue
 {
 	private Queue<TetronimoType> blocks;
 	// Number of elements to have in the queue
-	private int size;
+	private int size = 5;
 	// Number of elements to look back to find duplicates
-	private int lookback;
+	private int lookback = 4;
 	// Number of tries before adding a duplicate
-	private int tries;
+	private int tries = 4;
 
-	public TetronimoQueue() : this( 5, 4, 4 ) {}
+	public TetronimoQueue()
+	{
+		blocks = new Queue<TetronimoType>( size );
+		refreshQueue();
+	}
 
 	public TetronimoQueue( int size, int lookback, int tries )
 	{
 		if( size <= 0 ) throw new ArgumentException( "Size must be greater than zero" );
 		blocks = new Queue<TetronimoType>( size );
+		Initialize( size, lookback, tries );
+	}
+
+	public void Initialize( int size, int lookback, int tries )
+	{
+		if( size <= 0 ) throw new ArgumentException( "Size must be greater than zero" );
 		this.size = size;
 		this.lookback = lookback;
 		this.tries = tries;

@@ -4,10 +4,11 @@
     <Files>
       <File FileName="Assets\Scripts\Tetris Scripts\RowCollapseAnimation.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Tetris Scripts\TetrisSizeGizmo.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Tetris Scripts\TetrisGame.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Tetris Scripts\TetrisGame.cs" Line="57" Column="3" />
       <File FileName="Assets\Scripts\Tetris Scripts\TetrisBoard.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Tetris Scripts\Tetronimo.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Tetris Scripts\Tetronimo.cs" Line="147" Column="17" />
       <File FileName="Assets\Scripts\Tetris Scripts\InputManger.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Tetris Scripts\TetronimoQueue.cs" Line="66" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

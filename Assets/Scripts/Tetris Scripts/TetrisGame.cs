@@ -5,11 +5,17 @@ using System.Collections.Generic;
 [RequireComponent(typeof(TetrisBoard))]
 public class TetrisGame : MonoBehaviour
 {
-	[Header("Colors:")]
 	public Color ShadowColor;
 
-	[Header("Input Manager:")]
 	public InputManger InputManager;
+
+	[Header("Queue Parameters")]
+	[SerializeField]
+	private int queueSize = 5;
+	[SerializeField]
+	private int queueLookback = 4;
+	[SerializeField]
+	private int queueTries = 4;
 
 	private TetrisBoard board;
 	private GameObject[,] blocks;
@@ -66,7 +72,7 @@ public class TetrisGame : MonoBehaviour
 	{
 		board = gameObject.GetComponent<TetrisBoard>();
 		Tetronimo.ShadowColor = ShadowColor;
-		queue = new TetronimoQueue();
+		queue = new TetronimoQueue( queueSize, queueLookback, queueTries );
 	}
 
 	void Start()
