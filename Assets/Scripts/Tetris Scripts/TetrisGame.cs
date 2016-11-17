@@ -77,7 +77,7 @@ public class TetrisGame : MonoBehaviour
 
 	void Start()
 	{
-		currentBlock = Tetronimo.CreateNewTetronimo( Scripts, queue.GetNextBlock() );
+		//currentBlock = Tetronimo.CreateNewTetronimo( Scripts, queue.GetNextBlock() );
 	}
 
 	private void Hold()
