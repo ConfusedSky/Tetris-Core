@@ -16,21 +16,21 @@ public class Tetronimo
 
 	// Define a table containing tetronimos represented as an array of offsets
 	// +y is down +x is right
-	public static int[,,] TETRONIMOS = new int[7, 4, 2] { 
+	public static Point[][] TETRONIMOS = new Point[7][] { 
 		// I
-		{ { 0, 0 }, { -1, 0 }, { -2, 0 }, { 1, 0 } },
+		new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( -2, 0 ), new Point( 1, 0 ) },
 		// O
-		{ { 0, 0 }, { 1, 0 }, { 0, 1 }, { 1, 1 } },
+		new Point[]{ new Point( 0, 0 ), new Point( 1, 0 ), new Point( 0, 1 ), new Point( 1, 1 ) },
 		// T
-		{ { 0, 0 }, { 0, -1 }, { -1, 0 }, { 1, 0 } },
+		new Point[]{ new Point( 0, 0 ), new Point( 0, -1 ), new Point( -1, 0 ), new Point( 1, 0 ) },
 		// J
-		{ { 0, 0 }, { 0, -1 }, { 0, 1 }, { -1, 1 } },
+		new Point[]{ new Point( 0, 0 ), new Point( 0, -1 ), new Point( 0, 1 ), new Point( -1, 1 ) },
 		// L
-		{ { 0, 0 }, { 0, -1 }, { 0, 1 }, { 1, 1 } },
+		new Point[]{ new Point( 0, 0 ), new Point( 0, -1 ), new Point( 0, 1 ), new Point( 1, 1 ) },
 		// S
-		{ { 0, 0 }, { 1, 0 }, { 0, 1 }, { -1, 1 } },
+		new Point[]{ new Point( 0, 0 ), new Point( 1, 0 ), new Point( 0, 1 ), new Point( -1, 1 ) },
 		// Z
-		{ { 0, 0 }, { -1, 0 }, { 0, 1 }, { 1, 1 } }
+		new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( 0, 1 ), new Point( 1, 1 ) }
 	};
 
 	public static Color[] TETRONIMO_COLORS = new Color[7] {
@@ -198,9 +198,9 @@ public class Tetronimo
 
 	public static IEnumerable<Point> GetBlockLocations( TetronimoType t, int x, int y, int rotation = 0 )
 	{
-		for( int i = 0; i < 4; i++ )
+		foreach( Point point in TETRONIMOS[(int)t] )
 		{
-			int[] offsets = RotateOffset( TETRONIMOS[(int)t, i, 0], TETRONIMOS[(int)t, i, 1], rotation );
+			int[] offsets = RotateOffset( point.x, point.y, rotation );
 			yield return new Point(x + offsets[0], y + offsets[1]);
 		}
 	}
