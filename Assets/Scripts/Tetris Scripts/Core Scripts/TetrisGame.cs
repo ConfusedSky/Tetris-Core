@@ -156,19 +156,21 @@ public class TetrisGame : MonoBehaviour
 
 		for( int i = 0; i < Height; i++ )
 		{
-			bool clearable = true;
-
-			for( int j = 0; j < Width; j++ )
-			{
-				if( !Scripts[i, j].Occupied )
-					clearable = false;
-			}
-
-			if( clearable )
+			if( CheckClear( i ) )
 				result.Add( i );
 		}
 
 		return result;
+	}
+
+	public bool CheckClear( int row )
+	{
+		for( int i = 0; i < Width; i++ )
+		{
+			if( !Scripts[row, i].Occupied )
+				return false;
+		}
+		return true;
 	}
 		
 }

@@ -45,19 +45,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Tetris Scripts\HeldBlockDisplay.cs" />
-     <Compile Include="Assets\Scripts\Tetris Scripts\InputManger.cs" />
-     <Compile Include="Assets\Scripts\Tetris Scripts\Point.cs" />
-     <Compile Include="Assets\Scripts\Tetris Scripts\RowCollapseAnimation.cs" />
-     <Compile Include="Assets\Scripts\Tetris Scripts\TetrisAction.cs" />
-     <Compile Include="Assets\Scripts\Tetris Scripts\TetrisBlockScript.cs" />
-     <Compile Include="Assets\Scripts\Tetris Scripts\TetrisBoard.cs" />
-     <Compile Include="Assets\Scripts\Tetris Scripts\TetrisGame.cs" />
-     <Compile Include="Assets\Scripts\Tetris Scripts\TetrisSizeGizmo.cs" />
-     <Compile Include="Assets\Scripts\Tetris Scripts\Tetronimo.cs" />
-     <Compile Include="Assets\Scripts\Tetris Scripts\TetronimoQueue.cs" />
-     <Compile Include="Assets\Scripts\Tetris Scripts\TetronimoType.cs" />
-     <Compile Include="Assets\Scripts\Tetris Scripts\UpcomingBlocksDisplay.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\InputManger.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\Point.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetrisAction.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetrisBlockScript.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetrisBoard.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetrisGame.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\Tetronimo.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetronimoQueue.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetronimoType.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Display Scripts\HeldBlockDisplay.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Display Scripts\RowCollapseAnimation.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Display Scripts\TetrisSizeGizmo.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Display Scripts\UpcomingBlocksDisplay.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Tetris Modifiers\AnnoyingBlock.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
