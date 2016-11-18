@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class Tetronimo
 {
 	public static Color ShadowColor = Color.white;
 
-	private TetrisBlockScript[,] space;
+	private TetrisBoard board;
 	private TetronimoType type;
 	private int x;
 	private int y;
@@ -57,9 +58,9 @@ public class Tetronimo
 		}
 	}
 
-	public Tetronimo(TetrisBlockScript[,] space, TetronimoType t, int startingX, int startingY)
+	public Tetronimo(TetrisBoard board, TetronimoType t, int startingX, int startingY)
 	{
-		this.space = space;
+		this.board = board;
 		type = t;
 		x = startingX;
 		y = startingY;
@@ -99,7 +100,7 @@ public class Tetronimo
 
 	public bool ValidPlacement( int xOffset, int yOffset, int rotationOffset = 0 )
 	{
-		return ValidPlacement( space, type, x + xOffset, y + yOffset, (rotation + rotationOffset)%4 );
+		return ValidPlacement( board, type, x + xOffset, y + yOffset, (rotation + rotationOffset)%4 );
 	}
 
 	public bool Move( int xOffset, int yOffset )
@@ -162,16 +163,16 @@ public class Tetronimo
 	{
 		shadowY = y;
 		// Find the actual place to cast the shadow
-		while( shadowY < space.GetLength(0) && ValidPlacement( space, type, x, shadowY, rotation ) ) shadowY++;
+		while( shadowY < board.Height && ValidPlacement( board, type, x, shadowY, rotation ) ) shadowY++;
 		shadowY--;
-		if( !ValidPlacement( space, type, x, shadowY, rotation ) ) shadowY = -1;
+		if( !ValidPlacement( board, type, x, shadowY, rotation ) ) shadowY = -1;
 	}
 
 	public void SetShadowColor( Color? color )
 	{
-		if( shadowY >= 0 && shadowY < space.GetLength(0) )
+		if( shadowY >= 0 && shadowY < board.Height )
 		{
-			foreach( TetrisBlockScript block in GetBlocks( space, type, x, shadowY, rotation ) )
+			foreach( TetrisBlockScript block in GetBlocks( board, type, x, shadowY, rotation ) )
 				block.BackgroundColor = color;
 		}
 	}
@@ -190,45 +191,33 @@ public class Tetronimo
 		SetBlockColor( null );
 	}
 
-	public System.Collections.IEnumerable GetBlockLocations()
+	public IEnumerable<Point> GetBlockLocations()
 	{
 		return GetBlockLocations( type, x, y, rotation );
 	}
 
-	public static System.Collections.IEnumerable GetBlockLocations( TetronimoType t, int x, int y, int rotation = 0 )
+	public static IEnumerable<Point> GetBlockLocations( TetronimoType t, int x, int y, int rotation = 0 )
 	{
 		for( int i = 0; i < 4; i++ )
 		{
 			int[] offsets = RotateOffset( TETRONIMOS[(int)t, i, 0], TETRONIMOS[(int)t, i, 1], rotation );
-			yield return new int[]{ (x + offsets[0]), (y + offsets[1]) };
+			yield return new Point(x + offsets[0], y + offsets[1]);
 		}
 	}
 
-	public System.Collections.IEnumerable GetBlocks()
+	public IEnumerable<TetrisBlockScript> GetBlocks()
 	{
-		return GetBlocks( space, type, x, y, rotation );
+		return GetBlocks( board, type, x, y, rotation );
 	}
 
-	public static System.Collections.IEnumerable GetBlocks( TetrisBlockScript[,] space, TetronimoType t, int x, int y, int rotation = 0 )
+	public static IEnumerable<TetrisBlockScript> GetBlocks( TetrisBoard board, TetronimoType t, int x, int y, int rotation = 0 )
 	{
-		foreach( int[] point in GetBlockLocations( t, x, y, rotation) )
-		{
-			if( point[1] >= 0 )
-				yield return space[point[1], point[0]];
-		}
+		return board.GetBlocks( GetBlockLocations( t, x, y, rotation ) );
 	}
 
-	public static bool ValidPlacement( TetrisBlockScript[,] space, TetronimoType t, int x, int y, int rotation = 0 )
+	public static bool ValidPlacement( TetrisBoard board, TetronimoType t, int x, int y, int rotation = 0 )
 	{
-		foreach( int[] point in GetBlockLocations( t, x, y, rotation ) )
-		{
-			if( point[0] < 0 || point[0] >= space.GetLength( 1 ) || point[1] >= space.GetLength( 0 ) ||
-				(point[1] >= 0 && space[point[1], point[0]].Occupied) )
-			{
-				return false;
-			}
-		}
-		return true;
+		return board.ValidPlacement( GetBlockLocations( t, x, y, rotation ) );
 	}
 
 	public static int[] RotateOffset( int xOffset, int yOffset, int rotation )
@@ -257,21 +246,21 @@ public class Tetronimo
 		return result;
 	}
 		
-	public static Tetronimo CreateRandomTetronimo( TetrisBlockScript[,] space )
+	public static Tetronimo CreateRandomTetronimo( TetrisBoard board )
 	{
-		TetronimoType t = (TetronimoType)Random.Range(0,TETRONIMO_COUNT);
-		return CreateNewTetronimo( space, t );
+		TetronimoType t = (TetronimoType)Random.Range( 0, TETRONIMO_COUNT );
+		return CreateNewTetronimo( board, t );
 	}
 
 	// Creates a new Tetronimo at the center of the screen if the block type can't be placed in the center of the screen return null
-	public static Tetronimo CreateNewTetronimo( TetrisBlockScript[,] space, TetronimoType t )
+	public static Tetronimo CreateNewTetronimo( TetrisBoard board, TetronimoType t )
 	{
-		if( !ValidPlacement( space, t, space.GetLength( 1 ) / 2, 0 ) )
+		if( !board.ValidPlacement( GetBlockLocations( t, board.Width / 2, 0 ) ) )
 		{
-			return new Tetronimo( space, t, space.GetLength( 1 ) / 2, -1 );
+			return new Tetronimo( board, t, board.Width / 2, -1 );
 		}
 
-		return new Tetronimo( space, t, space.GetLength( 1 ) / 2, 0 );
+		return new Tetronimo( board, t, board.Width / 2, 0 );
 	}
 }
 

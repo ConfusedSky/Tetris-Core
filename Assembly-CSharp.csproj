@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Tetris Scripts\HeldBlockDisplay.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\InputManger.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Point.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\RowCollapseAnimation.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\TetrisAction.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\TetrisBlockScript.cs" />

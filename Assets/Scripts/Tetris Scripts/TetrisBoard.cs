@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class TetrisBoard : MonoBehaviour 
 {
@@ -90,6 +91,32 @@ public class TetrisBoard : MonoBehaviour
 				Blocks[i, j].transform.localPosition = position;
 				background[i, j].transform.localPosition = position;
 			}
+		}
+	}
+
+	// returns true if all of the blocks sent in are empty and in the boundries
+	// IEnumerable must be a enumerable of x where x is an int[] and x is (x,y) coordinates
+	public bool ValidPlacement( IEnumerable<Point> BlockLocations )
+	{
+		foreach( Point point in BlockLocations )
+		{
+			if( point.x < 0 || point.x >= Width || point.y >= Height ||
+				(point.y >= 0 && Scripts[point.y, point.x].Occupied) )
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	// Returns all of the blockscripts that are asked for
+	// Input is an ienumerable of x where x is an int[] and x is (x,y) coordinates
+	public IEnumerable<TetrisBlockScript> GetBlocks( IEnumerable<Point> BlockLocations )
+	{
+		foreach( Point point in BlockLocations )
+		{
+			if( point.y >= 0 )
+				yield return Scripts[point.y, point.x];
 		}
 	}
 }

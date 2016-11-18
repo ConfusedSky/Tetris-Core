@@ -85,7 +85,7 @@ public class TetrisGame : MonoBehaviour
 		currentBlock.Clear();
 		TetronimoType? temp = (currentBlock != null) ? (TetronimoType?)currentBlock.BlockType : null;
 		if( heldBlock != null )
-			currentBlock = Tetronimo.CreateNewTetronimo( Scripts, heldBlock.GetValueOrDefault() );
+			currentBlock = Tetronimo.CreateNewTetronimo( board, heldBlock.GetValueOrDefault() );
 		else
 			currentBlock = null;
 		heldBlock = temp;
@@ -116,7 +116,7 @@ public class TetrisGame : MonoBehaviour
 				Reset();
 			}
 				
-			currentBlock = Tetronimo.CreateNewTetronimo( Scripts, queue.GetNextBlock() );
+			currentBlock = Tetronimo.CreateNewTetronimo( board, queue.GetNextBlock() );
 
 			if( OnBlockDropped != null ) OnBlockDropped( this, System.EventArgs.Empty );
 		}
