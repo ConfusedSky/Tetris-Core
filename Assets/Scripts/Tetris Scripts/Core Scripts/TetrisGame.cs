@@ -66,6 +66,7 @@ public class TetrisGame : MonoBehaviour
 	public event System.EventHandler OnHold;
 	public event System.EventHandler OnBlockDropped;
 	public event System.EventHandler<RowCollapseEventArgs> OnRowCollapse;
+	public event System.EventHandler OnStart;
 
 	// Use this for initialization
 	void Awake()
@@ -77,7 +78,13 @@ public class TetrisGame : MonoBehaviour
 
 	void Start()
 	{
-		//currentBlock = Tetronimo.CreateNewTetronimo( Scripts, queue.GetNextBlock() );
+		GameStart();
+	}
+
+	void GameStart()
+	{
+		currentBlock = Tetronimo.CreateNewTetronimo( board, queue.GetNextBlock() );
+		if( OnStart != null ) OnStart( this, System.EventArgs.Empty );
 	}
 
 	private void Hold()
@@ -87,7 +94,7 @@ public class TetrisGame : MonoBehaviour
 		if( heldBlock != null )
 			currentBlock = Tetronimo.CreateNewTetronimo( board, heldBlock.GetValueOrDefault() );
 		else
-			currentBlock = null;
+			currentBlock = Tetronimo.CreateNewTetronimo( board, queue.GetNextBlock() );
 		heldBlock = temp;
 
 		if( OnHold != null ) OnHold( this, System.EventArgs.Empty );
@@ -114,11 +121,12 @@ public class TetrisGame : MonoBehaviour
 			if( Lost )
 			{
 				Reset();
+				return;
 			}
 				
-			currentBlock = Tetronimo.CreateNewTetronimo( board, queue.GetNextBlock() );
-
+			TetronimoType nextTetronimo = queue.GetNextBlock();
 			if( OnBlockDropped != null ) OnBlockDropped( this, System.EventArgs.Empty );
+			currentBlock = Tetronimo.CreateNewTetronimo( board, nextTetronimo );
 		}
 
 		if( currentBlock != null ) currentBlock = currentBlock.Update( action );
@@ -127,11 +135,11 @@ public class TetrisGame : MonoBehaviour
 	public void Reset()
 	{
 		board.Reset();
-
 		heldBlock = null;
-		OnHold( this, System.EventArgs.Empty );
-
+		currentBlock = null;
 		queue.Reset();
+
+		GameStart();
 	}
 
 	public void CollapseRow( int row )

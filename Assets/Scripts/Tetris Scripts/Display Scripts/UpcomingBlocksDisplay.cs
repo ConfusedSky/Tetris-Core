@@ -18,17 +18,21 @@ public class UpcomingBlocksDisplay : MonoBehaviour {
 
 	void OnEnable()
 	{
-		game.OnBlockDropped += new System.EventHandler( OnBlockDropped );
+		game.OnBlockDropped += OnBlockDropped;
+		game.OnStart += OnBlockDropped;
+		game.OnHold += OnBlockDropped;
 	}
 
 	void Start()
 	{
-		OnBlockDropped( game, System.EventArgs.Empty );
+		
 	}
 
 	void OnDisable()
 	{
-		game.OnBlockDropped -= new System.EventHandler( OnBlockDropped );
+		game.OnBlockDropped -= OnBlockDropped;
+		game.OnStart -= OnBlockDropped;
+		game.OnHold -= OnBlockDropped;
 	}
 
 	void OnBlockDropped( object sender, System.EventArgs e )

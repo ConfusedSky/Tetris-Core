@@ -199,6 +199,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a49738888ea5034fb8ffd39adcb5935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FadeTime: 200
+  ActivateOnCollapse: 0
+  ActivateOnDrop: 1
+  BlocksPerDrop: 1
 --- !u!1001 &1737577348
 Prefab:
   m_ObjectHideFlags: 0

@@ -18,11 +18,13 @@ public class HeldBlockDisplay : MonoBehaviour {
 	void OnEnable()
 	{
 		game.OnHold += new System.EventHandler( OnHoldAction );
+		game.OnStart += new System.EventHandler( OnHoldAction );
 	}
 
 	void OnDisable()
 	{
 		game.OnHold -= new System.EventHandler( OnHoldAction );
+		game.OnStart -= new System.EventHandler( OnHoldAction );
 	}
 	
 	void OnHoldAction( object sender, System.EventArgs e )

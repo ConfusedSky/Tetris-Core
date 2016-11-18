@@ -4,7 +4,12 @@ using System.Collections;
 [RequireComponent(typeof(TetrisGame))]
 public class AnnoyingBlock : MonoBehaviour
 {
-	public float FadeTime = 25;
+	public float FadeTime = 100;
+
+	public bool ActivateOnCollapse = true;
+	public bool ActivateOnDrop = false;
+
+	public int BlocksPerDrop = 1;
 
 	private TetrisGame game;
 
@@ -20,54 +25,70 @@ public class AnnoyingBlock : MonoBehaviour
 
 	void OnEnable()
 	{
-		game.OnRowCollapse += SpawnBlock;
+		game.OnRowCollapse += OnCollaspse;
+		game.OnBlockDropped += OnBlockDropped;
 	}
 
 	void OnDisable()
 	{
-		game.OnRowCollapse -= SpawnBlock;
+		game.OnRowCollapse -= OnCollaspse;
+		game.OnBlockDropped -= OnBlockDropped;
 	}
 
-	void SpawnBlock( object sender, TetrisGame.RowCollapseEventArgs args )
+	void OnBlockDropped (object sender, System.EventArgs e)
+	{
+		if( ActivateOnDrop )
+			for( int i = 0; i < BlocksPerDrop; i++ )
+			{
+				PlaceBlock();
+			}
+	}
+
+	void OnCollaspse( object sender, TetrisGame.RowCollapseEventArgs args )
+	{
+		if( ActivateOnCollapse )
+			foreach( int line in args.ClearedRows )
+			{
+				PlaceBlock();
+			}
+	}
+
+	private void PlaceBlock()
 	{
 		int column;
 		int i;
-		foreach( int line in args.ClearedRows )
+		int tries = 0;
+		bool blockPlaced = false;
+		do
 		{
-			int tries = 0;
-			bool blockPlaced = false;
-			do
+			column = Random.Range( 0, game.Width );
+			for( i = 1; i < game.Height; i++ )
 			{
-				column = Random.Range( 0, game.Width );
-				i = 1;
-				for( i = 1; i < game.Height; i++ )
-				{
-					if( game.Scripts[i, column].Occupied )
-						break;
-				}
-				game.Scripts[i - 1, column].BlockColor = Color.black;
-				blockPlaced = true;
-				if( game.CheckClear( i - 1 ) )
-				{
-					game.Scripts[i - 1, column].BlockColor = null;
-					blockPlaced = false;
-				}
-				tries++;
-			} while( !blockPlaced );
+				if( game.Scripts[i, column].Occupied )
+					break;
+			}
+			game.Scripts[i-1, column].BlockColor = Color.black;
+			blockPlaced = true;
+			if( game.CheckClear( i - 1 ) )
+			{
+				game.Scripts[i - 1, column].BlockColor = null;
+				blockPlaced = false;
+			}
+			tries++;
+		} while( !blockPlaced );
 
-			IEnumerator fade = FadeIn( column, i - 1 );
-			StartCoroutine( fade );
-		}
+		IEnumerator fade = FadeIn( column, i - 1 );
+		StartCoroutine( fade );
 	}
 
 	private IEnumerator FadeIn( int x, int y )
 	{
 		TetrisBlockScript block = game.Scripts[y, x];
 
-		for( int i = 0; i < 256; i += 8 )
+		for( float i = 0; i <= 1; i += .1f )
 		{
-			block.BlockColor = new Color32( 0, 0, 0, (byte)i );
-			yield return new WaitForSeconds( (FadeTime / 1000) / 32 );
+			block.BlockColor = new Color( 0, 0, 0, i );
+			yield return new WaitForSeconds( (FadeTime / 1000) / 10 );
 		}
 	}
 
