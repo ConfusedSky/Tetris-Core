@@ -85,7 +85,7 @@ public class AnnoyingBlock : MonoBehaviour
 	{
 		TetrisBlockScript block = game.Scripts[y, x];
 
-		for( float i = 0; i <= 1; i += .1f )
+		for( float i = 0; block.Occupied && i <= 1; i += .1f )
 		{
 			block.BlockColor = new Color( 0, 0, 0, i );
 			yield return new WaitForSeconds( (FadeTime / 1000) / 10 );

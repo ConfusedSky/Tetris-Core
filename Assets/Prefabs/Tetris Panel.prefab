@@ -523,8 +523,8 @@ MonoBehaviour:
   BlockFolder: {fileID: 1000011339271462}
   BackgroundFolder: {fileID: 1000011245381436}
   Width: 10
-  Height: 21
-  StartingLocation: {x: 0, y: 0, z: 0}
+  Height: 22
+  StartingLocation: {x: 0, y: 0.51, z: 0}
   PrefabSize: {x: 0.48, y: 0.48}
   BGColor1: {r: 0.6838235, g: 0.6838235, b: 0.6838235, a: 0.19607843}
   BGColor2: {r: 0.19117647, g: 0.19117647, b: 0.19117647, a: 0.19607843}
@@ -612,6 +612,9 @@ MonoBehaviour:
     DropButton: Drop
     RotateRightButton: RotateRight
     HoldButton: Hold
+  queueSize: 5
+  queueLookback: 4
+  queueTries: 4
 --- !u!114 &114000012107664400
 MonoBehaviour:
   m_ObjectHideFlags: 1
