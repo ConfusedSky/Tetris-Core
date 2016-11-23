@@ -90,6 +90,12 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &101496728 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1737577348}
+  m_Script: {fileID: 11500000, guid: 2625b3081916b9d448ee169eb05b0543, type: 3}
 --- !u!1 &1048823528
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +228,31 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114000013390483108, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: Game
+      value: 
+      objectReference: {fileID: 101496728}
+    - target: {fileID: 114000010053768298, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: Game
+      value: 
+      objectReference: {fileID: 101496728}
+    - target: {fileID: 114000013774770008, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: Game
+      value: 
+      objectReference: {fileID: 101496728}
+    - target: {fileID: 114000013590941236, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: Game
+      value: 
+      objectReference: {fileID: 101496728}
+    - target: {fileID: 114000010320196924, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: Game
+      value: 
+      objectReference: {fileID: 101496728}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 367f874d38f529549934379a5468217b, type: 2}
   m_IsPrefabParent: 0

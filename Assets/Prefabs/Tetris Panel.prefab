@@ -507,8 +507,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe706ed451589247aa3ab5bbbdac69c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TetrisPanel: {fileID: 1000012255361060}
   Number: 1
+  Game: {fileID: 114000011676764126}
 --- !u!114 &114000010137189986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -541,8 +541,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe706ed451589247aa3ab5bbbdac69c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TetrisPanel: {fileID: 1000012255361060}
   Number: 4
+  Game: {fileID: 114000011676764126}
 --- !u!114 &114000010469576388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -578,7 +578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e302cc8369f9147459b3727490fdeb6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TetrisPanel: {fileID: 1000012255361060}
+  Game: {fileID: 114000011676764126}
 --- !u!114 &114000011180863880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -661,8 +661,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe706ed451589247aa3ab5bbbdac69c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TetrisPanel: {fileID: 1000012255361060}
   Number: 0
+  Game: {fileID: 114000011676764126}
 --- !u!114 &114000013417292696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -687,8 +687,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe706ed451589247aa3ab5bbbdac69c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TetrisPanel: {fileID: 1000012255361060}
   Number: 3
+  Game: {fileID: 114000011676764126}
 --- !u!114 &114000013774770008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -700,8 +700,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe706ed451589247aa3ab5bbbdac69c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TetrisPanel: {fileID: 1000012255361060}
   Number: 2
+  Game: {fileID: 114000011676764126}
 --- !u!114 &114000013934167946
 MonoBehaviour:
   m_ObjectHideFlags: 1

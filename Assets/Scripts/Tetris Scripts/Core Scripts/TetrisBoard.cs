@@ -38,14 +38,18 @@ public class TetrisBoard : MonoBehaviour
 		{
 			for( int j = 0; j < Width; j++ )
 			{
+				// Set up the actual blocks
 				Blocks[i, j] = (GameObject)Instantiate(
 					BlockPrefab,
 					BlockFolder.transform
 				);
 
+				// Assign the scripts to the variable and make their background invisible
 				Scripts[i, j] = Blocks[i, j].GetComponent<TetrisBlockScript>();
 				Scripts[i, j].DefaultColor = new Color( 0, 0, 0, 0 );
 
+				// Make the actual background
+				// The background is separate because 
 				background[i, j] = (GameObject)Instantiate(
 					BlockPrefab,
 					BackgroundFolder.transform

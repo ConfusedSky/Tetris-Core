@@ -10,5 +10,10 @@ public class Point
 		this.x = x;
 		this.y = y;
 	}
+
+	public static Point operator+( Point first, Point other )
+	{
+		return new Point( first.x + other.x, first.y + other.y );
+	}
 }
 
