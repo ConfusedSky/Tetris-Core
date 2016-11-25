@@ -24,11 +24,11 @@ public class Tetronimo
 		// T
 		new Point[]{ new Point( 0, 0 ), new Point( 0, -1 ), new Point( -1, 0 ), new Point( 1, 0 ) },
 		// J
-		new Point[]{ new Point( 0, 0 ), new Point( 0, -1 ), new Point( 0, 1 ), new Point( -1, 1 ) },
+		new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( 1, 0 ), new Point( -1, -1 ) },
 		// L
-		new Point[]{ new Point( 0, 0 ), new Point( 0, -1 ), new Point( 0, 1 ), new Point( 1, 1 ) },
+		new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( 1, 0 ), new Point( 1, -1 ) },
 		// S
-		new Point[]{ new Point( 0, 0 ), new Point( 1, 0 ), new Point( 0, 1 ), new Point( -1, 1 ) },
+		new Point[]{ new Point( 0, 0 ), new Point( 1, -1 ), new Point( 0, -1 ), new Point( -1, 0 ) },
 		// Z
 		new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( 0, 1 ), new Point( 1, 1 ) }
 	};

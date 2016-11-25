@@ -10,6 +10,7 @@ public class AnnoyingBlock : MonoBehaviour
 	public bool ActivateOnDrop = false;
 
 	public int BlocksPerDrop = 1;
+	public int BlocksPerCollapse = 1;
 
 	private TetrisGame game;
 
@@ -38,10 +39,7 @@ public class AnnoyingBlock : MonoBehaviour
 	void OnBlockDropped (object sender, System.EventArgs e)
 	{
 		if( ActivateOnDrop )
-			for( int i = 0; i < BlocksPerDrop; i++ )
-			{
-				PlaceBlock();
-			}
+			PlaceBlocks( BlocksPerDrop );
 	}
 
 	void OnCollaspse( object sender, TetrisGame.RowCollapseEventArgs args )
@@ -49,8 +47,16 @@ public class AnnoyingBlock : MonoBehaviour
 		if( ActivateOnCollapse )
 			foreach( int line in args.ClearedRows )
 			{
-				PlaceBlock();
+				PlaceBlocks( BlocksPerCollapse );
 			}
+	}
+
+	private void PlaceBlocks( int n )
+	{
+		for( int i = 0; i < n; i++ )
+		{
+			PlaceBlock();
+		}
 	}
 
 	private void PlaceBlock()
