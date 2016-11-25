@@ -1,32 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class TetronimoQueue
+public class RandomItemGenerator<T>
 {
-	private Queue<TetronimoType> blocks;
+	private Queue<T> blocks;
 	// Number of elements to have in the queue
 	private int size = 5;
 	// Number of elements to look back to find duplicates
 	private int lookback = 4;
 	// Number of tries before adding a duplicate
 	private int tries = 4;
+	// List of items to generate from
+	private T[] sourceList;
 
-	public TetronimoQueue()
+	public RandomItemGenerator( T[] sourceList )
 	{
-		blocks = new Queue<TetronimoType>( size );
-		refreshQueue();
+		Initialize( sourceList, 5, 4, 4 );
 	}
 
-	public TetronimoQueue( int size, int lookback, int tries )
+	public RandomItemGenerator( T[] sourceList, int size, int lookback, int tries )
 	{
-		if( size <= 0 ) throw new ArgumentException( "Size must be greater than zero" );
-		blocks = new Queue<TetronimoType>( size );
-		Initialize( size, lookback, tries );
+		Initialize( sourceList, size, lookback, tries );
 	}
 
-	public void Initialize( int size, int lookback, int tries )
+	public void Initialize( T[] sourceList, int size, int lookback, int tries )
 	{
+		if( sourceList.Length <= 0 ) throw new ArgumentException( "Source list must have at least one element" );
 		if( size <= 0 ) throw new ArgumentException( "Size must be greater than zero" );
+		blocks = new Queue<T>( size );
+		this.sourceList = sourceList;
 		this.size = size;
 		this.lookback = lookback;
 		this.tries = tries;
@@ -35,7 +37,7 @@ public class TetronimoQueue
 
 	public void Reset()
 	{
-		blocks = new Queue<TetronimoType>( size );
+		blocks = new Queue<T>( size );
 		refreshQueue();
 	}
 
@@ -47,36 +49,36 @@ public class TetronimoQueue
 			int index = size - blocks.Count;
 			for( int i = 0; i < index; i++ )
 			{
-				addBlock();
+				addItem();
 			}
 		}
 		// Else there are too many and we must get rid of them
 		else
 		{
-			Queue<TetronimoType> temp = new Queue<TetronimoType>(size);
+			Queue<T> temp = new Queue<T>(size);
 			for( int i = 0; i < size; i++ ) temp.Enqueue( blocks.Dequeue() );
 			blocks = temp;
 		}
 	}
 
-	private void addBlock()
+	private void addItem()
 	{
 		int blockNumber;
-		TetronimoType result = (TetronimoType)UnityEngine.Random.Range( 0, Tetronimo.TETRONIMO_COUNT );
+		T result = sourceList[UnityEngine.Random.Range( 0, sourceList.Length )];
 		bool valid;
 
 		// Try to add a new element that isn't a duplicate 
 		for( int i = 0; i < tries; i++ )
 		{
-			result = (TetronimoType)UnityEngine.Random.Range( 0, Tetronimo.TETRONIMO_COUNT );
+			result = sourceList[UnityEngine.Random.Range( 0, sourceList.Length )];
 			valid = true;
 
 			blockNumber = 0;
-			foreach( TetronimoType t in blocks )
+			foreach( T t in blocks )
 			{
 				if( blockNumber >= lookback ) break;
 
-				if( result == t )
+				if( result.Equals(t) )
 				{
 					valid = false;
 					break;
@@ -94,15 +96,15 @@ public class TetronimoQueue
 		blocks.Enqueue( result );
 	}
 
-	public TetronimoType GetNextBlock()
+	public T GetNextItem()
 	{
-		TetronimoType result = blocks.Dequeue();
-		addBlock();
+		T result = blocks.Dequeue();
+		addItem();
 
 		return result;
 	}
 
-	public TetronimoType[] GetTypes()
+	public T[] GetObjects()
 	{
 		return blocks.ToArray();
 	}

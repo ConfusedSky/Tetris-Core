@@ -46,13 +46,14 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\InputManger.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\MinoType.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\Point.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\RandomItemGenerator.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetrisAction.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetrisBlockScript.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetrisBoard.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetrisGame.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\Tetronimo.cs" />
-     <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetronimoQueue.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetronimoType.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Display Scripts\HeldBlockDisplay.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Display Scripts\RowCollapseAnimation.cs" />

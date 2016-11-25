@@ -22,7 +22,7 @@ public class TetrisGame : MonoBehaviour
 	private TetrisBlockScript[,] blockScripts;
 	private Tetronimo currentBlock;
 	private TetronimoType? heldBlock = null;
-	private TetronimoQueue queue;
+	private RandomItemGenerator<TetronimoType> queue;
 
 	public bool Lost
 	{
@@ -38,7 +38,7 @@ public class TetrisGame : MonoBehaviour
 	}
 		
 	public TetronimoType? HeldBlock{ get{ return heldBlock; } }
-	public TetronimoType[] QueuedBlocks{ get{ return queue.GetTypes(); } }
+	public TetronimoType[] QueuedBlocks{ get{ return queue.GetObjects(); } }
 	public GameObject[,] Blocks{ get{ return board.Blocks; } }
 	public TetrisBlockScript[,] Scripts{ get{ return board.Scripts; } }
 
@@ -73,7 +73,7 @@ public class TetrisGame : MonoBehaviour
 	{
 		board = gameObject.GetComponent<TetrisBoard>();
 		Tetronimo.ShadowColor = ShadowColor;
-		queue = new TetronimoQueue( queueSize, queueLookback, queueTries );
+		queue = new RandomItemGenerator<TetronimoType>( TetronimoTypeFunctions.Values, queueSize, queueLookback, queueTries );
 	}
 
 	void Start()
@@ -83,7 +83,7 @@ public class TetrisGame : MonoBehaviour
 
 	void GameStart()
 	{
-		currentBlock = Tetronimo.CreateNewTetronimo( board, queue.GetNextBlock() );
+		currentBlock = Tetronimo.CreateNewTetronimo( board, queue.GetNextItem() );
 		if( OnStart != null ) OnStart( this, System.EventArgs.Empty );
 	}
 
@@ -94,7 +94,7 @@ public class TetrisGame : MonoBehaviour
 		if( heldBlock != null )
 			currentBlock = Tetronimo.CreateNewTetronimo( board, heldBlock.GetValueOrDefault() );
 		else
-			currentBlock = Tetronimo.CreateNewTetronimo( board, queue.GetNextBlock() );
+			currentBlock = Tetronimo.CreateNewTetronimo( board, queue.GetNextItem() );
 		heldBlock = temp;
 
 		if( OnHold != null ) OnHold( this, System.EventArgs.Empty );
@@ -124,7 +124,7 @@ public class TetrisGame : MonoBehaviour
 				return;
 			}
 				
-			TetronimoType nextTetronimo = queue.GetNextBlock();
+			TetronimoType nextTetronimo = queue.GetNextItem();
 			if( OnBlockDropped != null ) OnBlockDropped( this, System.EventArgs.Empty );
 			currentBlock = Tetronimo.CreateNewTetronimo( board, nextTetronimo );
 		}
