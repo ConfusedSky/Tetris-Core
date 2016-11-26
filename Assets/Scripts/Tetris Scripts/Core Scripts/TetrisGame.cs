@@ -20,9 +20,9 @@ public class TetrisGame : MonoBehaviour
 	private TetrisBoard board;
 	private GameObject[,] blocks;
 	private TetrisBlockScript[,] blockScripts;
-	private Tetronimo currentBlock;
-	private TetronimoType? heldBlock = null;
-	private RandomItemGenerator<TetronimoType> queue;
+	private Mino currentBlock;
+	private MinoType heldBlock = null;
+	private RandomItemGenerator<MinoType> queue;
 
 	public bool Lost
 	{
@@ -37,8 +37,8 @@ public class TetrisGame : MonoBehaviour
 		}
 	}
 		
-	public TetronimoType? HeldBlock{ get{ return heldBlock; } }
-	public TetronimoType[] QueuedBlocks{ get{ return queue.GetObjects(); } }
+	public MinoType HeldBlock{ get{ return heldBlock; } }
+	public MinoType[] QueuedBlocks{ get{ return queue.GetObjects(); } }
 	public GameObject[,] Blocks{ get{ return board.Blocks; } }
 	public TetrisBlockScript[,] Scripts{ get{ return board.Scripts; } }
 
@@ -72,8 +72,8 @@ public class TetrisGame : MonoBehaviour
 	void Awake()
 	{
 		board = gameObject.GetComponent<TetrisBoard>();
-		Tetronimo.ShadowColor = ShadowColor;
-		queue = new RandomItemGenerator<TetronimoType>( TetronimoTypeFunctions.Values, queueSize, queueLookback, queueTries );
+		Mino.ShadowColor = ShadowColor;
+		queue = new RandomItemGenerator<MinoType>( Mino.TETRONIMO_TYPES, queueSize, queueLookback, queueTries );
 	}
 
 	void Start()
@@ -83,18 +83,18 @@ public class TetrisGame : MonoBehaviour
 
 	void GameStart()
 	{
-		currentBlock = Tetronimo.CreateNewTetronimo( board, queue.GetNextItem() );
+		currentBlock = Mino.CreateNewMino( board, queue.GetNextItem() );
 		if( OnStart != null ) OnStart( this, System.EventArgs.Empty );
 	}
 
 	private void Hold()
 	{
 		currentBlock.Clear();
-		TetronimoType? temp = (currentBlock != null) ? (TetronimoType?)currentBlock.BlockType : null;
+		MinoType temp = (currentBlock != null) ? currentBlock.BlockType : null;
 		if( heldBlock != null )
-			currentBlock = Tetronimo.CreateNewTetronimo( board, heldBlock.GetValueOrDefault() );
+			currentBlock = Mino.CreateNewMino( board, heldBlock );
 		else
-			currentBlock = Tetronimo.CreateNewTetronimo( board, queue.GetNextItem() );
+			currentBlock = Mino.CreateNewMino( board, queue.GetNextItem() );
 		heldBlock = temp;
 
 		if( OnHold != null ) OnHold( this, System.EventArgs.Empty );
@@ -124,9 +124,9 @@ public class TetrisGame : MonoBehaviour
 				return;
 			}
 				
-			TetronimoType nextTetronimo = queue.GetNextItem();
+			MinoType nextTetronimo = queue.GetNextItem();
 			if( OnBlockDropped != null ) OnBlockDropped( this, System.EventArgs.Empty );
-			currentBlock = Tetronimo.CreateNewTetronimo( board, nextTetronimo );
+			currentBlock = Mino.CreateNewMino( board, nextTetronimo );
 		}
 
 		if( currentBlock != null ) currentBlock = currentBlock.Update( action );

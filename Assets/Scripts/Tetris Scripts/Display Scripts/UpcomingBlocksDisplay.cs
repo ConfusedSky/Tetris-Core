@@ -35,11 +35,11 @@ public class UpcomingBlocksDisplay : MonoBehaviour
 
 	void OnBlockDropped( object sender, System.EventArgs e )
 	{
-		TetronimoType[] queuedBlocks = Game.QueuedBlocks;
+		MinoType[] queuedBlocks = Game.QueuedBlocks;
 
 		if( Number >= queuedBlocks.Length )
 			blockScript.BlockColor = null;
 		else
-			blockScript.BlockColor = queuedBlocks[Number].Color();
+			blockScript.BlockColor = queuedBlocks[Number].BlockColor;
 	}
 }

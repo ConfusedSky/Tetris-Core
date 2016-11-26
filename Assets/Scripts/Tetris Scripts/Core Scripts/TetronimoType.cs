@@ -27,6 +27,6 @@ public static class TetronimoTypeFunctions
 
 	public static Color Color(this TetronimoType type )
 	{
-		return Tetronimo.TETRONIMO_COLORS[(int)type];
+		return Mino.TETRONIMO_COLORS[(int)type];
 	}
 }

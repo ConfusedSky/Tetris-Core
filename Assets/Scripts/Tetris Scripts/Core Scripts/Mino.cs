@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class Tetronimo
+public class Mino
 {
 	public static Color ShadowColor = Color.white;
 
 	private TetrisBoard board;
-	private TetronimoType type;
-	private int x;
-	private int y;
+	private MinoType type;
+	private Point position;
 	private int shadowY = -1;
 	private int rotation = 0;
 
-	public TetronimoType BlockType { get { return type; } }
+	public MinoType BlockType { get { return type; } }
 
 	// Define a table containing tetronimos represented as an array of offsets
 	// +y is down +x is right
@@ -50,6 +49,24 @@ public class Tetronimo
 		Color.red
 	};
 
+	public static MinoType[] TETRONIMO_TYPES = new MinoType[]
+	{
+		// I
+		new MinoType( TETRONIMOS[0], TETRONIMO_COLORS[0] ),
+		// O
+		new MinoType( TETRONIMOS[1], TETRONIMO_COLORS[1] ),
+		// T
+		new MinoType( TETRONIMOS[2], TETRONIMO_COLORS[2] ),
+		// J
+		new MinoType( TETRONIMOS[3], TETRONIMO_COLORS[3] ),
+		// L
+		new MinoType( TETRONIMOS[4], TETRONIMO_COLORS[4] ),
+		// S
+		new MinoType( TETRONIMOS[5], TETRONIMO_COLORS[5] ),
+		// Z
+		new MinoType( TETRONIMOS[6], TETRONIMO_COLORS[6] )
+	};
+
 	public static int TETRONIMO_COUNT
 	{
 		get
@@ -58,16 +75,15 @@ public class Tetronimo
 		}
 	}
 
-	public Tetronimo(TetrisBoard board, TetronimoType t, int startingX, int startingY)
+	public Mino(TetrisBoard board, MinoType t, Point startingPosition)
 	{
 		this.board = board;
 		type = t;
-		x = startingX;
-		y = startingY;
+		position = startingPosition;
 		Place();
 	}
 
-	public Tetronimo Update( TetrisAction action = TetrisAction.None )
+	public Mino Update( TetrisAction action = TetrisAction.None )
 	{
 		// If there is no action don't check for action
 		if( action == TetrisAction.None )
@@ -87,7 +103,7 @@ public class Tetronimo
 		}
 		else if( action == TetrisAction.Drop )
 		{
-			Move( 0, shadowY - y );
+			Move( 0, shadowY - position.y );
 			return null;
 		}
 		else if( action == TetrisAction.RotateRight )
@@ -98,42 +114,45 @@ public class Tetronimo
 		return this;
 	}
 
-	public bool ValidPlacement( int xOffset, int yOffset, int rotationOffset = 0 )
+	public bool ValidPlacement( Point offset,  int rotationOffset = 0 )
 	{
-		return ValidPlacement( board, type, x + xOffset, y + yOffset, (rotation + rotationOffset)%4 );
+		return ValidPlacement( board, type, position + offset, (rotation + rotationOffset)%4 );
 	}
 
-	public bool Move( int xOffset, int yOffset )
+	public bool Move( Point offset )
 	{
 		bool result = false;
 		Clear();
-		if( ValidPlacement( xOffset, yOffset ) )
+		if( ValidPlacement( offset ) )
 		{
-			x += xOffset;
-			y += yOffset;
+			position += offset;
 			result = true;
 		}
 		Place();
 		return result;
 	}
 
+	public bool Move( int xOffset, int yOffset )
+	{
+		return Move( new Point( xOffset, yOffset ) );
+	}
+
 	public bool Rotate()
 	{
 		int rotationOffset = 1;
 		Clear();
-		while( rotationOffset != 0 && !ValidPlacement( 0, 0, rotationOffset ) )
+		while( rotationOffset != 0 && !ValidPlacement( Point.Origin, rotationOffset ) )
 		{
 			// try to find a valid offset in which this rotation works
 			bool works = false;
-			foreach( int[] offsets in new int[][]{ new int[]{  0,  1 },
-				                                   new int[]{  1,  0 }, 
-				                                   new int[]{ -1,  0 }, 
-				                                   new int[]{  0, -1 } } )
+			foreach( Point offset in new Point[]{ new Point(  0,  1 ),
+				                                   new Point(  1,  0 ), 
+				                                   new Point( -1,  0 ), 
+				                                   new Point(  0, -1 ) } )
 			{
-				if( ValidPlacement( offsets[0], offsets[1], rotationOffset ) )
+				if( ValidPlacement( offset, rotationOffset ) )
 				{
-					x += offsets[0];
-					y += offsets[1];
+					position += offset;
 					works = true;
 					break;
 				}
@@ -161,18 +180,18 @@ public class Tetronimo
 
 	public void SetShadowLocation()
 	{
-		shadowY = y;
+		shadowY = position.y;
 		// Find the actual place to cast the shadow
-		while( shadowY < board.Height && ValidPlacement( board, type, x, shadowY, rotation ) ) shadowY++;
+		while( shadowY < board.Height && ValidPlacement( board, type, new Point( position.x, shadowY ), rotation ) ) shadowY++;
 		shadowY--;
-		if( !ValidPlacement( board, type, x, shadowY, rotation ) ) shadowY = -1;
+		if( !ValidPlacement( board, type, new Point( position.x, shadowY ), rotation ) ) shadowY = -1;
 	}
 
 	public void SetShadowColor( Color? color )
 	{
 		if( shadowY >= 0 && shadowY < board.Height )
 		{
-			foreach( TetrisBlockScript block in GetBlocks( board, type, x, shadowY, rotation ) )
+			foreach( TetrisBlockScript block in GetBlocks( board, type, new Point( position.x, shadowY ), rotation ) )
 				block.BackgroundColor = color;
 		}
 	}
@@ -181,7 +200,7 @@ public class Tetronimo
 	{
 		SetShadowLocation();
 		SetShadowColor( ShadowColor );
-		SetBlockColor( type.Color() );
+		SetBlockColor( type.BlockColor );
 	}
 
 	public void Clear()
@@ -193,74 +212,47 @@ public class Tetronimo
 
 	public IEnumerable<Point> GetBlockLocations()
 	{
-		return GetBlockLocations( type, x, y, rotation );
+		return GetBlockLocations( type, position, rotation );
 	}
 
-	public static IEnumerable<Point> GetBlockLocations( TetronimoType t, int x, int y, int rotation = 0 )
+	public static IEnumerable<Point> GetBlockLocations( MinoType t, Point center, int rotation = 0 )
 	{
-		foreach( Point point in TETRONIMOS[(int)t] )
+		foreach( Point offsets in t.GetBlockOffsets(rotation) )
 		{
-			int[] offsets = RotateOffset( point.x, point.y, rotation );
-			yield return new Point(x + offsets[0], y + offsets[1]);
+			yield return center + offsets;
 		}
 	}
 
 	public IEnumerable<TetrisBlockScript> GetBlocks()
 	{
-		return GetBlocks( board, type, x, y, rotation );
+		return GetBlocks( board, type, position, rotation );
 	}
 
-	public static IEnumerable<TetrisBlockScript> GetBlocks( TetrisBoard board, TetronimoType t, int x, int y, int rotation = 0 )
+	public static IEnumerable<TetrisBlockScript> GetBlocks( TetrisBoard board, MinoType t, Point position, int rotation = 0 )
 	{
-		return board.GetBlocks( GetBlockLocations( t, x, y, rotation ) );
+		return board.GetBlocks( GetBlockLocations( t, position, rotation ) );
 	}
 
-	public static bool ValidPlacement( TetrisBoard board, TetronimoType t, int x, int y, int rotation = 0 )
+	public static bool ValidPlacement( TetrisBoard board, MinoType t, Point position, int rotation = 0 )
 	{
-		return board.ValidPlacement( GetBlockLocations( t, x, y, rotation ) );
-	}
-
-	public static int[] RotateOffset( int xOffset, int yOffset, int rotation )
-	{
-		int[] result;
-
-		switch( rotation )
-		{
-		case 0:
-			result = new int[]{ xOffset, yOffset };
-			break;
-		case 1:
-			result = new int[]{ -yOffset, xOffset };
-			break;
-		case 2:
-			result = new int[]{ -xOffset, -yOffset };
-			break;
-		case 3:
-			result = new int[]{ yOffset, -xOffset };
-			break;
-		default:
-			result = new int[]{ xOffset, yOffset };
-			break;
-		}
-
-		return result;
+		return board.ValidPlacement( GetBlockLocations( t, position, rotation ) );
 	}
 		
-	public static Tetronimo CreateRandomTetronimo( TetrisBoard board )
+	public static Mino CreateRandomTetronimo( TetrisBoard board )
 	{
-		TetronimoType t = (TetronimoType)Random.Range( 0, TETRONIMO_COUNT );
-		return CreateNewTetronimo( board, t );
+		int t = (int)Random.Range( 0, TETRONIMO_COUNT );
+		return CreateNewMino( board, TETRONIMO_TYPES[t] );
 	}
 
 	// Creates a new Tetronimo at the center of the screen if the block type can't be placed in the center of the screen return null
-	public static Tetronimo CreateNewTetronimo( TetrisBoard board, TetronimoType t )
+	public static Mino CreateNewMino( TetrisBoard board, MinoType t )
 	{
-		if( !board.ValidPlacement( GetBlockLocations( t, board.Width / 2, 0 ) ) )
+		if( !board.ValidPlacement( GetBlockLocations( t, new Point(board.Width / 2, 0 ) ) ) )
 		{
-			return new Tetronimo( board, t, board.Width / 2, -1 );
+			return new Mino( board, t, new Point( board.Width / 2, -1 ) );
 		}
 
-		return new Tetronimo( board, t, board.Width / 2, 0 );
+		return new Mino( board, t, new Point( board.Width / 2, 0 ) );
 	}
 }
 
