@@ -71,7 +71,7 @@ public class Mino
 	{
 		get
 		{
-			return System.Enum.GetNames( typeof(TetronimoType) ).Length;
+			return TETRONIMO_TYPES.Length;
 		}
 	}
 
