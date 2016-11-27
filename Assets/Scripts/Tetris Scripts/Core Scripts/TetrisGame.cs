@@ -73,7 +73,7 @@ public class TetrisGame : MonoBehaviour
 	{
 		board = gameObject.GetComponent<TetrisBoard>();
 		Mino.ShadowColor = ShadowColor;
-		queue = new RandomItemGenerator<MinoType>( Mino.TETRONIMO_TYPES, queueSize, queueLookback, queueTries );
+		queue = new RandomItemGenerator<MinoType>( Mino.TETROMINO_TYPES, queueSize, queueLookback, queueTries );
 	}
 
 	void Start()

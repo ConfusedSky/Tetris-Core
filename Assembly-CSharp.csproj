@@ -54,7 +54,7 @@
      <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetrisBlockScript.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetrisBoard.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetrisGame.cs" />
-     <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetronimoType.cs" />
+     <Compile Include="Assets\Scripts\Tetris Scripts\Core Scripts\TetrominoType.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Display Scripts\HeldBlockDisplay.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Display Scripts\RowCollapseAnimation.cs" />
      <Compile Include="Assets\Scripts\Tetris Scripts\Display Scripts\TetrisSizeGizmo.cs" />

@@ -614,7 +614,7 @@ MonoBehaviour:
     HoldButton: Hold
   queueSize: 5
   queueLookback: 4
-  queueTries: 4
+  queueTries: 6
 --- !u!114 &114000012107664400
 MonoBehaviour:
   m_ObjectHideFlags: 1

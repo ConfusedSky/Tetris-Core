@@ -15,7 +15,7 @@ public class Mino
 
 	// Define a table containing tetronimos represented as an array of offsets
 	// +y is down +x is right
-	public static Point[][] TETRONIMOS = new Point[7][] { 
+	public static Point[][] TETROMINO = new Point[7][] { 
 		// I
 		new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( -2, 0 ), new Point( 1, 0 ) },
 		// O
@@ -32,7 +32,7 @@ public class Mino
 		new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( 0, 1 ), new Point( 1, 1 ) }
 	};
 
-	public static Color[] TETRONIMO_COLORS = new Color[7] {
+	public static Color[] TETROMINO_COLORS = new Color[7] {
 		// I
 		Color.cyan,
 		// O
@@ -49,25 +49,25 @@ public class Mino
 		Color.red
 	};
 
-	public static MinoType[] TETRONIMO_TYPES = new MinoType[]
+	public static MinoType[] TETROMINO_TYPES = new MinoType[]
 	{
 		// I
-		new MinoType( TETRONIMOS[0], TETRONIMO_COLORS[0] ),
+		new MinoType( TETROMINO[0], TETROMINO_COLORS[0] ),
 		// O
-		new MinoType( TETRONIMOS[1], TETRONIMO_COLORS[1] ),
+		new MinoType( TETROMINO[1], TETROMINO_COLORS[1] ),
 		// T
-		new MinoType( TETRONIMOS[2], TETRONIMO_COLORS[2] ),
+		new MinoType( TETROMINO[2], TETROMINO_COLORS[2] ),
 		// J
-		new MinoType( TETRONIMOS[3], TETRONIMO_COLORS[3] ),
+		new MinoType( TETROMINO[3], TETROMINO_COLORS[3] ),
 		// L
-		new MinoType( TETRONIMOS[4], TETRONIMO_COLORS[4] ),
+		new MinoType( TETROMINO[4], TETROMINO_COLORS[4] ),
 		// S
-		new MinoType( TETRONIMOS[5], TETRONIMO_COLORS[5] ),
+		new MinoType( TETROMINO[5], TETROMINO_COLORS[5] ),
 		// Z
-		new MinoType( TETRONIMOS[6], TETRONIMO_COLORS[6] )
+		new MinoType( TETROMINO[6], TETROMINO_COLORS[6] )
 	};
 
-	public static int TETRONIMO_COUNT
+	public static int TETROMINIO_COUNT
 	{
 		get
 		{
@@ -240,8 +240,8 @@ public class Mino
 		
 	public static Mino CreateRandomTetronimo( TetrisBoard board )
 	{
-		int t = (int)Random.Range( 0, TETRONIMO_COUNT );
-		return CreateNewMino( board, TETRONIMO_TYPES[t] );
+		int t = (int)Random.Range( 0, TETROMINIO_COUNT );
+		return CreateNewMino( board, TETROMINO_TYPES[t] );
 	}
 
 	// Creates a new Tetronimo at the center of the screen if the block type can't be placed in the center of the screen return null
