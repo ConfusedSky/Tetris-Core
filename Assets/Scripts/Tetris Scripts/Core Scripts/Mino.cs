@@ -71,7 +71,7 @@ public class Mino
 	{
 		get
 		{
-			return TETRONIMO_TYPES.Length;
+			return TETROMINO_TYPES.Length;
 		}
 	}
 
