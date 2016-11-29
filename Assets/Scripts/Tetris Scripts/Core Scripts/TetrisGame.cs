@@ -11,6 +11,8 @@ public class TetrisGame : MonoBehaviour
 
 	[Header("Queue Parameters")]
 	[SerializeField]
+	private MinoType[] minosToSpawn = Mino.TETROMINO_TYPES;
+	[SerializeField]
 	private int queueSize = 5;
 	[SerializeField]
 	private int queueLookback = 4;
@@ -73,7 +75,7 @@ public class TetrisGame : MonoBehaviour
 	{
 		board = gameObject.GetComponent<TetrisBoard>();
 		Mino.ShadowColor = ShadowColor;
-		queue = new RandomItemGenerator<MinoType>( Mino.TETROMINO_TYPES, queueSize, queueLookback, queueTries );
+		queue = new RandomItemGenerator<MinoType>( minosToSpawn, queueSize, queueLookback, queueTries );
 	}
 
 	void Start()

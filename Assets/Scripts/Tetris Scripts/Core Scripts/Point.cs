@@ -1,5 +1,6 @@
 ﻿using System;
 
+[Serializable]
 public class Point
 {
 	public static readonly Point Origin = new Point( 0, 0 );
