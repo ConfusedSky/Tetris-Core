@@ -63,7 +63,6 @@ public class AnnoyingBlock : MonoBehaviour
 	{
 		int column;
 		int i;
-		int tries = 0;
 		bool blockPlaced = false;
 		do
 		{
@@ -80,7 +79,6 @@ public class AnnoyingBlock : MonoBehaviour
 				game.Scripts[i - 1, column].BlockColor = null;
 				blockPlaced = false;
 			}
-			tries++;
 		} while( !blockPlaced );
 
 		IEnumerator fade = FadeIn( column, i - 1 );

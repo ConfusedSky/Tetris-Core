@@ -104,6 +104,7 @@ public class Mino
 		else if( action == TetrisAction.Drop )
 		{
 			Move( 0, shadowY - position.y );
+			Place( true );
 			return null;
 		}
 		else if( action == TetrisAction.RotateRight )
@@ -170,11 +171,12 @@ public class Mino
 		return true;
 	}
 
-	private void SetBlockColor( Color? c )
+	private void SetBlockColor( Color? c, bool permanent = false )
 	{
 		foreach( TetrisBlockScript block in GetBlocks() )
 		{
-			block.BlockColor = c;
+			if( permanent ) block.BlockColor = c;
+			else block.BackgroundColor = c;
 		}
 	}
 
@@ -196,11 +198,11 @@ public class Mino
 		}
 	}
 
-	public void Place()
+	public void Place( bool permanent = false )
 	{
 		SetShadowLocation();
 		SetShadowColor( ShadowColor );
-		SetBlockColor( type.BlockColor );
+		SetBlockColor( type.BlockColor, permanent );
 	}
 
 	public void Clear()
