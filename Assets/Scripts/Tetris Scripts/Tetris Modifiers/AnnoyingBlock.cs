@@ -9,8 +9,8 @@ public class AnnoyingBlock : MonoBehaviour
 	public bool ActivateOnCollapse = true;
 	public bool ActivateOnDrop = false;
 
-	public int BlocksPerDrop = 1;
 	public int BlocksPerCollapse = 1;
+	public int BlocksPerDrop = 1;
 
 	private TetrisGame game;
 
