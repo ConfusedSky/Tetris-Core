@@ -117,7 +117,7 @@ public class Mino
 
 	public bool ValidPlacement( Point offset,  int rotationOffset = 0 )
 	{
-		return ValidPlacement( board, type, position + offset, (rotation + rotationOffset)%4 );
+		return board.ValidPlacement( GetBlockLocations( type, position + offset, (rotation + rotationOffset)%4) );
 	}
 
 	public bool Move( Point offset )
@@ -184,16 +184,16 @@ public class Mino
 	{
 		shadowY = position.y;
 		// Find the actual place to cast the shadow
-		while( shadowY < board.Height && ValidPlacement( board, type, new Point( position.x, shadowY ), rotation ) ) shadowY++;
+		while( shadowY < board.Height && board.ValidPlacement( GetBlockLocations( type, new Point( position.x, shadowY ), rotation ) ) ) shadowY++;
 		shadowY--;
-		if( !ValidPlacement( board, type, new Point( position.x, shadowY ), rotation ) ) shadowY = -1;
+		if( !board.ValidPlacement( GetBlockLocations( type, new Point( position.x, shadowY ), rotation ) ) ) shadowY = -1;
 	}
 
 	public void SetShadowColor( Color? color )
 	{
 		if( shadowY >= 0 && shadowY < board.Height )
 		{
-			foreach( TetrisBlockScript block in GetBlocks( board, type, new Point( position.x, shadowY ), rotation ) )
+			foreach( TetrisBlockScript block in board.GetBlocks( GetBlockLocations( type, new Point( position.x, shadowY ), rotation ) ) )
 				block.BackgroundColor = color;
 		}
 	}
@@ -227,7 +227,7 @@ public class Mino
 
 	public IEnumerable<TetrisBlockScript> GetBlocks()
 	{
-		return GetBlocks( board, type, position, rotation );
+		return board.GetBlocks( GetBlockLocations( type, position, rotation ) );
 	}
 
 	public static IEnumerable<TetrisBlockScript> GetBlocks( TetrisBoard board, MinoType t, Point position, int rotation = 0 )

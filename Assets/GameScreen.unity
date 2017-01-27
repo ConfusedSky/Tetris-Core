@@ -110,7 +110,7 @@ MonoBehaviour:
   FadeTime: 100
   ActivateOnCollapse: 1
   ActivateOnDrop: 0
-  BlocksPerCollapse: 4
+  BlocksPerCollapse: 1
   BlocksPerDrop: 1
 --- !u!1001 &849873834
 Prefab:
