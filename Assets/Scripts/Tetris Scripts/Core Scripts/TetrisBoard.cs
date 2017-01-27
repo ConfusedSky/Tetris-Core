@@ -28,6 +28,8 @@ public class TetrisBoard : MonoBehaviour
 	public GameObject[,] Blocks{ get{ return blocks; } }
 	public TetrisBlockScript[,] Scripts{ get { return scripts; } }
 
+	public event System.EventHandler OnBoardChanged;
+
 	void Awake()
 	{
 		background = new GameObject[Height, Width];
@@ -104,17 +106,54 @@ public class TetrisBoard : MonoBehaviour
 	{
 		foreach( Point point in BlockLocations )
 		{
-			if( point.x < 0 || point.x >= Width || point.y >= Height ||
-				(point.y >= 0 && Scripts[point.y, point.x].Occupied) )
-			{
-				return false;
-			}
+			if( !ValidPlacement( point ) ) return false;
 		}
 		return true;
 	}
 
+	public bool ValidPlacement( Point point )
+	{
+		if( point.x < 0 || point.x >= Width || point.y >= Height ||
+		    (point.y >= 0 && Scripts[point.y, point.x].Occupied) )
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	// Sets the color of all of the blockscripts whose locations are given in BlockLocations
+	// Also fires a board changed event.
+	// BlockLocations is an ienumerable of points. Each point represents a location on the board.
+	// DOES NOT VALIDATE POSITIONS
+	// TODO: Implement fading on the TetrisBlockScript end of things so that even if the block is moved the correct block is still faded
+	public void PlaceBlocks( IEnumerable<Point> BlockLocations, Color? color, bool background = false, float fadeTime = 0 )
+	{
+		foreach( TetrisBlockScript block in GetBlocks( BlockLocations ) )
+		{
+			if( background ) block.BackgroundColor = color;
+			else             block.BlockColor = color;
+		}
+		if( OnBoardChanged != null && !background ) OnBoardChanged( this, System.EventArgs.Empty );
+	}
+
+	// Sets the color for a blockscript at a location
+	// Also fires a board changed event
+	// DOES NOT VALIDATE POSITIONS
+	// TODO: Implement a system to place a block without firing a board changed event
+	public void PlaceBlock( Point p, Color? color, bool background = false, float fadeTime = 0 )
+	{
+		if( background ) Scripts[p.y, p.x].BackgroundColor = color;
+		else             Scripts[p.y, p.x].BlockColor = color;
+
+		if( OnBoardChanged != null && !background ) OnBoardChanged( this, System.EventArgs.Empty );
+	}
+
 	// Returns all of the blockscripts that are asked for
-	// Input is an ienumerable of x where x is an int[] and x is (x,y) coordinates
+	// Input is an ienumerable of points. Each point represents a location on the board
+	// DOES NOT VALIDATE POSITIONS
 	public IEnumerable<TetrisBlockScript> GetBlocks( IEnumerable<Point> BlockLocations )
 	{
 		foreach( Point point in BlockLocations )

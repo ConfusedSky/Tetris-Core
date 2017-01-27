@@ -81,6 +81,20 @@ public class Mino
 		type = t;
 		position = startingPosition;
 		Place();
+
+		board.OnBoardChanged += OnBoardChanged;
+	}
+
+	// Stops listening for events
+	public void Destroy()
+	{
+		board.OnBoardChanged -= OnBoardChanged;
+	}
+
+	// Make sure that when the mino goes out of scope it doesn't continue receiving events from things
+	~Mino()
+	{
+		Destroy();
 	}
 
 	public Mino Update( TetrisAction action = TetrisAction.None )
@@ -105,6 +119,7 @@ public class Mino
 		{
 			Move( 0, shadowY - position.y );
 			Place( true );
+			Destroy();
 			return null;
 		}
 		else if( action == TetrisAction.RotateRight )
@@ -113,6 +128,14 @@ public class Mino
 		}
 
 		return this;
+	}
+
+	// If the board is changed, make sure to change the drop location and the shadow as well
+	void OnBoardChanged (object sender, System.EventArgs e)
+	{
+		SetShadowColor( null );
+		SetShadowLocation();
+		SetShadowColor( ShadowColor );
 	}
 
 	public bool ValidPlacement( Point offset,  int rotationOffset = 0 )
@@ -171,13 +194,9 @@ public class Mino
 		return true;
 	}
 
-	private void SetBlockColor( Color? c, bool permanent = false )
+	private void SetBlockColor( Color? color, bool permanent = false )
 	{
-		foreach( TetrisBlockScript block in GetBlocks() )
-		{
-			if( permanent ) block.BlockColor = c;
-			else block.BackgroundColor = c;
-		}
+		board.PlaceBlocks( GetBlockLocations(), color, background: !permanent );
 	}
 
 	public void SetShadowLocation()
@@ -193,8 +212,7 @@ public class Mino
 	{
 		if( shadowY >= 0 && shadowY < board.Height )
 		{
-			foreach( TetrisBlockScript block in board.GetBlocks( GetBlockLocations( type, new Point( position.x, shadowY ), rotation ) ) )
-				block.BackgroundColor = color;
+			board.PlaceBlocks( GetBlockLocations( type, new Point( position.x, shadowY ), rotation ), color, background: true );
 		}
 	}
 

@@ -77,7 +77,7 @@ public class AnnoyingBlock : MonoBehaviour
 			PlaceBlock();
 		}
 	}
-
+		
 	private void PlaceBlock()
 	{
 		int column;
@@ -100,8 +100,10 @@ public class AnnoyingBlock : MonoBehaviour
 			}
 		} while( !blockPlaced );
 
-		IEnumerator fade = FadeIn( column, i - 1 );
-		StartCoroutine( fade );
+		game.Board.PlaceBlock( new Point( column, i-1 ), Color.black );
+
+		// IEnumerator fade = FadeIn( column, i - 1 );
+		// StartCoroutine( fade );
 	}
 
 	private IEnumerator FadeIn( int x, int y )

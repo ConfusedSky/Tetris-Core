@@ -41,6 +41,7 @@ public class TetrisGame : MonoBehaviour
 		
 	public MinoType HeldBlock{ get{ return heldBlock; } }
 	public MinoType[] QueuedBlocks{ get{ return queue.GetObjects(); } }
+	public TetrisBoard Board{ get{ return board; } }
 	public GameObject[,] Blocks{ get{ return board.Blocks; } }
 	public TetrisBlockScript[,] Scripts{ get{ return board.Scripts; } }
 
@@ -92,6 +93,8 @@ public class TetrisGame : MonoBehaviour
 	private void Hold()
 	{
 		currentBlock.Clear();
+		// TODO: find a better solution for the multiple shadows problem
+		currentBlock.Destroy();
 		MinoType temp = (currentBlock != null) ? currentBlock.BlockType : null;
 		if( heldBlock != null )
 			currentBlock = Mino.CreateNewMino( board, heldBlock );
