@@ -108,10 +108,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FadeTime: 100
-  ActivateOnCollapse: 1
+  TimePeriod: 1
+  ActivateOnCollapse: 0
   ActivateOnDrop: 0
+  ActivateOnTimePeriod: 0
   BlocksPerCollapse: 1
   BlocksPerDrop: 1
+  BlocksPerTimePeriod: 1
 --- !u!1001 &849873834
 Prefab:
   m_ObjectHideFlags: 0
