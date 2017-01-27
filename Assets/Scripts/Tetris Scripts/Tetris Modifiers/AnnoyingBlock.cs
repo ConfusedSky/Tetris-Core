@@ -10,6 +10,7 @@ public class AnnoyingBlock : MonoBehaviour
 	public bool ActivateOnCollapse = false;
 	public bool ActivateOnDrop = false;
 	public bool ActivateOnTimePeriod = false;
+	public bool AvoidClears = true;
 
 	public int BlocksPerCollapse = 1;
 	public int BlocksPerDrop = 1;
@@ -93,7 +94,7 @@ public class AnnoyingBlock : MonoBehaviour
 			}
 			game.Scripts[i-1, column].BlockColor = Color.black;
 			blockPlaced = true;
-			if( game.CheckClear( i - 1 ) )
+			if( AvoidClears && game.CheckClear( i - 1 ) )
 			{
 				game.Scripts[i - 1, column].BlockColor = null;
 				blockPlaced = false;

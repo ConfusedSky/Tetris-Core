@@ -89,6 +89,7 @@ public class Mino
 	public void Destroy()
 	{
 		board.OnBoardChanged -= OnBoardChanged;
+		Clear();
 	}
 
 	// Make sure that when the mino goes out of scope it doesn't continue receiving events from things

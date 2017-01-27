@@ -90,9 +90,18 @@ public class TetrisGame : MonoBehaviour
 		if( OnStart != null ) OnStart( this, System.EventArgs.Empty );
 	}
 
+	void OnEnable()
+	{
+		board.OnBoardChanged += OnBoardChanged;
+	}
+
+	void OnDisable()
+	{
+		board.OnBoardChanged -= OnBoardChanged;
+	}
+
 	private void Hold()
 	{
-		currentBlock.Clear();
 		// TODO: find a better solution for the multiple shadows problem
 		currentBlock.Destroy();
 		MinoType temp = (currentBlock != null) ? currentBlock.BlockType : null;
@@ -105,6 +114,25 @@ public class TetrisGame : MonoBehaviour
 		if( OnHold != null ) OnHold( this, System.EventArgs.Empty );
 	}
 
+
+	void OnBoardChanged (object sender, System.EventArgs e)
+	{
+		IList clears = CheckClears();
+		// if the previous frame had a drop that cleared resolve the clear
+		foreach( int i in clears )
+		{
+			CollapseRow( i );
+		}
+		if( clears.Count > 0 && OnRowCollapse != null ) OnRowCollapse( this, new RowCollapseEventArgs( clears ) );
+
+		// Check for loss conditions if loss reset the board
+		if( Lost )
+		{
+			Reset();
+			return;
+		}
+	}
+
 	// Update is called once per frame
 	void Update()
 	{
@@ -114,21 +142,6 @@ public class TetrisGame : MonoBehaviour
 
 		if( currentBlock == null )
 		{
-			IList clears = CheckClears();
-			// if the previous frame had a drop that cleared resolve the clear
-			foreach( int i in clears )
-			{
-				CollapseRow( i );
-			}
-			if( clears.Count > 0 && OnRowCollapse != null ) OnRowCollapse( this, new RowCollapseEventArgs( clears ) );
-
-			// Check for loss conditions if loss reset the board
-			if( Lost )
-			{
-				Reset();
-				return;
-			}
-				
 			MinoType nextTetronimo = queue.GetNextItem();
 			if( OnBlockDropped != null ) OnBlockDropped( this, System.EventArgs.Empty );
 			currentBlock = Mino.CreateNewMino( board, nextTetronimo );
@@ -141,6 +154,7 @@ public class TetrisGame : MonoBehaviour
 	{
 		board.Reset();
 		heldBlock = null;
+		if( currentBlock != null ) currentBlock.Destroy();
 		currentBlock = null;
 		queue.Reset();
 

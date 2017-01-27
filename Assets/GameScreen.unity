@@ -111,7 +111,7 @@ MonoBehaviour:
   TimePeriod: 1
   ActivateOnCollapse: 0
   ActivateOnDrop: 0
-  ActivateOnTimePeriod: 0
+  ActivateOnTimePeriod: 1
   BlocksPerCollapse: 1
   BlocksPerDrop: 1
   BlocksPerTimePeriod: 1
