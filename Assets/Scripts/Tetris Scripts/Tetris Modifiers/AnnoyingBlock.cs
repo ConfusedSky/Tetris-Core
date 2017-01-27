@@ -5,14 +5,18 @@ using System.Collections;
 public class AnnoyingBlock : MonoBehaviour
 {
 	public float FadeTime = 100;
+	public float TimePeriod = 1f;
 
-	public bool ActivateOnCollapse = true;
+	public bool ActivateOnCollapse = false;
 	public bool ActivateOnDrop = false;
+	public bool ActivateOnTimePeriod = false;
 
 	public int BlocksPerCollapse = 1;
 	public int BlocksPerDrop = 1;
+	public int BlocksPerTimePeriod = 1;
 
 	private TetrisGame game;
+	private float timeTillDrop = 0;
 
 	// Use this for initialization
 	void Awake() 
@@ -22,6 +26,7 @@ public class AnnoyingBlock : MonoBehaviour
 
 	void Start()
 	{
+		timeTillDrop = TimePeriod;
 	}
 
 	void OnEnable()
@@ -34,6 +39,20 @@ public class AnnoyingBlock : MonoBehaviour
 	{
 		game.OnRowCollapse -= OnCollaspse;
 		game.OnBlockDropped -= OnBlockDropped;
+	}
+
+	void Update()
+	{
+		if( ActivateOnTimePeriod )
+		{
+			timeTillDrop -= Time.deltaTime;
+
+			if( timeTillDrop < 0 )
+			{
+				timeTillDrop += TimePeriod;
+				PlaceBlocks( BlocksPerTimePeriod );
+			}
+		}
 	}
 
 	void OnBlockDropped (object sender, System.EventArgs e)
