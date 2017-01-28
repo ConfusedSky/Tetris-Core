@@ -32,7 +32,7 @@ public class TetrisGame : MonoBehaviour
 		{
 			for( int i = 0; i < Width; i++ )
 			{
-				if( Scripts[0, i].Occupied )
+				if( Scripts[1, i].Occupied )
 					return true;
 			}
 			return false;

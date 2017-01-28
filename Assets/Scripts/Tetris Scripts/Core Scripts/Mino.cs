@@ -134,9 +134,8 @@ public class Mino
 	// If the board is changed, make sure to change the drop location and the shadow as well
 	void OnBoardChanged (object sender, System.EventArgs e)
 	{
-		SetShadowColor( null );
-		SetShadowLocation();
-		SetShadowColor( ShadowColor );
+		Clear();
+		Place();
 	}
 
 	public bool ValidPlacement( Point offset,  int rotationOffset = 0 )
