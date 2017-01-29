@@ -132,8 +132,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114984343164063848, guid: 367f874d38f529549934379a5468217b,
         type: 2}
-      propertyPath: TimePeriod
-      value: 2
+      propertyPath: BlocksPerTimePeriod
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 367f874d38f529549934379a5468217b, type: 2}

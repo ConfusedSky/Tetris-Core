@@ -819,7 +819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FadeTime: 100
-  TimePeriod: 2
+  TimePeriod: 1.5
   ActivateOnCollapse: 0
   ActivateOnDrop: 0
   ActivateOnTimePeriod: 1
