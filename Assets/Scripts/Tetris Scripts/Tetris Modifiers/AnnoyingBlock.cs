@@ -19,6 +19,9 @@ public class AnnoyingBlock : MonoBehaviour
 	private TetrisGame game;
 	private float timeTillDrop = 0;
 
+	//TODO: Add some code to make sure this doesn't place a block in the same frame as a block drop
+	//      Or at least make it feel better. 
+
 	// Use this for initialization
 	void Awake() 
 	{
