@@ -10,8 +10,23 @@ public class Mino
 	private Point position;
 	private int shadowY = -1;
 	private int rotation = 0;
+	private bool alive = true;
 
-	public MinoType BlockType { get { return type; } }
+	public bool Alive{ get { return alive; } }
+
+	public MinoType BlockType { 
+		get { return type; }
+		set 
+		{ 
+			Clear();
+			type = value;
+			// Move the peice to its proper starting position
+			position = CalculateStartingPosition( board, type );
+			rotation = 0;
+			Place();
+			alive = true;
+		}
+	}
 
 	// Define a table containing tetronimos represented as an array of offsets
 	// +y is down +x is right
@@ -85,11 +100,12 @@ public class Mino
 		board.OnBoardChanged += OnBoardChanged;
 	}
 
-	// Stops listening for events
+	// Kill the currently active block
 	public void Destroy()
 	{
-		board.OnBoardChanged -= OnBoardChanged;
 		Clear();
+		board.OnBoardChanged += OnBoardChanged;
+		alive = false;
 	}
 
 	// Make sure that when the mino goes out of scope it doesn't continue receiving events from things
@@ -120,8 +136,9 @@ public class Mino
 		{
 			Move( 0, shadowY - position.y );
 			Place( true );
-			Destroy();
-			return null;
+			// Remove any background that would be here
+			Clear();
+			alive = false;
 		}
 		else if( action == TetrisAction.RotateRight )
 		{
@@ -264,15 +281,16 @@ public class Mino
 		return CreateNewMino( board, TETROMINO_TYPES[t] );
 	}
 
+	// Calculates where a mino of type t would land on the passed in board
+	public static Point CalculateStartingPosition( TetrisBoard board, MinoType t )
+	{
+		return new Point( board.Width / 2, board.ValidPlacement( GetBlockLocations( t, new Point( board.Width / 2, 0 ) ) ) ? 0 : -1 );
+	}
+
 	// Creates a new Tetronimo at the center of the screen if the block type can't be placed in the center of the screen return null
 	public static Mino CreateNewMino( TetrisBoard board, MinoType t )
 	{
-		if( !board.ValidPlacement( GetBlockLocations( t, new Point(board.Width / 2, 0 ) ) ) )
-		{
-			return new Mino( board, t, new Point( board.Width / 2, -1 ) );
-		}
-
-		return new Mino( board, t, new Point( board.Width / 2, 0 ) );
+		return new Mino( board, t, CalculateStartingPosition( board, t ) );
 	}
 }
 

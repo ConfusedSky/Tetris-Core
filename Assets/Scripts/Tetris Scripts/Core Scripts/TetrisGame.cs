@@ -81,12 +81,13 @@ public class TetrisGame : MonoBehaviour
 
 	void Start()
 	{
+		currentBlock = Mino.CreateNewMino( board, queue.GetNextItem() );
 		GameStart();
 	}
 
 	void GameStart()
 	{
-		currentBlock = Mino.CreateNewMino( board, queue.GetNextItem() );
+		currentBlock.BlockType = queue.GetNextItem();
 		if( OnStart != null ) OnStart( this, System.EventArgs.Empty );
 	}
 
@@ -102,13 +103,11 @@ public class TetrisGame : MonoBehaviour
 
 	private void Hold()
 	{
-		// TODO: find a better solution for the multiple shadows problem
-		currentBlock.Destroy();
-		MinoType temp = (currentBlock != null) ? currentBlock.BlockType : null;
+		MinoType temp = currentBlock.BlockType;
 		if( heldBlock != null )
-			currentBlock = Mino.CreateNewMino( board, heldBlock );
+			currentBlock.BlockType = heldBlock;
 		else
-			currentBlock = Mino.CreateNewMino( board, queue.GetNextItem() );
+			currentBlock.BlockType = queue.GetNextItem();
 		heldBlock = temp;
 
 		if( OnHold != null ) OnHold( this, System.EventArgs.Empty );
@@ -138,24 +137,22 @@ public class TetrisGame : MonoBehaviour
 	{
 		TetrisAction action = InputManager.HandleInput();
 
-		if( action == TetrisAction.Hold && currentBlock != null ) Hold();
+		if( action == TetrisAction.Hold ) Hold();
 
-		if( currentBlock == null )
+		if( currentBlock.Alive )
+			currentBlock = currentBlock.Update( action );
+		else
 		{
 			MinoType nextTetronimo = queue.GetNextItem();
 			if( OnBlockDropped != null ) OnBlockDropped( this, System.EventArgs.Empty );
-			currentBlock = Mino.CreateNewMino( board, nextTetronimo );
+			currentBlock.BlockType = nextTetronimo;
 		}
-
-		if( currentBlock != null ) currentBlock = currentBlock.Update( action );
 	}
 
 	public void Reset()
 	{
 		board.Reset();
 		heldBlock = null;
-		if( currentBlock != null ) currentBlock.Destroy();
-		currentBlock = null;
 		queue.Reset();
 
 		GameStart();
