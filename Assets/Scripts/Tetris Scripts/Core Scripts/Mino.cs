@@ -190,27 +190,9 @@ public class Mino
 		return GetBlockLocations( type, position, rotation );
 	}
 
-	public static IEnumerable<Point> GetBlockLocations( MinoType t, Point center, int rotation = 0 )
-	{
-		foreach( Point offsets in t.GetBlockOffsets(rotation) )
-		{
-			yield return center + offsets;
-		}
-	}
-
 	public IEnumerable<TetrisBlockScript> GetBlocks()
 	{
 		return board.GetBlocks( GetBlockLocations( type, position, rotation ) );
-	}
-
-	public static IEnumerable<TetrisBlockScript> GetBlocks( TetrisBoard board, MinoType t, Point position, int rotation = 0 )
-	{
-		return board.GetBlocks( GetBlockLocations( t, position, rotation ) );
-	}
-
-	public static bool ValidPlacement( TetrisBoard board, MinoType t, Point position, int rotation = 0 )
-	{
-		return board.ValidPlacement( GetBlockLocations( t, position, rotation ) );
 	}
 
 	// Calculates where a mino of type t would land on the passed in board
@@ -223,6 +205,14 @@ public class Mino
 	public static Mino CreateNewMino( TetrisBoard board, MinoType t )
 	{
 		return new Mino( board, t, CalculateStartingPosition( board, t ) );
+	}
+		
+	public static IEnumerable<Point> GetBlockLocations( MinoType t, Point center, int rotation = 0 )
+	{
+		foreach( Point offsets in t.GetBlockOffsets(rotation) )
+		{
+			yield return center + offsets;
+		}
 	}
 }
 
