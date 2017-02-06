@@ -117,6 +117,5 @@ public class AnnoyingBlock : MonoBehaviour
 			yield return new WaitForSeconds( (FadeTime / 1000) / 10 );
 		}
 	}
-
 }
 
