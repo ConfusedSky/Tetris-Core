@@ -104,7 +104,7 @@ public class Mino
 	public void Destroy()
 	{
 		Clear();
-		board.OnBoardChanged += OnBoardChanged;
+		board.OnBoardChanged -= OnBoardChanged;
 		alive = false;
 	}
 
