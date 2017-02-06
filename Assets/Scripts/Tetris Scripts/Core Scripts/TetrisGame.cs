@@ -7,6 +7,8 @@ public class TetrisGame : MonoBehaviour
 {
 	public Color ShadowColor;
 
+	public int LossHeight = 1;
+
 	public InputManger InputManager;
 
 	[Header("Queue Parameters")]
@@ -32,7 +34,7 @@ public class TetrisGame : MonoBehaviour
 		{
 			for( int i = 0; i < Width; i++ )
 			{
-				if( Scripts[1, i].Occupied )
+				if( Scripts[LossHeight, i].Occupied )
 					return true;
 			}
 			return false;
