@@ -98,6 +98,16 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1048823533}
     m_Modifications:
+    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: minosToSpawn.Array.data[7].Offsets.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: minosToSpawn.Array.data[8].Offsets.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4000012781306786, guid: 367f874d38f529549934379a5468217b, type: 2}
       propertyPath: m_LocalPosition.x
       value: 2.98
@@ -129,6 +139,101 @@ Prefab:
     - target: {fileID: 4000012781306786, guid: 367f874d38f529549934379a5468217b, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114984343164063848, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: ActivateOnCollapse
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114984343164063848, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: TimePeriod
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114984343164063848, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: BlocksPerTimePeriod
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114984343164063848, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: ActivateOnDrop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114984343164063848, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: ActivateOnTimePeriod
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114984343164063848, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: BlocksPerDrop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: minosToSpawn.Array.data[7].Offsets.Array.data[1].x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: minosToSpawn.Array.data[7].Offsets.Array.data[2].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: minosToSpawn.Array.data[7].Offsets.Array.data[3].x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: minosToSpawn.Array.data[7].Offsets.Array.data[3].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: minosToSpawn.Array.data[7].BlockColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: minosToSpawn.Array.data[7].BlockColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: minosToSpawn.Array.data[8].Offsets.Array.data[1].x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: minosToSpawn.Array.data[8].Offsets.Array.data[2].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: minosToSpawn.Array.data[8].Offsets.Array.data[3].x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: minosToSpawn.Array.data[8].Offsets.Array.data[3].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: minosToSpawn.Array.data[8].BlockColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011676764126, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: minosToSpawn.Array.data[8].BlockColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114984343164063848, guid: 367f874d38f529549934379a5468217b,
+        type: 2}
+      propertyPath: AvoidClears
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 367f874d38f529549934379a5468217b, type: 2}

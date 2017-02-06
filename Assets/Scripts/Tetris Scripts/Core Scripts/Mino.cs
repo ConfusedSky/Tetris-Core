@@ -28,68 +28,6 @@ public class Mino
 		}
 	}
 
-	// Define a table containing tetronimos represented as an array of offsets
-	// +y is down +x is right
-	public static Point[][] TETROMINO = new Point[7][] { 
-		// I
-		new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( -2, 0 ), new Point( 1, 0 ) },
-		// O
-		new Point[]{ new Point( 0, 0 ), new Point( 1, 0 ), new Point( 0, 1 ), new Point( 1, 1 ) },
-		// T
-		new Point[]{ new Point( 0, 0 ), new Point( 0, -1 ), new Point( -1, 0 ), new Point( 1, 0 ) },
-		// J
-		new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( 1, 0 ), new Point( -1, -1 ) },
-		// L
-		new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( 1, 0 ), new Point( 1, -1 ) },
-		// S
-		new Point[]{ new Point( 0, 0 ), new Point( 1, -1 ), new Point( 0, -1 ), new Point( -1, 0 ) },
-		// Z
-		new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( 0, 1 ), new Point( 1, 1 ) }
-	};
-
-	public static Color[] TETROMINO_COLORS = new Color[7] {
-		// I
-		Color.cyan,
-		// O
-		Color.yellow,
-		// T
-		Color.magenta,
-		// J
-		Color.blue,
-		// L
-		new Color32( 255, 127, 0, 255 ),
-		// S
-		Color.green,
-		// Z
-		Color.red
-	};
-
-	public static MinoType[] TETROMINO_TYPES = new MinoType[]
-	{
-		// I
-		new MinoType( TETROMINO[0], TETROMINO_COLORS[0] ),
-		// O
-		new MinoType( TETROMINO[1], TETROMINO_COLORS[1] ),
-		// T
-		new MinoType( TETROMINO[2], TETROMINO_COLORS[2] ),
-		// J
-		new MinoType( TETROMINO[3], TETROMINO_COLORS[3] ),
-		// L
-		new MinoType( TETROMINO[4], TETROMINO_COLORS[4] ),
-		// S
-		new MinoType( TETROMINO[5], TETROMINO_COLORS[5] ),
-		// Z
-		new MinoType( TETROMINO[6], TETROMINO_COLORS[6] )
-	};
-
-	public static int TETROMINIO_COUNT
-	{
-		get
-		{
-			return TETROMINO_TYPES.Length;
-		}
-	}
-
 	public Mino(TetrisBoard board, MinoType t, Point startingPosition)
 	{
 		this.board = board;
@@ -273,12 +211,6 @@ public class Mino
 	public static bool ValidPlacement( TetrisBoard board, MinoType t, Point position, int rotation = 0 )
 	{
 		return board.ValidPlacement( GetBlockLocations( t, position, rotation ) );
-	}
-		
-	public static Mino CreateRandomTetronimo( TetrisBoard board )
-	{
-		int t = (int)Random.Range( 0, TETROMINIO_COUNT );
-		return CreateNewMino( board, TETROMINO_TYPES[t] );
 	}
 
 	// Calculates where a mino of type t would land on the passed in board

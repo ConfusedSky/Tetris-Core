@@ -13,7 +13,7 @@ public class TetrisGame : MonoBehaviour
 
 	[Header("Queue Parameters")]
 	[SerializeField]
-	private MinoType[] minosToSpawn = Mino.TETROMINO_TYPES;
+	private MinoType[] minosToSpawn = Tetromino.TETROMINO_TYPES;
 	[SerializeField]
 	private int queueSize = 5;
 	[SerializeField]
