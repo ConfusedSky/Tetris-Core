@@ -21,6 +21,7 @@ public class InputManger
 	public string DownButton = "Down";
 	public string DropButton = "Drop";
 	public string RotateRightButton = "RotateRight";
+	public string RotateLeftButton = "RotateLeft";
 	public string HoldButton = "Hold";
 
 	private InputState state = InputState.None;
@@ -57,6 +58,10 @@ public class InputManger
 		else if( Input.GetButtonDown( RotateRightButton ) )
 		{
 			return TetrisAction.RotateRight;
+		}
+		else if( Input.GetButtonDown( RotateLeftButton ) )
+		{
+			return TetrisAction.RotateLeft;
 		}
 		else if( state == InputState.LeftDown )
 		{

@@ -4,6 +4,7 @@
 	Right,
 	Down,
 	RotateRight,
+	RotateLeft,
 	Drop,
 	Hold,
 	None

@@ -80,7 +80,11 @@ public class Mino
 		}
 		else if( action == TetrisAction.RotateRight )
 		{
-			Rotate();
+			Rotate( 1 );
+		}
+		else if( action == TetrisAction.RotateLeft )
+		{
+			Rotate( 3 );
 		}
 
 		return this;
@@ -116,11 +120,15 @@ public class Mino
 		return Move( new Point( xOffset, yOffset ) );
 	}
 
-	public bool Rotate()
+	// Int parameter so it is possible to do a 180 turn if needed
+	// Offset of 1 is a right rotation
+	// Offset of 2 is a 180 rotation
+	// Offset of 3 is a left rotation
+	public bool Rotate( int rotationOffset )
 	{
-		int rotationOffset = 1;
 		Clear();
-		while( rotationOffset != 0 && !ValidPlacement( Point.Origin, rotationOffset ) )
+		// Check if the rotation is valid, if it is not try the kicks
+		if( !ValidPlacement( Point.Origin, rotationOffset ) )
 		{
 			// try to find a valid offset in which this rotation works
 			bool works = false;
@@ -139,8 +147,7 @@ public class Mino
 
 			if( !works )
 			{
-				rotationOffset++;
-				rotationOffset %= 4;
+				rotationOffset = 0;
 			}
 		}
 		rotation += rotationOffset;
