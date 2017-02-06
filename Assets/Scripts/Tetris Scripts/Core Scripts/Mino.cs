@@ -103,8 +103,8 @@ public class Mino
 	// Kill the currently active block
 	public void Destroy()
 	{
-		Clear();
 		board.OnBoardChanged -= OnBoardChanged;
+		Clear();
 		alive = false;
 	}
 
