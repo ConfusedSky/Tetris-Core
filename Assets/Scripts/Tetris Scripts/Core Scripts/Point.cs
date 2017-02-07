@@ -19,6 +19,11 @@ public class Point
 		return new Point( first.x + other.x, first.y + other.y );
 	}
 
+	public static Point operator/( Point first, int other )
+	{
+		return new Point( first.x / other, first.y / other );
+	}
+
 	// Rotates the point around the origin
 	// Rotates by 
 	// 0, 0 degrees
@@ -50,5 +55,14 @@ public class Point
 
 		return result;
 	}
+
+	// Rotate around a point
+	public Point Rotate( int rotation, Point centerPoint )
+	{
+		return new Point
+			( x - centerPoint.x, 
+			  y - centerPoint.y ).Rotate( rotation ) + centerPoint;
+	}
+
 }
 
