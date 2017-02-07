@@ -127,29 +127,23 @@ public class Mino
 	public bool Rotate( int rotationOffset )
 	{
 		Clear();
-		// Check if the rotation is valid, if it is not try the kicks
-		if( !ValidPlacement( Point.Origin, rotationOffset ) )
+		// try to find a valid offset in which this rotation works
+		bool works = false;
+		foreach( Point offset in type.GetKickOffsets( rotation, (rotation+rotationOffset)%4 ) )
 		{
-			// try to find a valid offset in which this rotation works
-			bool works = false;
-			foreach( Point offset in new Point[]{ new Point(  0,  1 ),
-				                                  new Point(  1,  0 ), 
-				                                  new Point( -1,  0 ), 
-				                                  new Point(  0, -1 ) } )
+			if( ValidPlacement( offset, rotationOffset ) )
 			{
-				if( ValidPlacement( offset, rotationOffset ) )
-				{
-					position += offset;
-					works = true;
-					break;
-				}
-			}
-
-			if( !works )
-			{
-				rotationOffset = 0;
+				position += offset;
+				works = true;
+				break;
 			}
 		}
+
+		if( !works )
+		{
+			rotationOffset = 0;
+		}
+
 		rotation += rotationOffset;
 		rotation %= 4;
 		Place();

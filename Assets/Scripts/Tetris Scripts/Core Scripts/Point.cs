@@ -19,6 +19,11 @@ public class Point
 		return new Point( first.x + other.x, first.y + other.y );
 	}
 
+	public static Point operator-( Point first, Point other )
+	{
+		return new Point( first.x - other.x, first.y - other.y );
+	}
+
 	public static Point operator/( Point first, int other )
 	{
 		return new Point( first.x / other, first.y / other );
