@@ -19,13 +19,13 @@ public class Point
 		return new Point( first.x + other.x, first.y + other.y );
 	}
 
-	// Rotates the point around the center of rotation
+	// Rotates the point around the origin
 	// Rotates by 
 	// 0, 0 degrees
 	// 1, 90 degrees
 	// 2, 180 degrees
 	// 3, 270 degrees
-	public Point Rotate( Point center, int rotation )
+	public Point Rotate( int rotation )
 	{
 		Point result;
 
@@ -49,11 +49,6 @@ public class Point
 		}
 
 		return result;
-	}
-
-	public Point Rotate( int rotation )
-	{
-		return Rotate( Origin, rotation );
 	}
 }
 
