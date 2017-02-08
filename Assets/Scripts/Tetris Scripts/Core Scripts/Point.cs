@@ -19,13 +19,23 @@ public class Point
 		return new Point( first.x + other.x, first.y + other.y );
 	}
 
-	// Rotates the point around the center of rotation
+	public static Point operator-( Point first, Point other )
+	{
+		return new Point( first.x - other.x, first.y - other.y );
+	}
+
+	public static Point operator/( Point first, int other )
+	{
+		return new Point( first.x / other, first.y / other );
+	}
+
+	// Rotates the point around the origin
 	// Rotates by 
 	// 0, 0 degrees
 	// 1, 90 degrees
 	// 2, 180 degrees
 	// 3, 270 degrees
-	public Point Rotate( Point center, int rotation )
+	public Point Rotate( int rotation )
 	{
 		Point result;
 
@@ -51,9 +61,13 @@ public class Point
 		return result;
 	}
 
-	public Point Rotate( int rotation )
+	// Rotate around a point
+	public Point Rotate( int rotation, Point centerPoint )
 	{
-		return Rotate( Origin, rotation );
+		return new Point
+			( x - centerPoint.x, 
+			  y - centerPoint.y ).Rotate( rotation ) + centerPoint;
 	}
+
 }
 
