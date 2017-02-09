@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Tetris;
 
 public class Mino
 {
@@ -176,7 +177,7 @@ public class Mino
 	{
 		SetShadowLocation();
 		SetShadowColor( ShadowColor );
-		SetBlockColor( type.BlockColor, permanent );
+		SetBlockColor( type.BlockColor.ToUnityColor(), permanent );
 	}
 
 	public void Clear()

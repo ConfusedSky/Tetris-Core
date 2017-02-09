@@ -1,11 +1,14 @@
-﻿public enum TetrisAction
+﻿namespace Tetris
 {
-	Left,
-	Right,
-	Down,
-	RotateRight,
-	RotateLeft,
-	Drop,
-	Hold,
-	None
+	public enum TetrisAction
+	{
+		Left,
+		Right,
+		Down,
+		RotateRight,
+		RotateLeft,
+		Drop,
+		Hold,
+		None
+	}
 }

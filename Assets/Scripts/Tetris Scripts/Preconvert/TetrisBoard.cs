@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Tetris;
 
 public class TetrisBoard : MonoBehaviour 
 {
@@ -128,8 +129,7 @@ public class TetrisBoard : MonoBehaviour
 	// Also fires a board changed event.
 	// BlockLocations is an ienumerable of points. Each point represents a location on the board.
 	// DOES NOT VALIDATE POSITIONS
-	// TODO: Implement fading on the TetrisBlockScript end of things so that even if the block is moved the correct block is still faded
-	public void PlaceBlocks( IEnumerable<Point> BlockLocations, Color? color, bool background = false, float fadeTime = 0 )
+	public void PlaceBlocks( IEnumerable<Point> BlockLocations, Color? color, bool background = false )
 	{
 		foreach( TetrisBlockScript block in GetBlocks( BlockLocations ) )
 		{
@@ -143,7 +143,7 @@ public class TetrisBoard : MonoBehaviour
 	// Also fires a board changed event
 	// DOES NOT VALIDATE POSITIONS
 	// TODO: Implement a system to place a block without firing a board changed event
-	public void PlaceBlock( Point p, Color? color, bool background = false, float fadeTime = 0 )
+	public void PlaceBlock( Point p, Color? color, bool background = false )
 	{
 		if( background ) Scripts[p.y, p.x].BackgroundColor = color;
 		else             Scripts[p.y, p.x].BlockColor = color;

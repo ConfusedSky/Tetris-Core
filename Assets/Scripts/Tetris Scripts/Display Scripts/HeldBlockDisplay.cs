@@ -29,6 +29,6 @@ public class HeldBlockDisplay : MonoBehaviour
 		if( Game.HeldBlock == null )
 			blockScript.BlockColor = null;
 		else
-			blockScript.BlockColor = Game.HeldBlock.BlockColor;
+			blockScript.BlockColor = Game.HeldBlock.BlockColor.ToUnityColor();
 	}
 }

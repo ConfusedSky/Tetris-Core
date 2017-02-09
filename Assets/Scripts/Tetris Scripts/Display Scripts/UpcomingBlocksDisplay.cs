@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Tetris;
 
 [RequireComponent(typeof(TetrisBlockScript))]
 public class UpcomingBlocksDisplay : MonoBehaviour 
@@ -40,6 +41,6 @@ public class UpcomingBlocksDisplay : MonoBehaviour
 		if( Number >= queuedBlocks.Length )
 			blockScript.BlockColor = null;
 		else
-			blockScript.BlockColor = queuedBlocks[Number].BlockColor;
+			blockScript.BlockColor = queuedBlocks[Number].BlockColor.ToUnityColor();
 	}
 }

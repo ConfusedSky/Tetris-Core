@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Tetris;
 
 [RequireComponent(typeof(TetrisGame))]
 public class AnnoyingBlock : MonoBehaviour

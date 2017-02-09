@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Tetris;
 
 // Defines all of the minos from the original tetris game
 public static class Tetromino
@@ -25,7 +26,7 @@ public static class Tetromino
 		new MinoType( 
 			Offsets:     new Point[]{ new Point( -1, 0 ), new Point( 0, 0 ), new Point( 1, 0 ), new Point( 2, 0 ) },
 			KickOffsets: IKickOffsetData,
-			BlockColor:  Color.cyan
+			BlockColor:  ((Color32)Color.cyan).ToBlockColor()
 		);
 
 	public static readonly MinoType O =
@@ -38,42 +39,42 @@ public static class Tetromino
 			                new Point[]{ new Point( -1, 1 ) }, 
 			                new Point[]{ new Point( -1, 0 ) } 
 		                 },
-			BlockColor:  Color.yellow
+			BlockColor:  ((Color32)Color.yellow).ToBlockColor()
 		);
 
 	public static readonly MinoType T = 
 		new MinoType(
 			Offsets:     new Point[]{ new Point( 0, 0 ), new Point( 0, -1 ), new Point( -1, 0 ), new Point( 1, 0 ) },
 			KickOffsets: GeneralKickOffsetData,
-			BlockColor:  Color.magenta
+			BlockColor:  ((Color32)Color.magenta).ToBlockColor()
 		);
 
 	public static readonly MinoType J = 
 		new MinoType(
 			Offsets:     new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( 1, 0 ), new Point( -1, -1 ) },
 			KickOffsets: GeneralKickOffsetData,
-			BlockColor:  Color.blue
+			BlockColor: ((Color32)Color.blue).ToBlockColor()
 		);
 
 	public static readonly MinoType L = 
 		new MinoType(
 			Offsets:     new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( 1, 0 ), new Point( 1, -1 ) },
 			KickOffsets: GeneralKickOffsetData,
-			BlockColor:  new Color32( 255, 127, 0, 255 )
+			BlockColor:  new BlockColor( 255, 127, 0, 255 )
 		);
 
 	public static readonly MinoType S = 
 		new MinoType(
 			Offsets:     new Point[]{ new Point( 0, 0 ), new Point( 1, -1 ), new Point( 0, -1 ), new Point( -1, 0 ) },
 			KickOffsets: GeneralKickOffsetData,
-			BlockColor:  Color.green
+			BlockColor:  ((Color32)Color.green).ToBlockColor()
 		);
 
 	public static readonly MinoType Z = 
 		new MinoType(
 			Offsets:     new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( 0, 1 ), new Point( 1, 1 ) },
 			KickOffsets: GeneralKickOffsetData,
-			BlockColor:  Color.red
+			BlockColor:  ((Color32)Color.red).ToBlockColor()
 		);
 
 	public static readonly MinoType[] TETROMINO_TYPES = new MinoType[]
