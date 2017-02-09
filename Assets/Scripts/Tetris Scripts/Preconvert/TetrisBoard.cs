@@ -25,6 +25,7 @@ public class TetrisBoard : MonoBehaviour
 	private GameObject[,] background;
 	private GameObject[,] blocks;
 	private TetrisBlockScript[,] scripts;
+	private RectangularTetrisBoard logic;
 
 	public GameObject[,] Blocks{ get{ return blocks; } }
 	public TetrisBlockScript[,] Scripts{ get { return scripts; } }
@@ -62,6 +63,8 @@ public class TetrisBoard : MonoBehaviour
 					(((j + i % 2) % 2 == 0) ? (BGColor1) : (BGColor2));
 			}
 		}
+
+		logic = new RectangularTetrisBoard (Width, Height, 2);
 	}
 
 	void Start()
@@ -105,24 +108,12 @@ public class TetrisBoard : MonoBehaviour
 	// IEnumerable must be a enumerable of x where x is an int[] and x is (x,y) coordinates
 	public bool ValidPlacement( IEnumerable<Point> BlockLocations )
 	{
-		foreach( Point point in BlockLocations )
-		{
-			if( !ValidPlacement( point ) ) return false;
-		}
-		return true;
+		return logic.IsValidPlacement (BlockLocations);
 	}
 
 	public bool ValidPlacement( Point point )
 	{
-		if( point.x < 0 || point.x >= Width || point.y >= Height ||
-		    (point.y >= 0 && Scripts[point.y, point.x].Occupied) )
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		return logic.IsValidPlacement (point);
 	}
 
 	// Sets the color of all of the blockscripts whose locations are given in BlockLocations
@@ -131,12 +122,7 @@ public class TetrisBoard : MonoBehaviour
 	// DOES NOT VALIDATE POSITIONS
 	public void PlaceBlocks( IEnumerable<Point> BlockLocations, Color? color, bool background = false )
 	{
-		foreach( TetrisBlockScript block in GetBlocks( BlockLocations ) )
-		{
-			if( background ) block.BackgroundColor = color;
-			else             block.BlockColor = color;
-		}
-		if( OnBoardChanged != null && !background ) OnBoardChanged( this, System.EventArgs.Empty );
+		logic.PlaceBlocks (BlockLocations, ((Color32)color).ToBlockColor (), background);
 	}
 
 	// Sets the color for a blockscript at a location
@@ -145,10 +131,7 @@ public class TetrisBoard : MonoBehaviour
 	// TODO: Implement a system to place a block without firing a board changed event
 	public void PlaceBlock( Point p, Color? color, bool background = false )
 	{
-		if( background ) Scripts[p.y, p.x].BackgroundColor = color;
-		else             Scripts[p.y, p.x].BlockColor = color;
-
-		if( OnBoardChanged != null && !background ) OnBoardChanged( this, System.EventArgs.Empty );
+		logic.PlaceBlock (p, ((Color32)color).ToBlockColor (), background);
 	}
 
 	// Returns all of the blockscripts that are asked for

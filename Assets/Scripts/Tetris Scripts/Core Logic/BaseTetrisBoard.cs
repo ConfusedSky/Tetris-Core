@@ -74,14 +74,27 @@ namespace Tetris
 		/// </summary>
 		/// <param name="p">Point to place the block.</param>
 		/// <param name="color">Color of the block.</param>
-		protected abstract void place (Point p, BlockColor color, bool background);
+		private void place (Point p, BlockColor color, bool background)
+		{
+			Block b = GetBlockAt (p);
+
+			if (background)
+				b.BackgroundColor = color;
+			else
+				b.Color = color;
+		}
 
 		/// <summary>
 		/// Gets the block scripts at the specified block locations
 		/// </summary>
 		/// <returns>The blocks.</returns>
 		/// <param name="BlockLocations">Block locations to get blocks from.</param>
-		public abstract IEnumerable<Block> GetBlocks (IEnumerable<Point> BlockLocations);
+		public IEnumerable<Block> GetBlocks (IEnumerable<Point> BlockLocations)
+		{
+			foreach (Point p in BlockLocations) {
+				yield return GetBlockAt (p);
+			}
+		}
 
 		/// <summary>
 		/// Gets the block at point p.

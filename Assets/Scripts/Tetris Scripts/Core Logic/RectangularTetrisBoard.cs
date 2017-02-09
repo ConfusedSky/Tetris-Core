@@ -9,6 +9,7 @@ namespace Tetris
 
 		public int Width { get; private set; }
 		public int Height { get; private set; }
+		public int Blocks { get; }
 
 		public RectangularTetrisBoard ( int width, int height, int killHeight )
 		{
@@ -25,6 +26,9 @@ namespace Tetris
 			}
 		}
 
+		/// <summary>
+		/// Reset the internal state of the tetris board
+		/// </summary>
 		public override void Reset ()
 		{
 			foreach (Block[] row in blocks)
@@ -32,6 +36,12 @@ namespace Tetris
 					b.Clear ();
 		}
 
+		/// <summary>
+		/// Determines whether the specified point is a valid placement.
+		/// </summary>
+		/// <returns>true</returns>
+		/// <c>false</c>
+		/// <param name="point">Point to check.</param>
 		public override bool IsValidPlacement (Point point)
 		{
 			if( point.x < 0 || point.x >= Width || point.y >= Height ||
@@ -45,19 +55,9 @@ namespace Tetris
 			}
 		}
 
-		protected override void place (Point p, BlockColor color, bool background)
-		{
-			
-		}
-
-		public override IEnumerable<Block> GetBlocks (IEnumerable<Point> BlockLocations)
-		{
-			throw new NotImplementedException ();
-		}
-
 		public override Block GetBlockAt (Point p)
 		{
-			throw new NotImplementedException ();
+			return blocks [p.y] [p.x];
 		}
 	}
 }
