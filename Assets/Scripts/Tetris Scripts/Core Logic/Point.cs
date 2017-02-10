@@ -2,7 +2,6 @@
 
 namespace Tetris
 {
-
 	[Serializable]
 	public class Point
 	{
@@ -69,7 +68,5 @@ namespace Tetris
 			return new Point (x - centerPoint.x, 
 				y - centerPoint.y).Rotate (rotation) + centerPoint;
 		}
-
 	}
-
 }

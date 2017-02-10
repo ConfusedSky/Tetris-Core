@@ -82,42 +82,42 @@ public class AnnoyingBlock : MonoBehaviour
 		
 	private void PlaceBlock()
 	{
-		int column;
-		int i;
-		bool blockPlaced = false;
-		do
-		{
-			column = Random.Range( 0, game.Width );
-			for( i = 1; i < game.Height; i++ )
-			{
-				if( game.Scripts[i, column].Occupied )
-					break;
-			}
-			game.Scripts[i-1, column].BlockColor = Color.black;
-			blockPlaced = true;
-			if( AvoidClears && game.CheckClear( i - 1 ) )
-			{
-				game.Scripts[i - 1, column].BlockColor = null;
-				blockPlaced = false;
-			}
-		} while( !blockPlaced );
+		// int column;
+		// int i;
+		// bool blockPlaced = false;
+		// do
+		// {
+		// 	column = Random.Range( 0, game.Width );
+		// 	for( i = 1; i < game.Height; i++ )
+		// 	{
+		// 		if( game.Scripts[i, column].Occupied )
+		// 			break;
+		// 	}
+		// 	game.Scripts[i-1, column].BlockColor = Color.black;
+		// 	blockPlaced = true;
+		// 	if( AvoidClears && game.CheckClear( i - 1 ) )
+		// 	{
+		// 		game.Scripts[i - 1, column].BlockColor = null;
+		// 		blockPlaced = false;
+		// 	}
+		// } while( !blockPlaced );
 
-		game.Board.PlaceBlock( new Point( column, i-1 ), Color.black );
+		// game.Board.PlaceBlock( new Point( column, i-1 ), BlockColor.black );
 
 		// IEnumerator fade = FadeIn( column, i - 1 );
 		// StartCoroutine( fade );
 	}
 
-	private IEnumerator FadeIn( int x, int y )
-	{
-		TetrisBlockScript block = game.Scripts[y, x];
+	//private IEnumerator FadeIn( int x, int y )
+	//{
+	//	TetrisBlockScript block = game.Scripts[y, x];
 
-		for( float i = 0; block.Occupied && i <= 1; i += .1f )
-		{
-			block.BlockColor = new Color( 0, 0, 0, i );
-			yield return new WaitForSeconds( (FadeTime / 1000) / 10 );
-		}
-	}
+	//	for( float i = 0; block.Occupied && i <= 1; i += .1f )
+	//	{
+	//		block.BlockColor = new Color( 0, 0, 0, i );
+	//		yield return new WaitForSeconds( (FadeTime / 1000) / 10 );
+	//	}
+	//}
 
 }
 

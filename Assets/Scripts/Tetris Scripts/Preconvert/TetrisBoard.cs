@@ -29,6 +29,7 @@ public class TetrisBoard : MonoBehaviour
 
 	public GameObject[,] Blocks{ get{ return blocks; } }
 	public TetrisBlockScript[,] Scripts{ get { return scripts; } }
+	public RectangularTetrisBoard Controller{ get { return logic; } }
 
 	public event System.EventHandler OnBoardChanged;
 
@@ -64,25 +65,37 @@ public class TetrisBoard : MonoBehaviour
 			}
 		}
 
-		logic = new RectangularTetrisBoard (Width, Height, 2);
+		logic = new RectangularTetrisBoard( Width, Height, 2 );
+	}
+
+	void OnEnable()
+	{
+		logic.BoardChanged += Logic_BoardChanged;
+	}
+
+	void OnDisable()
+	{
+		logic.BoardChanged += Logic_BoardChanged;
+	}
+
+	void Logic_BoardChanged (object sender, System.EventArgs e)
+	{
+		if (OnBoardChanged != null)
+			OnBoardChanged (this, System.EventArgs.Empty);
 	}
 
 	void Start()
 	{
 		UpdateBlocks();
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
-	}
 
-	public void Reset()
+	void Update()
 	{
-		foreach( TetrisBlockScript b in Scripts )
-		{
-			b.Clear();
+		// Todo: add some kind of soft board changed which updates whenever the background changes for efficency
+		for( int i = 0; i < Height; i++ ) {
+			for( int j = 0; j < Width; j++ ){
+				Scripts[i,j].BackgroundColor = logic.GetBlockAt( new Point( j, i ) ).DisplayedColor.ToUnityColor();
+			}
 		}
 	}
 
@@ -104,45 +117,4 @@ public class TetrisBoard : MonoBehaviour
 		}
 	}
 
-	// returns true if all of the blocks sent in are empty and in the boundries
-	// IEnumerable must be a enumerable of x where x is an int[] and x is (x,y) coordinates
-	public bool ValidPlacement( IEnumerable<Point> BlockLocations )
-	{
-		return logic.IsValidPlacement (BlockLocations);
-	}
-
-	public bool ValidPlacement( Point point )
-	{
-		return logic.IsValidPlacement (point);
-	}
-
-	// Sets the color of all of the blockscripts whose locations are given in BlockLocations
-	// Also fires a board changed event.
-	// BlockLocations is an ienumerable of points. Each point represents a location on the board.
-	// DOES NOT VALIDATE POSITIONS
-	public void PlaceBlocks( IEnumerable<Point> BlockLocations, Color? color, bool background = false )
-	{
-		logic.PlaceBlocks (BlockLocations, ((Color32)color).ToBlockColor (), background);
-	}
-
-	// Sets the color for a blockscript at a location
-	// Also fires a board changed event
-	// DOES NOT VALIDATE POSITIONS
-	// TODO: Implement a system to place a block without firing a board changed event
-	public void PlaceBlock( Point p, Color? color, bool background = false )
-	{
-		logic.PlaceBlock (p, ((Color32)color).ToBlockColor (), background);
-	}
-
-	// Returns all of the blockscripts that are asked for
-	// Input is an ienumerable of points. Each point represents a location on the board
-	// DOES NOT VALIDATE POSITIONS
-	public IEnumerable<TetrisBlockScript> GetBlocks( IEnumerable<Point> BlockLocations )
-	{
-		foreach( Point point in BlockLocations )
-		{
-			if( point.y >= 0 )
-				yield return Scripts[point.y, point.x];
-		}
-	}
 }

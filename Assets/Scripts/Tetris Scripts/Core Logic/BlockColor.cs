@@ -7,6 +7,20 @@ namespace Tetris
 	/// </summary>
 	public class BlockColor
 	{
+		public static BlockColor black   = new BlockColor(   0,   0,   0 );
+		public static BlockColor blue    = new BlockColor(   0,   0, 255 );
+		public static BlockColor clear   = new BlockColor(   0,   0,   0,  0 );
+		public static BlockColor cyan    = new BlockColor(   0, 255, 255 );
+		public static BlockColor gray    = new BlockColor( 127, 127, 127 );
+		public static BlockColor green   = new BlockColor(   0, 255,   0 );
+		public static BlockColor grey    = gray;
+		public static BlockColor magenta = new BlockColor( 255,   0, 255 );
+		public static BlockColor red     = new BlockColor( 255,   0,   0 );
+		public static BlockColor white   = new BlockColor( 255, 255, 255 );
+		public static BlockColor yellow  = new BlockColor( 255, 235,   4 );
+		public static BlockColor orange  = new BlockColor( 255, 127,   0 );
+
+		
 		public byte r { get; private set; }
 
 		public byte g { get; private set; }

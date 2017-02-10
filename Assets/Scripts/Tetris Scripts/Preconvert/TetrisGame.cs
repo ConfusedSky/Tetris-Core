@@ -26,19 +26,6 @@ public class TetrisGame : MonoBehaviour
 	private Mino currentBlock;
 	private MinoType heldBlock = null;
 	private RandomItemGenerator<MinoType> queue;
-
-	public bool Lost
-	{
-		get
-		{
-			for( int i = 0; i < Width; i++ )
-			{
-				if( Scripts[LossHeight, i].Occupied )
-					return true;
-			}
-			return false;
-		}
-	}
 		
 	public MinoType HeldBlock{ get{ return heldBlock; } }
 	public MinoType[] QueuedBlocks{ get{ return queue.GetObjects(); } }
@@ -76,13 +63,13 @@ public class TetrisGame : MonoBehaviour
 	void Awake()
 	{
 		board = gameObject.GetComponent<TetrisBoard>();
-		Mino.ShadowColor = ShadowColor;
+		Mino.ShadowColor = ShadowColor.ToBlockColor();
 		queue = new RandomItemGenerator<MinoType>( Tetromino.TETROMINO_TYPES, queueSize, queueLookback, queueTries );
 	}
 
 	void Start()
 	{
-		currentBlock = Mino.CreateNewMino( board, queue.GetNextItem() );
+		currentBlock = Mino.CreateNewMino( board.Controller, queue.GetNextItem() );
 		GameStart();
 	}
 
@@ -126,7 +113,7 @@ public class TetrisGame : MonoBehaviour
 		if( clears.Count > 0 && OnRowCollapse != null ) OnRowCollapse( this, new RowCollapseEventArgs( clears ) );
 
 		// Check for loss conditions if loss reset the board
-		if( Lost )
+		if( board.Controller.Lost )
 		{
 			Reset();
 			return;
@@ -140,6 +127,9 @@ public class TetrisGame : MonoBehaviour
 
 		if( action == TetrisAction.Hold ) Hold();
 
+		if (currentBlock == null)
+			return;
+
 		if( currentBlock.Alive )
 			currentBlock = currentBlock.Update( action );
 		else
@@ -152,7 +142,7 @@ public class TetrisGame : MonoBehaviour
 
 	public void Reset()
 	{
-		board.Reset();
+		board.Controller.Reset();
 		heldBlock = null;
 		queue.Reset();
 

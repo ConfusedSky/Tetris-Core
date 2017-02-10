@@ -4,7 +4,8 @@ using System.Collections.Generic;
 namespace Tetris
 {
 	/// <summary>
-	/// Base tetris board.
+	/// Base class for tetris board implementations
+	/// Can not be instantiated
 	/// </summary>
 	public abstract class BaseTetrisBoard
 	{
@@ -12,6 +13,18 @@ namespace Tetris
 		/// Occurs when the board is changed changed.
 		/// </summary>
 		public event System.EventHandler BoardChanged;
+
+		/// <summary>
+		/// Default location to spawn things onto the board
+		/// </summary>
+		/// <value>The spawn point.</value>
+		public abstract Point SpawnPoint { get; }
+
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="Tetris.BaseTetrisBoard"/> is in a loss state.
+		/// </summary>
+		/// <value><c>true</c> if lost; otherwise, <c>false</c>.</value>
+		public abstract bool Lost{ get; }
 
 		/// <summary>
 		/// Reset the internal state of the tetris board
@@ -78,6 +91,9 @@ namespace Tetris
 		{
 			Block b = GetBlockAt (p);
 
+			if (b == null)
+				return;
+
 			if (background)
 				b.BackgroundColor = color;
 			else
@@ -92,7 +108,9 @@ namespace Tetris
 		public IEnumerable<Block> GetBlocks (IEnumerable<Point> BlockLocations)
 		{
 			foreach (Point p in BlockLocations) {
-				yield return GetBlockAt (p);
+				Block b = GetBlockAt (p);
+				if( b != null )
+					yield return GetBlockAt (p);
 			}
 		}
 
