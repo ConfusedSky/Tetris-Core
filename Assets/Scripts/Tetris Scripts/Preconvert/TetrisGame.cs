@@ -8,8 +8,6 @@ public class TetrisGame : MonoBehaviour
 {
 	public Color ShadowColor;
 
-	public int LossHeight = 1;
-
 	public InputManger InputManager;
 
 	[Header("Queue Parameters")]
@@ -20,35 +18,20 @@ public class TetrisGame : MonoBehaviour
 	[SerializeField]
 	private int queueTries = 4;
 
-	private TetrisBoard board;
-	private GameObject[,] blocks;
-	private TetrisBlockScript[,] blockScripts;
+	private BaseTetrisBoard board;
 	private Mino currentBlock;
 	private MinoType heldBlock = null;
 	private RandomItemGenerator<MinoType> queue;
 		
 	public MinoType HeldBlock{ get{ return heldBlock; } }
 	public MinoType[] QueuedBlocks{ get{ return queue.GetObjects(); } }
-	public TetrisBoard Board{ get{ return board; } }
-	public GameObject[,] Blocks{ get{ return board.Blocks; } }
-	public TetrisBlockScript[,] Scripts{ get{ return board.Scripts; } }
-
-	// These properties only exist for backwards compatibility
-	public int Width{ get{ return board.Width; } }
-	public int Height{ get { return board.Height; } }
-	public Vector3 StartingLocation{ get{ return board.StartingLocation; } }
-	public Vector2 PrefabSize{ get{ return board.PrefabSize; } }
-
-	public Color BGColor1{ get{ return board.BGColor1; } }
-	public Color BGColor2{ get{ return board.BGColor2; } }
-
-	public GameObject BlockPrefab{ get{ return board.BlockPrefab; } }
+	public BaseTetrisBoard Board{ get{ return board; } }
 
 	public class RowCollapseEventArgs : System.EventArgs
 	{
-		public IList ClearedRows{ get; private set; }
+		public IList<int> ClearedRows{ get; private set; }
 
-		public RowCollapseEventArgs( IList clearedRows )
+		public RowCollapseEventArgs( IList<int> clearedRows )
 		{
 			ClearedRows = clearedRows;
 		}
@@ -62,14 +45,14 @@ public class TetrisGame : MonoBehaviour
 	// Use this for initialization
 	void Awake()
 	{
-		board = gameObject.GetComponent<TetrisBoard>();
 		Mino.ShadowColor = ShadowColor.ToBlockColor();
 		queue = new RandomItemGenerator<MinoType>( Tetromino.TETROMINO_TYPES, queueSize, queueLookback, queueTries );
 	}
 
 	void Start()
 	{
-		currentBlock = Mino.CreateNewMino( board.Controller, queue.GetNextItem() );
+		board = gameObject.GetComponent<TetrisBoard>().Controller;
+		currentBlock = Mino.CreateNewMino( board, queue.GetNextItem() );
 		GameStart();
 	}
 
@@ -81,12 +64,12 @@ public class TetrisGame : MonoBehaviour
 
 	void OnEnable()
 	{
-		board.OnBoardChanged += OnBoardChanged;
+		board.BoardChanged += OnBoardChanged;
 	}
 
 	void OnDisable()
 	{
-		board.OnBoardChanged -= OnBoardChanged;
+		board.BoardChanged -= OnBoardChanged;
 	}
 
 	private void Hold()
@@ -104,16 +87,16 @@ public class TetrisGame : MonoBehaviour
 
 	void OnBoardChanged (object sender, System.EventArgs e)
 	{
-		IList clears = CheckClears();
+		IList<int> clears = board.CheckClears();
 		// if the previous frame had a drop that cleared resolve the clear
 		foreach( int i in clears )
 		{
-			CollapseRow( i );
+			board.CollapseRow( i );
 		}
 		if( clears.Count > 0 && OnRowCollapse != null ) OnRowCollapse( this, new RowCollapseEventArgs( clears ) );
 
 		// Check for loss conditions if loss reset the board
-		if( board.Controller.Lost )
+		if( board.Lost )
 		{
 			Reset();
 			return;
@@ -142,50 +125,10 @@ public class TetrisGame : MonoBehaviour
 
 	public void Reset()
 	{
-		board.Controller.Reset();
+		board.Reset();
 		heldBlock = null;
 		queue.Reset();
 
 		GameStart();
 	}
-
-	public void CollapseRow( int row )
-	{
-		for( int i = 0; i < Width; i++ )
-		{
-			Scripts[row, i].Clear();
-		}
-
-		for( int i = row; i >= 1; i-- )
-		{
-			for( int j = 0; j < Width; j++ )
-			{
-				Scripts[i - 1, j].MoveTo( Scripts[i, j] );
-			}
-		}
-	}
-
-	public IList CheckClears()
-	{
-		ArrayList result = new ArrayList();
-
-		for( int i = 0; i < Height; i++ )
-		{
-			if( CheckClear( i ) )
-				result.Add( i );
-		}
-
-		return result;
-	}
-
-	public bool CheckClear( int row )
-	{
-		for( int i = 0; i < Width; i++ )
-		{
-			if( !Scripts[row, i].Occupied )
-				return false;
-		}
-		return true;
-	}
-		
 }

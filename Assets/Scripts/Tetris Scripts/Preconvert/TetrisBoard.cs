@@ -12,6 +12,7 @@ public class TetrisBoard : MonoBehaviour
 	[Header("Dimensions:")]
 	public int Width = 10;
 	public int Height = 20;
+	public int KillHeight = 1;
 	public Vector3 StartingLocation = new Vector3( 0, 0 );
 	public Vector2 PrefabSize = new Vector2();
 
@@ -30,8 +31,6 @@ public class TetrisBoard : MonoBehaviour
 	public GameObject[,] Blocks{ get{ return blocks; } }
 	public TetrisBlockScript[,] Scripts{ get { return scripts; } }
 	public RectangularTetrisBoard Controller{ get { return logic; } }
-
-	public event System.EventHandler OnBoardChanged;
 
 	void Awake()
 	{
@@ -65,23 +64,7 @@ public class TetrisBoard : MonoBehaviour
 			}
 		}
 
-		logic = new RectangularTetrisBoard( Width, Height, 1 );
-	}
-
-	void OnEnable()
-	{
-		logic.BoardChanged += Logic_BoardChanged;
-	}
-
-	void OnDisable()
-	{
-		logic.BoardChanged += Logic_BoardChanged;
-	}
-
-	void Logic_BoardChanged (object sender, System.EventArgs e)
-	{
-		if (OnBoardChanged != null)
-			OnBoardChanged (this, System.EventArgs.Empty);
+		logic = new RectangularTetrisBoard( Width, Height, KillHeight );
 	}
 
 	void Start()
@@ -94,7 +77,7 @@ public class TetrisBoard : MonoBehaviour
 		// Todo: add some kind of soft board changed which updates whenever the background changes for efficency
 		for( int i = 0; i < Height; i++ ) {
 			for( int j = 0; j < Width; j++ ){
-				Scripts[i,j].BackgroundColor = logic.GetBlockAt( new Point( j, i ) ).DisplayedColor.ToUnityColor();
+				Scripts[i,j].BlockColor = logic.GetBlockAt( new Point( j, i ) ).DisplayedColor.ToUnityColor();
 			}
 		}
 	}

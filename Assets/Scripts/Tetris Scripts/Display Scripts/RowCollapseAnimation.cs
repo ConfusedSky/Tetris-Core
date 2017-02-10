@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(TetrisGame))]
 public class RowCollapseAnimation : MonoBehaviour 
 {
+	private TetrisBoard board;
 	private TetrisGame game;
 	private GameObject[,] blocks;
 	private int numCollapses = 0;
@@ -17,12 +19,13 @@ public class RowCollapseAnimation : MonoBehaviour
 	// Use this for initialization
 	void Awake() 
 	{
+		board = gameObject.GetComponent<TetrisBoard>();
 		game = gameObject.GetComponent<TetrisGame>();
 	}
 
 	void Start()
 	{
-		blocks = game.Blocks;
+		blocks = board.Blocks;
 	}
 
 	void OnEnable()
@@ -37,16 +40,16 @@ public class RowCollapseAnimation : MonoBehaviour
 
 	void CollapseAnimation( object sender, TetrisGame.RowCollapseEventArgs args )
 	{
-		ArrayList list = new ArrayList( args.ClearedRows );
+		List<int> list = new List<int>( args.ClearedRows );
 		list.Sort();
 		list.Reverse();
 
 		int offset = 0;
 		foreach( int row in list )
 		{
-			moveAllAbove( row + offset, game.PrefabSize.y );
+			moveAllAbove( row + offset, board.PrefabSize.y );
 
-			IEnumerator c = moveOverTime( row + offset, game.PrefabSize.y );
+			IEnumerator c = moveOverTime( row + offset, board.PrefabSize.y );
 			StartCoroutine( c );
 			offset++;
 		}

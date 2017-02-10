@@ -129,6 +129,25 @@ namespace Tetris
 		{
 			get { return GetBlockAt (p); }
 		}
+
+		/// <summary>
+		/// Collapses a row of the board.
+		/// </summary>
+		/// <param name="row">Row to be collapsed</param>
+		public abstract void CollapseRow( int row );
+
+		/// <summary>
+		/// Checks all the rows of a tetris board for clearable rows
+		/// </summary>
+		/// <returns>Returns a list of the row numbers that are clearable</returns>
+		public abstract IList<int> CheckClears();
+
+		/// <summary>
+		/// Checks if a single row can be cleared
+		/// </summary>
+		/// <returns><c>true</c>, if row was clearable, <c>false</c> otherwise.</returns>
+		/// <param name="row">Row to check</param>
+		public abstract bool CheckClear( int row );
 	}
 
 }

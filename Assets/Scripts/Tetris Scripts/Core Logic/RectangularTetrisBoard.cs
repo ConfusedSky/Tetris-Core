@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Tetris
 {
@@ -84,6 +85,40 @@ namespace Tetris
 				return blocks[p.y][p.x];
 			else
 				return null;
+		}
+
+		public override void CollapseRow( int row )
+		{
+			throw new NotImplementedException ();
+		}
+
+		public override IList<int> CheckClears()
+		{
+			IEnumerable<int> clears = from row in Enumerable.Range( 0, Height )
+			                          where CheckClear( row )
+			                          select row;
+			return new List<int>( clears );
+		}
+
+		public override bool CheckClear( int row )
+		{
+			Block[] r = blocks[row];
+
+			foreach( Block b in r ) {
+				if( !b.Occupied ) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		public void ClearRow( int row )
+		{
+			Block[] r = blocks[row];
+
+			foreach( Block b in r )
+				b.Clear();
 		}
 	}
 }
