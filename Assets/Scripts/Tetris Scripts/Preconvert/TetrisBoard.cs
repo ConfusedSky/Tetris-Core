@@ -34,6 +34,7 @@ public class TetrisBoard : MonoBehaviour
 
 	void Awake()
 	{
+		logic = new RectangularTetrisBoard( Width, Height, KillHeight );
 		background = new GameObject[Height, Width];
 		blocks = new GameObject[Height, Width];
 		scripts = new TetrisBlockScript[Height, Width];
@@ -63,8 +64,6 @@ public class TetrisBoard : MonoBehaviour
 					(((j + i % 2) % 2 == 0) ? (BGColor1) : (BGColor2));
 			}
 		}
-
-		logic = new RectangularTetrisBoard( Width, Height, KillHeight );
 	}
 
 	void Start()

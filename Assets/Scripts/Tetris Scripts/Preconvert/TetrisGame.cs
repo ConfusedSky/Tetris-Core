@@ -18,14 +18,15 @@ public class TetrisGame : MonoBehaviour
 	[SerializeField]
 	private int queueTries = 4;
 
-	private BaseTetrisBoard board;
+	private TetrisBoard board;
 	private Mino currentBlock;
 	private MinoType heldBlock = null;
 	private RandomItemGenerator<MinoType> queue;
 		
 	public MinoType HeldBlock{ get{ return heldBlock; } }
 	public MinoType[] QueuedBlocks{ get{ return queue.GetObjects(); } }
-	public BaseTetrisBoard Board{ get{ return board; } }
+	public BaseTetrisBoard BoardLogic{ get{ return board.Controller; } }
+	public TetrisBoard Board{ get{ return board; } }
 
 	public class RowCollapseEventArgs : System.EventArgs
 	{
@@ -45,14 +46,14 @@ public class TetrisGame : MonoBehaviour
 	// Use this for initialization
 	void Awake()
 	{
+		board = gameObject.GetComponent<TetrisBoard>();
 		Mino.ShadowColor = ShadowColor.ToBlockColor();
 		queue = new RandomItemGenerator<MinoType>( Tetromino.TETROMINO_TYPES, queueSize, queueLookback, queueTries );
 	}
 
 	void Start()
 	{
-		board = gameObject.GetComponent<TetrisBoard>().Controller;
-		currentBlock = Mino.CreateNewMino( board, queue.GetNextItem() );
+		currentBlock = Mino.CreateNewMino( BoardLogic, queue.GetNextItem() );
 		GameStart();
 	}
 
@@ -64,12 +65,12 @@ public class TetrisGame : MonoBehaviour
 
 	void OnEnable()
 	{
-		board.BoardChanged += OnBoardChanged;
+		BoardLogic.BoardChanged += OnBoardChanged;
 	}
 
 	void OnDisable()
 	{
-		board.BoardChanged -= OnBoardChanged;
+		BoardLogic.BoardChanged -= OnBoardChanged;
 	}
 
 	private void Hold()
@@ -87,16 +88,16 @@ public class TetrisGame : MonoBehaviour
 
 	void OnBoardChanged (object sender, System.EventArgs e)
 	{
-		IList<int> clears = board.CheckClears();
+		IList<int> clears = BoardLogic.CheckClears();
 		// if the previous frame had a drop that cleared resolve the clear
 		foreach( int i in clears )
 		{
-			board.CollapseRow( i );
+			BoardLogic.CollapseRow( i );
 		}
 		if( clears.Count > 0 && OnRowCollapse != null ) OnRowCollapse( this, new RowCollapseEventArgs( clears ) );
 
 		// Check for loss conditions if loss reset the board
-		if( board.Lost )
+		if( BoardLogic.Lost )
 		{
 			Reset();
 			return;
@@ -125,7 +126,7 @@ public class TetrisGame : MonoBehaviour
 
 	public void Reset()
 	{
-		board.Reset();
+		BoardLogic.Reset();
 		heldBlock = null;
 		queue.Reset();
 

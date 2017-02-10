@@ -88,8 +88,15 @@ namespace Tetris
 		}
 
 		public override void CollapseRow( int row )
-		{
-			throw new NotImplementedException ();
+		{	
+			ClearRow( row );
+			Block[] temp = blocks[ row ];
+
+			for( int i = row; i >= 1; i-- ) {
+				blocks[ i ] = blocks[ i - 1 ];
+			}
+
+			blocks[ 0 ] = temp;
 		}
 
 		public override IList<int> CheckClears()
@@ -113,7 +120,7 @@ namespace Tetris
 			return true;
 		}
 
-		public void ClearRow( int row )
+		private void ClearRow( int row )
 		{
 			Block[] r = blocks[row];
 
