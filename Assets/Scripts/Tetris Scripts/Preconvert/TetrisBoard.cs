@@ -65,7 +65,7 @@ public class TetrisBoard : MonoBehaviour
 			}
 		}
 
-		logic = new RectangularTetrisBoard( Width, Height, 2 );
+		logic = new RectangularTetrisBoard( Width, Height, 1 );
 	}
 
 	void OnEnable()
