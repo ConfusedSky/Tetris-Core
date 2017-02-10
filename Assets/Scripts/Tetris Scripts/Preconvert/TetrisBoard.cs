@@ -73,10 +73,11 @@ public class TetrisBoard : MonoBehaviour
 
 	void Update()
 	{
+		Point pos = new Point();
 		// Todo: add some kind of soft board changed which updates whenever the background changes for efficency
-		for( int i = 0; i < Height; i++ ) {
-			for( int j = 0; j < Width; j++ ){
-				Scripts[i,j].BlockColor = logic.GetBlockAt( new Point( j, i ) ).DisplayedColor.ToUnityColor();
+		for( pos.y = 0; pos.y < Height; pos.y++ ) {
+			for( pos.x = 0; pos.x < Width; pos.x++ ){
+				Scripts[pos.y, pos.x].BlockColor = logic.GetBlockAt( pos ).DisplayedColor.ToUnityColor();
 			}
 		}
 	}

@@ -68,7 +68,7 @@
 	
 		public static readonly MinoType Z = 
 			new MinoType(
-				Offsets:     new Point[]{ new Point( 0, 0 ), new Point( -1, 0 ), new Point( 0, 1 ), new Point( 1, 1 ) },
+				Offsets:     new Point[]{ new Point( 0, 0 ), new Point( 1, 0 ), new Point( 0, -1 ), new Point( -1, -1 ) },
 				KickOffsets: GeneralKickOffsetData,
 				BlockColor:  BlockColor.red
 			);

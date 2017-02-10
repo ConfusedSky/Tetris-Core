@@ -82,30 +82,30 @@ public class AnnoyingBlock : MonoBehaviour
 		
 	private void PlaceBlock()
 	{
-		// int column;
-		// int i;
-		// bool blockPlaced = false;
-		// do
-		// {
-		// 	column = Random.Range( 0, game.Width );
-		// 	for( i = 1; i < game.Height; i++ )
-		// 	{
-		// 		if( game.Scripts[i, column].Occupied )
-		// 			break;
-		// 	}
-		// 	game.Scripts[i-1, column].BlockColor = Color.black;
-		// 	blockPlaced = true;
-		// 	if( AvoidClears && game.CheckClear( i - 1 ) )
-		// 	{
-		// 		game.Scripts[i - 1, column].BlockColor = null;
-		// 		blockPlaced = false;
-		// 	}
-		// } while( !blockPlaced );
+		bool blockPlaced = false;
+		Point pos = new Point();
+		do
+		{
+			pos.x = Random.Range( 0, game.Board.Width );
+			for( pos.y = 1; pos.y < game.Board.Height; pos.y++ )
+			{
+				if( game.BoardLogic[pos].Occupied )
+					break;
+		 	}
+			pos.y--;
+			game.BoardLogic[pos].Color = BlockColor.black;
+		 	blockPlaced = true;
+			if( AvoidClears && game.BoardLogic.CheckClear( pos.y ) )
+		 	{
+				game.BoardLogic[pos].Color = null;
+		 		blockPlaced = false;
+		 	}
+		 } while( !blockPlaced );
 
-		// game.Board.PlaceBlock( new Point( column, i-1 ), BlockColor.black );
+		game.BoardLogic.PlaceBlock( pos, BlockColor.black );
 
-		// IEnumerator fade = FadeIn( column, i - 1 );
-		// StartCoroutine( fade );
+		//IEnumerator fade = FadeIn( column, i - 1 );
+		//StartCoroutine( fade );
 	}
 
 	//private IEnumerator FadeIn( int x, int y )
