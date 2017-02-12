@@ -18,12 +18,14 @@ public class AnnoyingBlock : MonoBehaviour
 	public int BlocksPerTimePeriod = 1;
 
 	private TetrisGame game;
+	private TetrisBoard board;
 	private float timeTillDrop = 0;
 
 	// Use this for initialization
 	void Awake() 
 	{
 		game = gameObject.GetComponent<TetrisGame>();
+		board = gameObject.GetComponent<TetrisBoard>();
 	}
 
 	void Start()
@@ -33,13 +35,13 @@ public class AnnoyingBlock : MonoBehaviour
 
 	void OnEnable()
 	{
-		game.OnRowCollapse += OnCollaspse;
+		board.Controller.RowCollapsed += OnCollaspse;
 		game.OnBlockDropped += OnBlockDropped;
 	}
 
 	void OnDisable()
 	{
-		game.OnRowCollapse -= OnCollaspse;
+		board.Controller.RowCollapsed -= OnCollaspse;
 		game.OnBlockDropped -= OnBlockDropped;
 	}
 
@@ -63,7 +65,7 @@ public class AnnoyingBlock : MonoBehaviour
 			PlaceBlocks( BlocksPerDrop );
 	}
 
-	void OnCollaspse( object sender, TetrisGame.RowCollapseEventArgs args )
+	void OnCollaspse( object sender, RowCollapseEventArgs args )
 	{
 		if( ActivateOnCollapse )
 			foreach( int line in args.ClearedRows )
@@ -89,20 +91,20 @@ public class AnnoyingBlock : MonoBehaviour
 			pos.x = Random.Range( 0, game.Board.Width );
 			for( pos.y = 1; pos.y < game.Board.Height; pos.y++ )
 			{
-				if( game.BoardLogic[pos].Occupied )
+				if( board.Controller[pos].Occupied )
 					break;
 		 	}
 			pos.y--;
-			game.BoardLogic[pos].Color = BlockColor.black;
+			board.Controller[pos].Color = BlockColor.black;
 		 	blockPlaced = true;
-			if( AvoidClears && game.BoardLogic.CheckClear( pos.y ) )
+			if( AvoidClears && board.Controller.CheckClear( pos.y ) )
 		 	{
-				game.BoardLogic[pos].Color = null;
+				board.Controller[pos].Color = null;
 		 		blockPlaced = false;
 		 	}
 		 } while( !blockPlaced );
 
-		game.BoardLogic.PlaceBlock( pos, BlockColor.black );
+		board.Controller.PlaceBlock( pos, BlockColor.black );
 
 		//IEnumerator fade = FadeIn( column, i - 1 );
 		//StartCoroutine( fade );

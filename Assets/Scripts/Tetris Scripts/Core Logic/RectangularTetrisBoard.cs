@@ -37,7 +37,7 @@ namespace Tetris
 		/// <param name="width">Width.</param>
 		/// <param name="height">Height.</param>
 		/// <param name="killHeight">Kill height.</param>
-		public RectangularTetrisBoard( int width, int height, int killHeight )
+		public RectangularTetrisBoard( int width, int height, int killHeight ) : base()
 		{
 			Width = width;
 			Height = height;
@@ -87,7 +87,7 @@ namespace Tetris
 				return null;
 		}
 
-		public override void CollapseRow( int row )
+		protected override void collapse( int row )
 		{	
 			ClearRow( row );
 			Block[] temp = blocks[ row ];

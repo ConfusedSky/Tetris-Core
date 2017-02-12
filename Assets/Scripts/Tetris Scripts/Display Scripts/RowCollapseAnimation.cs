@@ -6,7 +6,6 @@ using System.Collections.Generic;
 public class RowCollapseAnimation : MonoBehaviour 
 {
 	private TetrisBoard board;
-	private TetrisGame game;
 	private GameObject[,] blocks;
 	private int numCollapses = 0;
 
@@ -20,7 +19,6 @@ public class RowCollapseAnimation : MonoBehaviour
 	void Awake() 
 	{
 		board = gameObject.GetComponent<TetrisBoard>();
-		game = gameObject.GetComponent<TetrisGame>();
 	}
 
 	void Start()
@@ -30,15 +28,15 @@ public class RowCollapseAnimation : MonoBehaviour
 
 	void OnEnable()
 	{
-		game.OnRowCollapse += CollapseAnimation;
+		board.Controller.RowCollapsed += CollapseAnimation;
 	}
 
 	void OnDisable()
 	{
-		game.OnRowCollapse -= CollapseAnimation;
+		board.Controller.RowCollapsed -= CollapseAnimation;
 	}
 
-	void CollapseAnimation( object sender, TetrisGame.RowCollapseEventArgs args )
+	void CollapseAnimation( object sender, Tetris.RowCollapseEventArgs args )
 	{
 		List<int> list = new List<int>( args.ClearedRows );
 		list.Sort();

@@ -3,16 +3,54 @@ using System.Collections.Generic;
 
 namespace Tetris
 {
+	public class RowCollapseEventArgs : System.EventArgs
+	{
+		public IList<int> ClearedRows{ get; private set; }
+
+		public RowCollapseEventArgs( IList<int> clearedRows )
+		{
+			ClearedRows = clearedRows;
+		}
+	}
+
 	/// <summary>
 	/// Base class for tetris board implementations
 	/// Can not be instantiated
 	/// </summary>
 	public abstract class BaseTetrisBoard
 	{
+		public BaseTetrisBoard()
+		{
+			BoardChanged += BaseTetrisBoard_BoardChanged;
+			RowCollapsed += BaseTetrisBoard_RowCollapsed;
+		}
+
+		~BaseTetrisBoard()
+		{
+			BoardChanged -= BaseTetrisBoard_BoardChanged;
+			RowCollapsed -= BaseTetrisBoard_RowCollapsed;
+		}
+
 		/// <summary>
 		/// Occurs when the board is changed changed.
 		/// </summary>
 		public event System.EventHandler BoardChanged;
+
+		private void BaseTetrisBoard_BoardChanged (object sender, EventArgs e)
+		{
+			CollapseAll();
+		}
+
+		/// <summary>
+		/// Occurs when a row is collapsed.
+		/// </summary>
+		public event System.EventHandler<RowCollapseEventArgs> RowCollapsed;
+
+		private void BaseTetrisBoard_RowCollapsed (object sender, RowCollapseEventArgs e)
+		{
+			if (BoardChanged != null)
+				BoardChanged( this, EventArgs.Empty );
+		}
 
 		/// <summary>
 		/// Default location to spawn things onto the board
@@ -64,8 +102,8 @@ namespace Tetris
 				place (p, color, background);
 			}
 
-			if (BoardChanged != null && !background)
-				BoardChanged (this, System.EventArgs.Empty);
+			if (!background && BoardChanged != null)
+					BoardChanged( this, EventArgs.Empty );
 		}
 
 		/// <summary>
@@ -78,8 +116,8 @@ namespace Tetris
 		{
 			place (p, color, background);
 
-			if (BoardChanged != null && !background)
-				BoardChanged (this, System.EventArgs.Empty);
+			if (!background && BoardChanged != null)
+				BoardChanged( this, EventArgs.Empty );
 		}
 
 		/// <summary>
@@ -130,11 +168,35 @@ namespace Tetris
 			get { return GetBlockAt (p); }
 		}
 
+		protected abstract void collapse( int row );
+
 		/// <summary>
 		/// Collapses a row of the board.
 		/// </summary>
 		/// <param name="row">Row to be collapsed</param>
-		public abstract void CollapseRow( int row );
+		public void CollapseRow( int row )
+		{
+			collapse( row );
+			if (RowCollapsed != null)
+				RowCollapsed( this, new RowCollapseEventArgs( new System.Collections.Generic.List<int>( row ) ) );
+		}
+
+		/// <summary>
+		/// Collapses all Clearable Rows.
+		/// </summary>
+		/// <returns>The cleared rows</returns>
+		public IList<int> CollapseAll()
+		{
+			IList<int> clears = CheckClears();
+			// if the previous frame had a drop that cleared resolve the clear
+			foreach( int i in clears )
+			{
+				collapse( i );
+			}
+			if( clears.Count > 0 && RowCollapsed != null ) RowCollapsed( this, new RowCollapseEventArgs( clears ) );
+
+			return clears;
+		}
 
 		/// <summary>
 		/// Checks all the rows of a tetris board for clearable rows
@@ -148,6 +210,7 @@ namespace Tetris
 		/// <returns><c>true</c>, if row was clearable, <c>false</c> otherwise.</returns>
 		/// <param name="row">Row to check</param>
 		public abstract bool CheckClear( int row );
+
 	}
 
 }
