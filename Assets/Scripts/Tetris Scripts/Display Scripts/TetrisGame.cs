@@ -39,6 +39,7 @@ public class TetrisGame : MonoBehaviour
 
 		initialized = true;
 		OnEnabled();
+		game.GameStart();
 	}
 
 	void OnEnabled()

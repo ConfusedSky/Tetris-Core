@@ -11,7 +11,6 @@ namespace Tetris
 			this.queue = queue;
 
 			currentBlock = Mino.CreateNewMino( board, queue.GetNextItem() );
-			GameStart();
 			OnEnable();
 		}
 
