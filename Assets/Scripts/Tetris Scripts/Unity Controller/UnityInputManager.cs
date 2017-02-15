@@ -28,9 +28,9 @@ public class UnityInputManger : IInputManager
 	private InputState state = InputState.None;
 	private float timeTillRepeat = 0;
 
-	public TetrisAction HandleInput()
+	public TetrisAction HandleInput( float deltaTime )
 	{
-		timeTillRepeat -= Time.deltaTime;
+		timeTillRepeat -= deltaTime;
 
 		if( Input.GetButtonDown( DropButton ) )
 		{

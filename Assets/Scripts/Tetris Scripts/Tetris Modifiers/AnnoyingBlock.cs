@@ -35,14 +35,14 @@ public class AnnoyingBlock : MonoBehaviour
 
 	void OnEnable()
 	{
-		board.Controller.RowCollapsed += OnCollaspse;
-		game.OnBlockDropped += OnBlockDropped;
+		board.RowCollapsed += OnCollaspse;
+		game.BlockDropped += OnBlockDropped;
 	}
 
 	void OnDisable()
 	{
-		board.Controller.RowCollapsed -= OnCollaspse;
-		game.OnBlockDropped -= OnBlockDropped;
+		board.RowCollapsed -= OnCollaspse;
+		game.BlockDropped -= OnBlockDropped;
 	}
 
 	void Update()

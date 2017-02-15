@@ -32,6 +32,22 @@ public class TetrisBoard : MonoBehaviour
 	public TetrisBlockScript[,] Scripts{ get { return scripts; } }
 	public RectangularTetrisBoard Controller{ get { return logic; } }
 
+	public event System.EventHandler BoardChanged;
+
+	void Logic_BoardChanged (object sender, System.EventArgs e)
+	{
+		if (BoardChanged != null)
+			BoardChanged (this, e);
+	}
+
+	public event System.EventHandler<Tetris.RowCollapseEventArgs> RowCollapsed;
+
+	void Logic_RowCollapsed (object sender, RowCollapseEventArgs e)
+	{
+		if (RowCollapsed != null)
+			RowCollapsed (this, e);
+	}
+
 	void Awake()
 	{
 		logic = new RectangularTetrisBoard( Width, Height, KillHeight );
@@ -69,12 +85,14 @@ public class TetrisBoard : MonoBehaviour
 
 	void OnEnable()
 	{
-		//logic.BoardChanged += Logic_ViewChanged;
+		logic.BoardChanged += Logic_BoardChanged;
+		logic.RowCollapsed += Logic_RowCollapsed;
 	}
 
 	void OnDisable()
 	{
-		//logic.BoardChanged -= Logic_ViewChanged;
+		logic.BoardChanged -= Logic_BoardChanged;
+		logic.RowCollapsed -= Logic_RowCollapsed;
 	}
 
 	void Start()

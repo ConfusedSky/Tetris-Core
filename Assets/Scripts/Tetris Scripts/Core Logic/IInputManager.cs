@@ -2,6 +2,6 @@
 {
 	public interface IInputManager
 	{
-		TetrisAction HandleInput();
+		TetrisAction HandleInput( float deltaTime );
 	}
 }

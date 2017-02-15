@@ -28,12 +28,12 @@ public class RowCollapseAnimation : MonoBehaviour
 
 	void OnEnable()
 	{
-		board.Controller.RowCollapsed += CollapseAnimation;
+		board.RowCollapsed += CollapseAnimation;
 	}
 
 	void OnDisable()
 	{
-		board.Controller.RowCollapsed -= CollapseAnimation;
+		board.RowCollapsed -= CollapseAnimation;
 	}
 
 	void CollapseAnimation( object sender, Tetris.RowCollapseEventArgs args )

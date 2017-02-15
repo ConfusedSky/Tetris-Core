@@ -4,26 +4,37 @@ namespace Tetris
 {
 	public class Game
 	{
-		public Game()
+		public Game( IInputManager input, BaseTetrisBoard board, RandomItemGenerator<MinoType> queue )
 		{
+			inputManager = input;
+			this.board = board;
+			this.queue = queue;
+
+			currentBlock = Mino.CreateNewMino( board, queue.GetNextItem() );
+			GameStart();
+			OnEnable();
 		}
 
-		private IInputManager InputManager;
+		private IInputManager inputManager;
 		private BaseTetrisBoard board;
 		private Mino currentBlock;
 		private MinoType heldBlock = null;
 		private RandomItemGenerator<MinoType> queue;
 
-		public event System.EventHandler OnHold;
-		public event System.EventHandler OnBlockDropped;
-		public event System.EventHandler OnStart;
+		public BaseTetrisBoard Board { get { return board; } }
+		public MinoType HeldBlock { get { return heldBlock; } }
+		public MinoType[] QueuedBlocks{ get { return queue.GetObjects(); } }
 
-		void OnEnable()
+		public event System.EventHandler BlockHeld;
+		public event System.EventHandler BlockDropped;
+		public event System.EventHandler Started;
+
+		public void OnEnable()
 		{
 			board.BoardChanged += OnBoardChanged;
 		}
 
-		void OnDisable()
+		public void OnDisable()
 		{
 			board.BoardChanged -= OnBoardChanged;
 		}
@@ -38,10 +49,10 @@ namespace Tetris
 			}
 		}
 
-		void GameStart()
+		public void GameStart()
 		{
 			currentBlock.BlockType = queue.GetNextItem();
-			if( OnStart != null ) OnStart( this, System.EventArgs.Empty );
+			if( Started != null ) Started( this, System.EventArgs.Empty );
 		}
 
 		private void Hold()
@@ -53,13 +64,13 @@ namespace Tetris
 				currentBlock.BlockType = queue.GetNextItem();
 			heldBlock = temp;
 
-			if( OnHold != null ) OnHold( this, System.EventArgs.Empty );
+			if( BlockHeld != null ) BlockHeld( this, System.EventArgs.Empty );
 		}
 
 		// Update is called once per frame
-		void Update()
+		public void Update( float deltaTime )
 		{
-			TetrisAction action = InputManager.HandleInput();
+			TetrisAction action = inputManager.HandleInput( deltaTime );
 
 			if( action == TetrisAction.Hold ) Hold();
 
@@ -71,7 +82,7 @@ namespace Tetris
 			else
 			{
 				MinoType nextTetronimo = queue.GetNextItem();
-				if( OnBlockDropped != null ) OnBlockDropped( this, System.EventArgs.Empty );
+				if( BlockDropped != null ) BlockDropped( this, System.EventArgs.Empty );
 				currentBlock.BlockType = nextTetronimo;
 			}
 		}

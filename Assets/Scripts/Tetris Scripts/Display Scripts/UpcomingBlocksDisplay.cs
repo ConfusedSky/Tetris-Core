@@ -17,9 +17,9 @@ public class UpcomingBlocksDisplay : MonoBehaviour
 
 	void OnEnable()
 	{
-		Game.OnBlockDropped += OnBlockDropped;
-		Game.OnStart += OnBlockDropped;
-		Game.OnHold += OnBlockDropped;
+		Game.BlockDropped += OnBlockDropped;
+		Game.Started += OnBlockDropped;
+		Game.BlockHeld += OnBlockDropped;
 	}
 
 	void Start()
@@ -29,9 +29,9 @@ public class UpcomingBlocksDisplay : MonoBehaviour
 
 	void OnDisable()
 	{
-		Game.OnBlockDropped -= OnBlockDropped;
-		Game.OnStart -= OnBlockDropped;
-		Game.OnHold -= OnBlockDropped;
+		Game.BlockDropped -= OnBlockDropped;
+		Game.Started -= OnBlockDropped;
+		Game.BlockHeld -= OnBlockDropped;
 	}
 
 	void OnBlockDropped( object sender, System.EventArgs e )
