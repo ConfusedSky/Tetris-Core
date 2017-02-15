@@ -182,8 +182,8 @@ GameObject:
   - component: {fileID: 4000012781306786}
   - component: {fileID: 114000010137189986}
   - component: {fileID: 114000011676764126}
-  - component: {fileID: 114000012107664400}
   - component: {fileID: 114000013417292696}
+  - component: {fileID: 114000012107664400}
   - component: {fileID: 114984343164063848}
   m_Layer: 0
   m_Name: Tetris Panel
@@ -525,6 +525,7 @@ MonoBehaviour:
   BackgroundFolder: {fileID: 1000011245381436}
   Width: 10
   Height: 23
+  KillHeight: 1
   StartingLocation: {x: 0, y: 0.99, z: 0}
   PrefabSize: {x: 0.48, y: 0.48}
   BGColor1: {r: 0.6838235, g: 0.6838235, b: 0.6838235, a: 0.19607843}
@@ -604,7 +605,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShadowColor: {r: 0.8235294, g: 0.8235294, b: 0.8235294, a: 1}
-  LossHeight: 1
   InputManager:
     RepeatDelay: 0.15
     RepeatRate: 0.045
