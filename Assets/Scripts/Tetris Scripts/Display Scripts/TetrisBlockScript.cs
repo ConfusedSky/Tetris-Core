@@ -14,19 +14,6 @@ public class TetrisBlockScript : MonoBehaviour
 		set
 		{
 			_color = value;
-			colorChanged = true;
-		}
-	}
-	public Color? BackgroundColor
-	{ 
-		get
-		{
-			return _background;
-		}
-		set
-		{
-			_background = value;
-			colorChanged = true;
 		}
 	}
 
@@ -34,8 +21,6 @@ public class TetrisBlockScript : MonoBehaviour
 	private SpriteRenderer sr;
 
 	private Color? _color = null;
-	private Color? _background = null;
-	private bool colorChanged = true;
 
 	// Use this for initialization
 	void Start()
@@ -46,29 +31,11 @@ public class TetrisBlockScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if( colorChanged ) ColorChange();
-	}
-
-	public void MoveTo( TetrisBlockScript destination )
-	{
-		destination.BlockColor = BlockColor;
-
-		Clear();
+		sr.color = BlockColor ?? DefaultColor;
 	}
 
 	public void Clear()
 	{
 		BlockColor = null;
-		BackgroundColor = null;
-	}
-
-	void ColorChange()
-	{
-		sr.color = BlockColor ?? BackgroundColor ?? DefaultColor;
-	}
-
-	public bool Occupied
-	{
-		get { return BlockColor != null; }
 	}
 }

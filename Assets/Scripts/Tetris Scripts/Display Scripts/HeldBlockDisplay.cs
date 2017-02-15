@@ -14,14 +14,14 @@ public class HeldBlockDisplay : MonoBehaviour
 
 	void OnEnable()
 	{
-		Game.OnHold += new System.EventHandler( OnHoldAction );
-		Game.OnStart += new System.EventHandler( OnHoldAction );
+		Game.BlockHeld += new System.EventHandler( OnHoldAction );
+		Game.Started += new System.EventHandler( OnHoldAction );
 	}
 
 	void OnDisable()
 	{
-		Game.OnHold -= new System.EventHandler( OnHoldAction );
-		Game.OnStart -= new System.EventHandler( OnHoldAction );
+		Game.BlockHeld -= new System.EventHandler( OnHoldAction );
+		Game.Started -= new System.EventHandler( OnHoldAction );
 	}
 	
 	void OnHoldAction( object sender, System.EventArgs e )
@@ -29,6 +29,6 @@ public class HeldBlockDisplay : MonoBehaviour
 		if( Game.HeldBlock == null )
 			blockScript.BlockColor = null;
 		else
-			blockScript.BlockColor = Game.HeldBlock.BlockColor;
+			blockScript.BlockColor = Game.HeldBlock.BlockColor.ToUnityColor();
 	}
 }

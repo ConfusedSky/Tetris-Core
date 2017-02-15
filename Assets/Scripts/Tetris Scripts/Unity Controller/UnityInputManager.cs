@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
+using Tetris;
 
 [Serializable]
-public class InputManger
+public class UnityInputManger : IInputManager
 {
 	private enum InputState
 	{
@@ -27,9 +28,9 @@ public class InputManger
 	private InputState state = InputState.None;
 	private float timeTillRepeat = 0;
 
-	public TetrisAction HandleInput()
+	public TetrisAction HandleInput( float deltaTime )
 	{
-		timeTillRepeat -= Time.deltaTime;
+		timeTillRepeat -= deltaTime;
 
 		if( Input.GetButtonDown( DropButton ) )
 		{

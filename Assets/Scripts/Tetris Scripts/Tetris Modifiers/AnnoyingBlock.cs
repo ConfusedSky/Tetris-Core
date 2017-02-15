@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Tetris;
 
 [RequireComponent(typeof(TetrisGame))]
 public class AnnoyingBlock : MonoBehaviour
@@ -17,12 +18,14 @@ public class AnnoyingBlock : MonoBehaviour
 	public int BlocksPerTimePeriod = 1;
 
 	private TetrisGame game;
+	private TetrisBoard board;
 	private float timeTillDrop = 0;
 
 	// Use this for initialization
 	void Awake() 
 	{
 		game = gameObject.GetComponent<TetrisGame>();
+		board = gameObject.GetComponent<TetrisBoard>();
 	}
 
 	void Start()
@@ -32,14 +35,14 @@ public class AnnoyingBlock : MonoBehaviour
 
 	void OnEnable()
 	{
-		game.OnRowCollapse += OnCollaspse;
-		game.OnBlockDropped += OnBlockDropped;
+		board.RowCollapsed += OnCollaspse;
+		game.BlockDropped += OnBlockDropped;
 	}
 
 	void OnDisable()
 	{
-		game.OnRowCollapse -= OnCollaspse;
-		game.OnBlockDropped -= OnBlockDropped;
+		board.RowCollapsed -= OnCollaspse;
+		game.BlockDropped -= OnBlockDropped;
 	}
 
 	void Update()
@@ -62,7 +65,7 @@ public class AnnoyingBlock : MonoBehaviour
 			PlaceBlocks( BlocksPerDrop );
 	}
 
-	void OnCollaspse( object sender, TetrisGame.RowCollapseEventArgs args )
+	void OnCollaspse( object sender, RowCollapseEventArgs args )
 	{
 		if( ActivateOnCollapse )
 			foreach( int line in args.ClearedRows )
@@ -81,42 +84,42 @@ public class AnnoyingBlock : MonoBehaviour
 		
 	private void PlaceBlock()
 	{
-		int column;
-		int i;
 		bool blockPlaced = false;
+		Point pos = new Point();
 		do
 		{
-			column = Random.Range( 0, game.Width );
-			for( i = 1; i < game.Height; i++ )
+			pos.x = Random.Range( 0, game.Board.Width );
+			for( pos.y = 1; pos.y < game.Board.Height; pos.y++ )
 			{
-				if( game.Scripts[i, column].Occupied )
+				if( board.Controller[pos].Occupied )
 					break;
-			}
-			game.Scripts[i-1, column].BlockColor = Color.black;
-			blockPlaced = true;
-			if( AvoidClears && game.CheckClear( i - 1 ) )
-			{
-				game.Scripts[i - 1, column].BlockColor = null;
-				blockPlaced = false;
-			}
-		} while( !blockPlaced );
+		 	}
+			pos.y--;
+			board.Controller[pos].Color = BlockColor.black;
+		 	blockPlaced = true;
+			if( AvoidClears && board.Controller.CheckClear( pos.y ) )
+		 	{
+				board.Controller[pos].Color = null;
+		 		blockPlaced = false;
+		 	}
+		 } while( !blockPlaced );
 
-		game.Board.PlaceBlock( new Point( column, i-1 ), Color.black );
+		board.Controller.PlaceBlock( pos, BlockColor.black );
 
-		// IEnumerator fade = FadeIn( column, i - 1 );
-		// StartCoroutine( fade );
+		//IEnumerator fade = FadeIn( column, i - 1 );
+		//StartCoroutine( fade );
 	}
 
-	private IEnumerator FadeIn( int x, int y )
-	{
-		TetrisBlockScript block = game.Scripts[y, x];
+	//private IEnumerator FadeIn( int x, int y )
+	//{
+	//	TetrisBlockScript block = game.Scripts[y, x];
 
-		for( float i = 0; block.Occupied && i <= 1; i += .1f )
-		{
-			block.BlockColor = new Color( 0, 0, 0, i );
-			yield return new WaitForSeconds( (FadeTime / 1000) / 10 );
-		}
-	}
+	//	for( float i = 0; block.Occupied && i <= 1; i += .1f )
+	//	{
+	//		block.BlockColor = new Color( 0, 0, 0, i );
+	//		yield return new WaitForSeconds( (FadeTime / 1000) / 10 );
+	//	}
+	//}
 
 }
 
