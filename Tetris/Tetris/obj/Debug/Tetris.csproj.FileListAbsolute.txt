@@ -1,0 +1,5 @@
+C:\Users\Masa\Documents\Git\Masochism\Tetris\Tetris\bin\Debug\Tetris.dll
+C:\Users\Masa\Documents\Git\Masochism\Tetris\Tetris\bin\Debug\Tetris.pdb
+C:\Users\Masa\Documents\Git\Masochism\Tetris\Tetris\obj\Debug\Tetris.csprojResolveAssemblyReference.cache
+C:\Users\Masa\Documents\Git\Masochism\Tetris\Tetris\obj\Debug\Tetris.dll
+C:\Users\Masa\Documents\Git\Masochism\Tetris\Tetris\obj\Debug\Tetris.pdb
