@@ -2,7 +2,6 @@
 
 namespace Tetris
 {
-
 	public class Mino
 	{
 		public static BlockColor ShadowColor = BlockColor.white;
