@@ -14,6 +14,7 @@ namespace Tetris
 		private bool alive = true;
 
 		public bool Alive{ get { return alive; } }
+        public Point Position { get { return position; } }
 
 		public MinoType BlockType { 
 			get { return type; }
@@ -105,6 +106,12 @@ namespace Tetris
 		{
 			return Move( new Point( xOffset, yOffset ) );
 		}
+
+        public bool MoveTo( Point p )
+        {
+            Point offset = p - position;
+            return Move(offset);
+        }
 
 		// Int parameter so it is possible to do a 180 turn if needed
 		// Offset of 1 is a right rotation
