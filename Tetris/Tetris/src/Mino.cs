@@ -2,6 +2,13 @@
 
 namespace Tetris
 {
+    public enum Rotation : byte
+    {
+        Right = 1,
+        Flip = 2,
+        Left = 3
+    }
+
 	public class Mino
 	{
 		public static BlockColor ShadowColor = BlockColor.white;
@@ -70,9 +77,9 @@ namespace Tetris
 				Clear();
 				alive = false;
 			} else if( action == TetrisAction.RotateRight ) {
-				Rotate( 1 );
+				Rotate( Rotation.Right );
 			} else if( action == TetrisAction.RotateLeft ) {
-				Rotate( 3 );
+				Rotate( Rotation.Left );
 			}
 
 			return this;
@@ -117,8 +124,9 @@ namespace Tetris
 		// Offset of 1 is a right rotation
 		// Offset of 2 is a 180 rotation
 		// Offset of 3 is a left rotation
-		public bool Rotate( int rotationOffset )
+		public bool Rotate( Rotation r )
 		{
+            int rotationOffset = (int)r;
 			Clear();
 			// try to find a valid offset in which this rotation works
 			bool works = false;

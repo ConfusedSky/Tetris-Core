@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using NUnit.Framework;
 
@@ -53,11 +49,11 @@ namespace Tetris.Test
                 },
                 BlockColor.black
                 );
-            mino.Rotate(1);
+            mino.Rotate( Rotation.Right );
             mino.MoveTo( new Point(1,board.Height-3) );
             Utils.PrintBoard(board);
             Console.WriteLine();
-            mino.Rotate(1);
+            mino.Rotate( Rotation.Right );
             Utils.PrintBoard(board);
             Console.WriteLine();
             Assert.AreEqual(new Point(2, board.Height - 2), mino.Position);
