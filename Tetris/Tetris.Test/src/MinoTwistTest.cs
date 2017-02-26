@@ -35,6 +35,10 @@ namespace Tetris.Test
         public void TestTSpinTimeSaver()
         {
             mino.BlockType = Tetromino.T;
+            // X_____
+            // XR_X__
+            // X___X_
+            // XX_X__
             board.PlaceBlocks(
                 new Point[]
                 {

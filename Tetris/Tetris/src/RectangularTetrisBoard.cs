@@ -127,6 +127,37 @@ namespace Tetris
 			foreach( Block b in r )
 				b.Clear();
 		}
+
+        /// <summary>
+        /// Creates a new board based on the info in text.
+        /// </summary>
+        /// <param name="text">
+        /// An array of strings, strings do not have to all be the same length but must 
+        /// be greater than or equal to the length of the first string.
+        /// Each string is a row of the tetris board
+        /// Anywhere there is an X a black block is placed, other characters are ignored
+        /// </param>
+        /// <param name="killHeight">
+        /// Specifies the kill hight of the board and adds a number of empty rows the the top equal to 
+        /// killHeight+1 to prevent death
+        /// </param>
+        /// <returns>The rectangular tetris board specified in text</returns>
+        public static RectangularTetrisBoard CreateBoardFromText( string[] text, int killHeight )
+        {
+            if (text.Length < 1) return null;
+            RectangularTetrisBoard board = new RectangularTetrisBoard(text[0].Length, text.Length+killHeight+1, killHeight);
+            char blockToken = 'X';
+            Point p = new Point();
+            for( p.y = killHeight+1; p.y < board.Height; p.y++ )
+            {
+                for( p.x = 0; p.x < board.Width; p.x++ )
+                {
+                    if( text[p.y-killHeight-1][p.x] == blockToken )
+                        board.PlaceBlock(p, BlockColor.black);
+                }
+            }
+            return board;
+        }
 	}
 }
 
