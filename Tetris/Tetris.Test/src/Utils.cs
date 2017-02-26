@@ -8,6 +8,41 @@ namespace Tetris.Test
 {
     static class Utils
     {
+        public static Mino SetupMino( RectangularTetrisBoard board, string[] text, MinoType type )
+        {
+            Mino m = Mino.CreateNewMino(board, type);
+            char[] posChars = { '0', 'L', 'R', 'U' };
+            Point p = new Point();
+            for( p.y = 0; p.y < text.Length; p.y++ )
+            {
+                for( p.x = 0; p.x < text[0].Length; p.x++ )
+                {
+                    if (posChars.Contains(text[p.y][p.x]))
+                    {
+                        switch (text[p.y][p.x])
+                        {
+                            case '0':
+                                m.Rotate(Rotation.None);
+                                break;
+                            case 'L':
+                                m.Rotate(Rotation.Left);
+                                break;
+                            case 'R':
+                                m.Rotate(Rotation.Right);
+                                break;
+                            case 'U':
+                                m.Rotate(Rotation.Flip);
+                                break;
+                        }
+                        p.y += board.KillHeight + 1;
+                        m.MoveTo(p);
+                        break;
+                    }
+                }
+            }
+            return m;
+        }
+
         public static void PrintBoard( RectangularTetrisBoard b )
         {
             Point p = new Point();

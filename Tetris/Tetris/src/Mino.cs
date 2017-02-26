@@ -4,6 +4,7 @@ namespace Tetris
 {
     public enum Rotation : byte
     {
+        None = 0,
         Right = 1,
         Flip = 2,
         Left = 3
@@ -145,7 +146,7 @@ namespace Tetris
 			rotation += rotationOffset;
 			rotation %= 4;
 			Place();
-			return true;
+			return works;
 		}
 
 		private void SetBlockColor( BlockColor color, bool permanent = false )
