@@ -21,8 +21,8 @@ namespace Tetris.Test.src
                 "X X"
             };
             RectangularTetrisBoard board = RectangularTetrisBoard.CreateBoardFromText( text, 4 );
-            Assert.AreEqual(board.Width, 3);
-            Assert.AreEqual(board.Height, 8);
+            Assert.AreEqual(board.Width, 3, "Width is incorrect");
+            Assert.AreEqual(board.Height, 8, "Height is incorrect");
             Utils.PrintBoard(board);
             Point p = new Point();
             for( p.y = 5; p.y < board.Height; p.y++ )
