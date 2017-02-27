@@ -30,6 +30,8 @@ namespace Tetris.Test
         }
 
         #region Tests
+
+        #region Tspins
         [Test]
         public void TestTSpinTimeSaverRight()
         {
@@ -152,7 +154,9 @@ namespace Tetris.Test
                 mino.Rotate(Rotation.Left);
             }, () => new Point(1, board.Height - 2));
         }
+        #endregion
 
+        #region ISpins
         [Test]
         public void TestISpinCross()
         {
@@ -195,7 +199,9 @@ namespace Tetris.Test
             };
             TestBase(text, Tetromino.I, () => mino.Rotate(Rotation.Left), () => new Point(2, board.Height - 1));
         }
+        #endregion
 
+        #region SZSpins
         [Test]
         public void TestZSpinInPlaceRight()
         {
@@ -327,6 +333,8 @@ namespace Tetris.Test
             };
             TestBase(text, Tetromino.Z, () => mino.Rotate(Rotation.Left), () => new Point(3, board.Height - 2));
         }
+        #endregion
+
         #endregion
     }
 }
