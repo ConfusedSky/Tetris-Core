@@ -2,10 +2,12 @@
 
 namespace Tetris
 {
-	/// <summary>
-	/// Block color is an immutable struct containing bytes representing a color with each rgba being a number from 0 to 255
-	/// </summary>
-	public class BlockColor
+    /// <summary>
+    /// Block color is an immutable struct containing bytes representing a color with each rgba being a number from 0 to 255
+    /// </summary>
+    /// 
+    [Serializable]
+    public class BlockColor
 	{
 		public static BlockColor black   = new BlockColor(   0,   0,   0 );
 		public static BlockColor blue    = new BlockColor(   0,   0, 255 );

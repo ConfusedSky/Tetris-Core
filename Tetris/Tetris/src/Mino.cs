@@ -2,6 +2,14 @@
 
 namespace Tetris
 {
+    public enum Rotation : byte
+    {
+        None = 0,
+        Right = 1,
+        Flip = 2,
+        Left = 3
+    }
+
 	public class Mino
 	{
 		public static BlockColor ShadowColor = BlockColor.white;
@@ -14,6 +22,7 @@ namespace Tetris
 		private bool alive = true;
 
 		public bool Alive{ get { return alive; } }
+        public Point Position { get { return position; } }
 
 		public MinoType BlockType { 
 			get { return type; }
@@ -69,9 +78,9 @@ namespace Tetris
 				Clear();
 				alive = false;
 			} else if( action == TetrisAction.RotateRight ) {
-				Rotate( 1 );
+				Rotate( Rotation.Right );
 			} else if( action == TetrisAction.RotateLeft ) {
-				Rotate( 3 );
+				Rotate( Rotation.Left );
 			}
 
 			return this;
@@ -106,12 +115,19 @@ namespace Tetris
 			return Move( new Point( xOffset, yOffset ) );
 		}
 
+        public bool MoveTo( Point p )
+        {
+            Point offset = p - position;
+            return Move(offset);
+        }
+
 		// Int parameter so it is possible to do a 180 turn if needed
 		// Offset of 1 is a right rotation
 		// Offset of 2 is a 180 rotation
 		// Offset of 3 is a left rotation
-		public bool Rotate( int rotationOffset )
+		public bool Rotate( Rotation r )
 		{
+            int rotationOffset = (int)r;
 			Clear();
 			// try to find a valid offset in which this rotation works
 			bool works = false;
@@ -130,7 +146,7 @@ namespace Tetris
 			rotation += rotationOffset;
 			rotation %= 4;
 			Place();
-			return true;
+			return works;
 		}
 
 		private void SetBlockColor( BlockColor color, bool permanent = false )

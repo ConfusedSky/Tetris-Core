@@ -2,8 +2,8 @@
 
 namespace Tetris
 {
-	[Serializable]
-	public class Point
+    [Serializable]
+    public class Point : IEquatable<Point>
 	{
 		public static readonly Point Origin = new Point (0, 0);
 
@@ -70,5 +70,15 @@ namespace Tetris
 			return new Point (x - centerPoint.x, 
 				y - centerPoint.y).Rotate (rotation) + centerPoint;
 		}
-	}
+
+        public override string ToString()
+        {
+            return String.Format("({0}, {1})", x, y );
+        }
+
+        public bool Equals(Point other)
+        {
+            return (x == other.x) && (y == other.y);
+        }
+    }
 }
