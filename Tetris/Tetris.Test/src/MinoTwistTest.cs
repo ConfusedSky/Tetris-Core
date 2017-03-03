@@ -17,7 +17,7 @@ namespace Tetris.Test
             mino = Mino.CreateNewMino(board, Tetromino.T);
         }
 
-        void TestBase(string[] text, MinoType type, Action TestActions, Point position )
+        void TestBase(string[] text, MinoType type, Action TestActions, Point position)
         {
             board = RectangularTetrisBoard.CreateBoardFromText(text, 0);
             mino = Utils.SetupMino(board, text, type);
@@ -26,13 +26,15 @@ namespace Tetris.Test
             TestActions();
             Utils.PrintBoard(board);
             Console.WriteLine();
-            position = new Point(position.x, board.Height - position.y - 1);
-            Assert.AreEqual(position, mino.Position);
+            //position = new Point(position.x, board.Height - position.y - 1);
+            Assert.AreEqual(position, 
+                new Point(mino.Position.x, board.Height - mino.Position.y - 1 ));
         }
 
         #region Tests
 
         #region Tspins
+        [Category("T Spins")]
         [Test]
         public void TestTSpinTimeSaverRight()
         {
@@ -46,6 +48,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.T, () => mino.Rotate(Rotation.Right), new Point(2, 1));
         }
 
+        [Category("T Spins")]
         [Test]
         public void TestTSpinTimeSaverLeft()
         {
@@ -59,6 +62,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.T, () => mino.Rotate(Rotation.Left), new Point(2, 1));
         }
 
+        [Category("T Spins")]
         [Test]
         public void TestTSpinSingleRight()
         {
@@ -71,6 +75,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.T, () => mino.Rotate(Rotation.Right), new Point(1, 0));
         }
 
+        [Category("T Spins")]
         [Test]
         public void TestTSpinSingleLeft()
         {
@@ -83,6 +88,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.T, () => mino.Rotate(Rotation.Left), new Point(1, 0));
         }
 
+        [Category("T Spins")]
         [Test]
         public void TestTSpinTripleRight()
         {
@@ -97,6 +103,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.T, () => mino.Rotate(Rotation.Right), new Point(3, 1));
         }
 
+        [Category("T Spins")]
         [Test]
         public void TestTSpinTripleLeft()
         {
@@ -111,6 +118,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.T, () => mino.Rotate(Rotation.Left), new Point(3, 1));
         }
 
+        [Category("T Spins")]
         [Test]
         public void TestTSpinVerticalSingleRight()
         {
@@ -124,6 +132,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.T, () => mino.Rotate(Rotation.Right), new Point(1, 1));
         }
 
+        [Category("T Spins")]
         [Test]
         public void TestTSpinVerticalSingleLeft()
         {
@@ -137,6 +146,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.T, () => mino.Rotate(Rotation.Left), new Point(3, 1));
         }
 
+        [Category("T Spins")]
         [Test]
         public void TestTSpinComplicated()
         {
@@ -158,6 +168,7 @@ namespace Tetris.Test
         #endregion
 
         #region ISpins
+        [Category("I Spins")]
         [Test]
         public void TestISpinCross()
         {
@@ -172,9 +183,10 @@ namespace Tetris.Test
             TestBase(text, Tetromino.I, () =>
             {
                 mino.Rotate(Rotation.Right);
-            }, new Point(1, 2) );
+            }, new Point(1, 2));
         }
 
+        [Category("I Spins")]
         [Test]
         public void TestISpinEndRight()
         {
@@ -188,6 +200,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.I, () => mino.Rotate(Rotation.Right), new Point(4, 0));
         }
 
+        [Category("I Spins")]
         [Test]
         public void TestISpinEndLeft()
         {
@@ -203,6 +216,7 @@ namespace Tetris.Test
         #endregion
 
         #region SZSpins
+        [Category("SZ Spins")]
         [Test]
         public void TestZSpinInPlaceRight()
         {
@@ -215,6 +229,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.Z, () => mino.Rotate(Rotation.Right), new Point(1, 1));
         }
 
+        [Category("SZ Spins")]
         [Test]
         public void TestSSpinInPlaceLeft()
         {
@@ -227,6 +242,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.S, () => mino.Rotate(Rotation.Left), new Point(2, 1));
         }
 
+        [Category("SZ Spins")]
         [Test]
         public void TestSSpinTuckRight()
         {
@@ -240,6 +256,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.S, () => mino.Rotate(Rotation.Right), new Point(1, 1));
         }
 
+        [Category("SZ Spins")]
         [Test]
         public void TestZSpinTuckLeft()
         {
@@ -253,6 +270,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.Z, () => mino.Rotate(Rotation.Left), new Point(2, 1));
         }
 
+        [Category("SZ Spins")]
         [Test]
         public void TestSSpinJumpRight()
         {
@@ -267,6 +285,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.S, () => mino.Rotate(Rotation.Right), new Point(1, 1));
         }
 
+        [Category("SZ Spins")]
         [Test]
         public void TestZSpinJumpLeft()
         {
@@ -281,6 +300,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.Z, () => mino.Rotate(Rotation.Left), new Point(3, 1));
         }
 
+        [Category("SZ Spins")]
         [Test]
         public void TestZSpinTuckRightNoOverhang()
         {
@@ -294,6 +314,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.Z, () => mino.Rotate(Rotation.Right), new Point(2, 1));
         }
 
+        [Category("SZ Spins")]
         [Test]
         public void TestSSpinTuckLeftNoOverhang()
         {
@@ -307,6 +328,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.S, () => mino.Rotate(Rotation.Left), new Point(1, 1));
         }
 
+        [Category("SZ Spins")]
         [Test]
         public void TestSSpinJumpRightNoOverhang()
         {
@@ -321,6 +343,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.S, () => mino.Rotate(Rotation.Right), new Point(1, 1));
         }
 
+        [Category("SZ Spins")]
         [Test]
         public void TestZSpinJumpLeftNoOverhang()
         {
@@ -337,6 +360,7 @@ namespace Tetris.Test
         #endregion
 
         #region JLSpins
+        [Category("JL Spins")]
         [Test]
         public void TestLSpinInPlaceRight()
         {
@@ -349,6 +373,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.L, () => mino.Rotate(Rotation.Right), new Point(2, 1));
         }
 
+        [Category("JL Spins")]
         [Test]
         public void TestJSpinInPlaceLeft()
         {
@@ -361,6 +386,7 @@ namespace Tetris.Test
             TestBase(text, Tetromino.J, () => mino.Rotate(Rotation.Left), new Point(2, 1));
         }
 
+        [Category("JL Spins")]
         [Test]
         public void TestLSpinTuckTopRight()
         {
@@ -370,7 +396,192 @@ namespace Tetris.Test
                 "XXL",
                 "   "
             };
-            TestBase(text, Tetromino.L, () => mino.Rotate(Rotation.Right), new Point( 1, 0 ));
+            TestBase(text, Tetromino.L, () => mino.Rotate(Rotation.Right), new Point(1, 0));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestJSpinTuckTopLeft()
+        {
+            string[] text =
+            {
+                "   ",
+                "RXX",
+                "   "
+            };
+            TestBase(text, Tetromino.J, () => mino.Rotate(Rotation.Left), new Point(1, 0));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestJSpinTuckBottomRight()
+        {
+            string[] text =
+            {
+                "XX    ",
+                " XL   ",
+                "      "
+            };
+            TestBase(text, Tetromino.J, () => mino.Rotate(Rotation.Right), new Point(1, 0));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestLSpinTuckBottomLeft()
+        {
+            string[] text =
+            {
+                "    XX",
+                "   RX ",
+                "      "
+            };
+            TestBase(text, Tetromino.L, () => mino.Rotate(Rotation.Left), new Point(4, 0));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestJSpinHighOverhangRight()
+        {
+            string[] text =
+            {
+                "    ",
+                " RXX",
+                "    ",
+                "XXX "
+            };
+            TestBase(text, Tetromino.J, () => mino.Rotate(Rotation.Right), new Point(2, 1));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestLSpinHighOverhangLeft()
+        {
+            string[] text =
+            {
+                "    ",
+                "XXL ",
+                "    ",
+                " XXX"
+            };
+            TestBase(text, Tetromino.L, () => mino.Rotate(Rotation.Left), new Point(1, 1));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestJSpiLowOverhangRight()
+        {
+            string[] text =
+            {
+                "    ",
+                "   X",
+                " R  ",
+                "  X "
+            };
+            TestBase(text, Tetromino.J, () => mino.Rotate(Rotation.Right), new Point(2, 1));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestLSpinLowOverhangLeft()
+        {
+            string[] text =
+            {
+                "    ",
+                "X   ",
+                "  L ",
+                " X  "
+            };
+            TestBase(text, Tetromino.L, () => mino.Rotate(Rotation.Left), new Point(1, 1));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestJSpinCaveRight()
+        {
+            string[] text =
+            {
+                "    ",
+                "XR X",
+                "X   ",
+                "XXX "
+            };
+            TestBase(text, Tetromino.J, () => mino.Rotate(Rotation.Right), new Point(2,1));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestLSpinCaveLeft()
+        {
+            string[] text =
+            {
+                "    ",
+                "X LX",
+                "   X",
+                " XXX"
+            };
+            TestBase(text, Tetromino.L, () => mino.Rotate(Rotation.Left), new Point(1, 1));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestLSpinJumpTripleRight()
+        {
+            string[] text =
+            {
+                "XX  ",
+                "X 0 ",
+                "X XX",
+                "X XX",
+                "X  X"
+            };
+            TestBase(text, Tetromino.L, () => mino.Rotate(Rotation.Right), new Point(1, 1));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestJSpinJumpTripleLeft()
+        {
+            string[] text =
+            {
+                "  XX",
+                " 0 X",
+                "XX X",
+                "XX X",
+                "X  X"
+            };
+            TestBase(text, Tetromino.J, () => mino.Rotate(Rotation.Left), new Point(2, 1));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestLSpinJumpTripleRightUpperHang()
+        {
+            string[] text =
+            {
+                "XX  ",
+                "X   ",
+                "X 0 ",
+                "X XX",
+                "X XX",
+                "X  X"
+            };
+            TestBase(text, Tetromino.L, () => mino.Rotate(Rotation.Right), new Point(1, 1));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestJSpinJumpTripleLeftUpperHang()
+        {
+            string[] text =
+            {
+                "  XX",
+                "   X",
+                " 0 X",
+                "XX X",
+                "XX X",
+                "X  X"
+            };
+            TestBase(text, Tetromino.J, () => mino.Rotate(Rotation.Left), new Point(2, 1));
         }
 
         #endregion

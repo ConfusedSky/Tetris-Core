@@ -12,6 +12,7 @@ namespace Tetris.Test.src
     class CreateBoardFromTextTest
     {
         [Test]
+        [Category("Board test")]
         public void TestCreateSimpleX()
         {
             string[] text =
