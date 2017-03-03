@@ -524,6 +524,62 @@ namespace Tetris.Test
 
         [Category("JL Spins")]
         [Test]
+        public void TestLSpinTuckDoubleRight()
+        {
+            string[] text =
+            {
+                "   ",
+                "R X",
+                "   ",
+                " XX"
+            };
+            TestBase(text, Tetromino.L, () => mino.Rotate(Rotation.Right), new Point(1, 1));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestJSpinTuckDoubleLeft()
+        {
+            string[] text =
+            {
+                "   ",
+                "X L",
+                "   ",
+                "XX "
+            };
+            TestBase(text, Tetromino.J, () => mino.Rotate(Rotation.Left), new Point(1, 1));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestLSpinTuckOverhangRight()
+        {
+            string[] text =
+            {
+                "     ",
+                "  RXX",
+                "     ",
+                "XX XX"
+            };
+            TestBase(text, Tetromino.L, () => mino.Rotate(Rotation.Right), new Point(3, 1));
+        }
+
+        [Category("JL Spins")]
+        [Test]
+        public void TestJSpinTuckOverhangLeft()
+        {
+            string[] text =
+            {
+                "     ",
+                "XXL  ",
+                "     ",
+                "XX XX"
+            };
+            TestBase(text, Tetromino.J, () => mino.Rotate(Rotation.Left), new Point(1, 1));
+        }
+
+        [Category("JL Spins")]
+        [Test]
         public void TestLSpinJumpTripleRight()
         {
             string[] text =
