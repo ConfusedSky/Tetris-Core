@@ -335,6 +335,46 @@ namespace Tetris.Test
         }
         #endregion
 
+        #region JLSpins
+
+        [Test]
+        public void TestLSpinInPlaceRight()
+        {
+            string[] text =
+            {
+                "   XX",
+                "X R X",
+                "X   X"
+            };
+            TestBase(text, Tetromino.L, () => mino.Rotate(Rotation.Right), () => new Point(2, board.Height - 2));
+        }
+
+        [Test]
+        public void TestJSpinInPlaceLeft()
+        {
+            string[] text =
+            {
+                "XX  ",
+                "X L X",
+                "X   X"
+            };
+            TestBase(text, Tetromino.J, () => mino.Rotate(Rotation.Left), () => new Point(2, board.Height - 2));
+        }
+
+        [Test]
+        public void TestLSpinTuckTopRight()
+        {
+            string[] text =
+            {
+                "   ",
+                "XXL",
+                "   "
+            };
+            TestBase(text, Tetromino.L, () => mino.Rotate(Rotation.Right), () => new Point( 1, board.Height-1 ));
+        }
+
+        #endregion
+
         #endregion
     }
 }
