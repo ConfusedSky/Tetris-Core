@@ -54,21 +54,18 @@ public class TetrisGame : MonoBehaviour
 
 	void Game_BlockHeld (object sender, System.EventArgs e)
 	{
-		if (BlockHeld != null )
-			BlockHeld (this, e);
-	}
+        BlockHeld?.Invoke(this, e);
+    }
 
 	void Game_BlockDropped (object sender, System.EventArgs e)
 	{
-		if (BlockDropped != null)
-			BlockDropped (this, e);
-	}
+        BlockDropped?.Invoke(this, e);
+    }
 
 	void Game_Started (object sender, System.EventArgs e)
 	{
-		if (Started != null)
-			Started (this, e);
-	}
+        Started?.Invoke(this, e);
+    }
 
 	void OnDisabled()
 	{

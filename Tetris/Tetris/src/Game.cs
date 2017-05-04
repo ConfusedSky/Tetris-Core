@@ -51,8 +51,8 @@ namespace Tetris
 		public void GameStart()
 		{
 			currentBlock.BlockType = queue.GetNextItem();
-			if( Started != null ) Started( this, System.EventArgs.Empty );
-		}
+            Started?.Invoke(this, System.EventArgs.Empty);
+        }
 
 		private void Hold()
 		{
@@ -63,8 +63,8 @@ namespace Tetris
 				currentBlock.BlockType = queue.GetNextItem();
 			heldBlock = temp;
 
-			if( BlockHeld != null ) BlockHeld( this, System.EventArgs.Empty );
-		}
+            BlockHeld?.Invoke(this, System.EventArgs.Empty);
+        }
 
 		// Update is called once per frame
 		public void Update( float deltaTime )
@@ -81,8 +81,8 @@ namespace Tetris
 			else
 			{
 				MinoType nextTetronimo = queue.GetNextItem();
-				if( BlockDropped != null ) BlockDropped( this, System.EventArgs.Empty );
-				currentBlock.BlockType = nextTetronimo;
+                BlockDropped?.Invoke(this, System.EventArgs.Empty);
+                currentBlock.BlockType = nextTetronimo;
 			}
 		}
 

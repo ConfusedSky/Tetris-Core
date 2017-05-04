@@ -48,9 +48,8 @@ namespace Tetris
 
 		private void BaseTetrisBoard_RowCollapsed (object sender, RowCollapseEventArgs e)
 		{
-			if (BoardChanged != null)
-				BoardChanged( this, EventArgs.Empty );
-		}
+            BoardChanged?.Invoke(this, EventArgs.Empty);
+        }
 
 		/// <summary>
 		/// Default location to spawn things onto the board
@@ -102,9 +101,9 @@ namespace Tetris
 				place (p, color, background);
 			}
 
-			if (!background && BoardChanged != null)
-					BoardChanged( this, EventArgs.Empty );
-		}
+			if (!background)
+                BoardChanged?.Invoke(this, EventArgs.Empty);
+        }
 
 		/// <summary>
 		/// Places the block at point p.
@@ -177,9 +176,8 @@ namespace Tetris
 		public void CollapseRow( int row )
 		{
 			collapse( row );
-			if (RowCollapsed != null)
-				RowCollapsed( this, new RowCollapseEventArgs( new System.Collections.Generic.List<int>( row ) ) );
-		}
+            RowCollapsed?.Invoke(this, new RowCollapseEventArgs(new System.Collections.Generic.List<int>(row)));
+        }
 
 		/// <summary>
 		/// Collapses all Clearable Rows.
