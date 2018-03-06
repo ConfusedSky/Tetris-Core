@@ -63,13 +63,23 @@ namespace Tetris
 					b.Clear();
 		}
 
-		/// <summary>
-		/// Determines whether the specified point is a valid placement.
-		/// </summary>
-		/// <returns>true</returns>
-		/// <c>false</c>
-		/// <param name="point">Point to check.</param>
-		public override bool IsValidPlacement( Point point )
+        /// <summary>
+        /// Reset the background of the tetris board
+        /// </summary>
+        public override void ResetBackground()
+        {
+            foreach (Block[] row in blocks)
+                foreach (Block b in row)
+                    b.BackgroundColor = null;
+        }
+
+        /// <summary>
+        /// Determines whether the specified point is a valid placement.
+        /// </summary>
+        /// <returns>true</returns>
+        /// <c>false</c>
+        /// <param name="point">Point to check.</param>
+        public override bool IsValidPlacement( Point point )
 		{
 			if( point.x < 0 || point.x >= Width || point.y >= Height ||
 			    (point.y >= 0 && GetBlockAt( point ).Occupied) ) {
@@ -99,7 +109,19 @@ namespace Tetris
 			blocks[ 0 ] = temp;
 		}
 
-		public override IList<int> CheckClears()
+        protected override void reverseCollapse()
+        {
+            ClearRow(0);
+            Block[] temp = blocks[0];
+
+            for (int i = 1; i < Height; i++)
+            {
+                blocks[i-1] = blocks[i];
+            }
+            blocks[Height - 1] = temp;
+        }
+
+        public override IList<int> CheckClears()
 		{
 			IEnumerable<int> clears = from row in Enumerable.Range( 0, Height )
 			                          where CheckClear( row )

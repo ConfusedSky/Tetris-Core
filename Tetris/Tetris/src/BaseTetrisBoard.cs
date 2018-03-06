@@ -69,6 +69,11 @@ namespace Tetris
 		/// </summary>
 		public abstract void Reset ();
 
+        /// <summary>
+        /// Reset the the background blocks
+        /// </summary>
+        public abstract void ResetBackground();
+
 		/// <summary>
 		/// Determines whether the specified BlockLocations are a valid placement in this instance.
 		/// </summary>
@@ -168,7 +173,9 @@ namespace Tetris
 			get { return GetBlockAt (p); }
 		}
 
-		protected abstract void collapse( int row );
+		protected abstract void collapse(int row);
+
+        protected abstract void reverseCollapse();
 
 		/// <summary>
 		/// Collapses a row of the board.
@@ -197,6 +204,21 @@ namespace Tetris
 
 			return clears;
 		}
+
+        /// <summary>
+        /// Moves n rows up.
+        /// </summary>
+        /// <param name="n">Number of rows to move.</param>
+        public void ReverseCollapse(int n, bool update = true)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                reverseCollapse();
+            }
+
+            ResetBackground();
+            if (BoardChanged != null && update) BoardChanged(this, EventArgs.Empty);
+        }
 
 		/// <summary>
 		/// Checks all the rows of a tetris board for clearable rows
