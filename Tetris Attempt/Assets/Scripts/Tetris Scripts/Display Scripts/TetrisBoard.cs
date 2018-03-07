@@ -66,6 +66,9 @@ public class TetrisBoard : MonoBehaviour
 					BlockFolder.transform
 				);
 
+				if (i < 2)
+					Blocks [i, j].SetActive (false);
+
 				// Assign the scripts to the variable and make their background invisible
 				Scripts[i, j] = Blocks[i, j].GetComponent<TetrisBlockScript>();
 				Scripts[i, j].DefaultColor = new Color( 0, 0, 0, 0 );
@@ -76,6 +79,9 @@ public class TetrisBoard : MonoBehaviour
 					BlockPrefab,
 					BackgroundFolder.transform
 				);
+
+				if (i < 2)
+					background [i, j].SetActive (false);
 
 				background[i, j].GetComponent<TetrisBlockScript>().DefaultColor = 
 					(((j + i % 2) % 2 == 0) ? (BGColor1) : (BGColor2));
