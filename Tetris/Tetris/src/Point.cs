@@ -33,6 +33,11 @@ namespace Tetris
 			return new Point (first.x / other, first.y / other);
 		}
 
+        public Point Clone()
+        {
+            return new Point(x, y);
+        }
+
 		// Rotates the point around the origin
 		// Rotates by
 		// 0, 0 degrees

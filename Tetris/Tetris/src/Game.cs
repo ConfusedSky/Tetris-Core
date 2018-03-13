@@ -23,6 +23,7 @@ namespace Tetris
 		public BaseTetrisBoard Board { get { return board; } }
 		public MinoType HeldBlock { get { return heldBlock; } }
 		public MinoType[] QueuedBlocks{ get { return queue.GetObjects(); } }
+        public Mino CurrentBlock { get { return currentBlock;  } }
 
 		public event System.EventHandler BlockHeld;
 		public event System.EventHandler BlockDropped;

@@ -22,7 +22,8 @@ namespace Tetris
 		private bool alive = true;
 
 		public bool Alive{ get { return alive; } }
-        public Point Position { get { return position; } }
+        public Point Position { get { return position.Clone(); } }
+        public Rotation Rotation { get { return (Rotation) rotation; } }
 
 		public MinoType BlockType { 
 			get { return type; }
