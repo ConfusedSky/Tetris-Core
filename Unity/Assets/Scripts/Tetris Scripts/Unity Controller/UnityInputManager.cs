@@ -3,7 +3,7 @@ using UnityEngine;
 using Tetris;
 
 [Serializable]
-public class UnityInputManger : IInputManager
+public class UnityInputManager : IInputManager
 {
 	private enum InputState
 	{

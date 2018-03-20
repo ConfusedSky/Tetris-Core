@@ -52,6 +52,9 @@ namespace Tetris
 				BoardChanged( this, EventArgs.Empty );
 		}
 
+        public delegate void intData(object t, int l);
+        public event intData RowReversed;
+
 		/// <summary>
 		/// Default location to spawn things onto the board
 		/// </summary>
@@ -217,6 +220,8 @@ namespace Tetris
             }
 
             ResetBackground();
+
+            if (RowReversed != null) RowReversed(this, n);
             if (BoardChanged != null && update) BoardChanged(this, EventArgs.Empty);
         }
 

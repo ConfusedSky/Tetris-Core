@@ -45,14 +45,21 @@ namespace Tetris
 			position = startingPosition;
 			Place();
 
+            board.RowReversed += Board_RowReversed;
 			board.BoardChanged += OnBoardChanged;
 		}
 
-		// Kill the currently active block
-		public void Destroy()
+        private void Board_RowReversed(object sender, int n)
+        {
+            Move(0, -n);
+        }
+
+        // Kill the currently active block
+        public void Destroy()
 		{
 			board.BoardChanged -= OnBoardChanged;
-			Clear();
+            board.RowReversed -= Board_RowReversed;
+            Clear();
 			alive = false;
 		}
 
