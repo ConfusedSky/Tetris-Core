@@ -22,13 +22,11 @@ namespace Tetris
 		public BaseTetrisBoard()
 		{
 			BoardChanged += BaseTetrisBoard_BoardChanged;
-			RowCollapsed += BaseTetrisBoard_RowCollapsed;
 		}
 
 		~BaseTetrisBoard()
 		{
 			BoardChanged -= BaseTetrisBoard_BoardChanged;
-			RowCollapsed -= BaseTetrisBoard_RowCollapsed;
 		}
 
 		/// <summary>
@@ -45,12 +43,6 @@ namespace Tetris
 		/// Occurs when a row is collapsed.
 		/// </summary>
 		public event System.EventHandler<RowCollapseEventArgs> RowCollapsed;
-
-		private void BaseTetrisBoard_RowCollapsed (object sender, RowCollapseEventArgs e)
-		{
-			if (BoardChanged != null)
-				BoardChanged( this, EventArgs.Empty );
-		}
 
         public delegate void intData(object t, int l);
         public event intData RowReversed;
@@ -184,18 +176,19 @@ namespace Tetris
 		/// Collapses a row of the board.
 		/// </summary>
 		/// <param name="row">Row to be collapsed</param>
-		public void CollapseRow( int row )
+		public void CollapseRow( int row, bool sendEvent = true)
 		{
 			collapse( row );
-			if (RowCollapsed != null)
+			if (RowCollapsed != null && sendEvent)
 				RowCollapsed( this, new RowCollapseEventArgs( new System.Collections.Generic.List<int>( row ) ) );
-		}
+            if (BoardChanged != null) BoardChanged(this, EventArgs.Empty);
+        }
 
 		/// <summary>
 		/// Collapses all Clearable Rows.
 		/// </summary>
 		/// <returns>The cleared rows</returns>
-		public IList<int> CollapseAll()
+		public IList<int> CollapseAll(bool sendEvent = true)
 		{
 			IList<int> clears = CheckClears();
 			// if the previous frame had a drop that cleared resolve the clear
@@ -203,9 +196,10 @@ namespace Tetris
 			{
 				collapse( i );
 			}
-			if( clears.Count > 0 && RowCollapsed != null ) RowCollapsed( this, new RowCollapseEventArgs( clears ) );
+			if(clears.Count > 0 && sendEvent && RowCollapsed != null ) RowCollapsed( this, new RowCollapseEventArgs( clears ) );
+            if(clears.Count > 0 && BoardChanged != null) BoardChanged(this, EventArgs.Empty);
 
-			return clears;
+            return clears;
 		}
 
         /// <summary>

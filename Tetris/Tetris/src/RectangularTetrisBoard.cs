@@ -118,6 +118,7 @@ namespace Tetris
             {
                 blocks[i-1] = blocks[i];
             }
+
             blocks[Height - 1] = temp;
         }
 
@@ -131,15 +132,7 @@ namespace Tetris
 
 		public override bool CheckClear( int row )
 		{
-			Block[] r = blocks[row];
-
-			foreach( Block b in r ) {
-				if( !b.Occupied ) {
-					return false;
-				}
-			}
-
-			return true;
+            return blocks[row].All(block => block.Occupied);
 		}
 
 		private void ClearRow( int row )

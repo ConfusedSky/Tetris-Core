@@ -8,7 +8,7 @@ public class TetrisGame : MonoBehaviour
 {
 	public Color ShadowColor;
 
-	public UnityInputManger InputManager;
+	public UnityInputManager InputManager;
 
 	[Header("Queue Parameters")]
 	[SerializeField]
