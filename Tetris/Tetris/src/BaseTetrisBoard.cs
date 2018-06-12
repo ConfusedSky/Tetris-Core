@@ -6,10 +6,12 @@ namespace Tetris
 	public class RowCollapseEventArgs : System.EventArgs
 	{
 		public IList<int> ClearedRows{ get; private set; }
+        public bool Scored { get; private set; }
 
-		public RowCollapseEventArgs( IList<int> clearedRows )
+		public RowCollapseEventArgs( IList<int> clearedRows, bool scored )
 		{
 			ClearedRows = clearedRows;
+            Scored = scored;
 		}
 	}
 
@@ -19,30 +21,38 @@ namespace Tetris
 	/// </summary>
 	public abstract class BaseTetrisBoard
 	{
-		public BaseTetrisBoard()
-		{
-			BoardChanged += BaseTetrisBoard_BoardChanged;
-		}
+        public BaseTetrisBoard()
+        {
+            BoardChanged += BaseTetrisBoard_BoardChanged;
+            RowCollapsed += BaseTetrisBoard_RowCollapsed;
+        }
 
-		~BaseTetrisBoard()
-		{
-			BoardChanged -= BaseTetrisBoard_BoardChanged;
-		}
+        ~BaseTetrisBoard()
+        {
+            BoardChanged -= BaseTetrisBoard_BoardChanged;
+            RowCollapsed -= BaseTetrisBoard_RowCollapsed;
+        }
 
-		/// <summary>
-		/// Occurs when the board is changed changed.
-		/// </summary>
-		public event System.EventHandler BoardChanged;
+        /// <summary>
+        /// Occurs when the board is changed changed.
+        /// </summary>
+        public event System.EventHandler BoardChanged;
 
 		private void BaseTetrisBoard_BoardChanged (object sender, EventArgs e)
 		{
 			CollapseAll();
 		}
 
-		/// <summary>
-		/// Occurs when a row is collapsed.
-		/// </summary>
-		public event System.EventHandler<RowCollapseEventArgs> RowCollapsed;
+        private void BaseTetrisBoard_RowCollapsed(object sender, RowCollapseEventArgs e)
+        {
+            if (BoardChanged != null)
+                BoardChanged(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Occurs when a row is collapsed.
+        /// </summary>
+        public event System.EventHandler<RowCollapseEventArgs> RowCollapsed;
 
         public delegate void intData(object t, int l);
         public event intData RowReversed;
@@ -176,19 +186,18 @@ namespace Tetris
 		/// Collapses a row of the board.
 		/// </summary>
 		/// <param name="row">Row to be collapsed</param>
-		public void CollapseRow( int row, bool sendEvent = true)
+		public void CollapseRow( int row, bool scored = true)
 		{
 			collapse( row );
-			if (RowCollapsed != null && sendEvent)
-				RowCollapsed( this, new RowCollapseEventArgs( new System.Collections.Generic.List<int>( row ) ) );
-            if (BoardChanged != null) BoardChanged(this, EventArgs.Empty);
+			if (RowCollapsed != null)
+				RowCollapsed( this, new RowCollapseEventArgs( new System.Collections.Generic.List<int>( row ), scored ) );
         }
 
 		/// <summary>
 		/// Collapses all Clearable Rows.
 		/// </summary>
 		/// <returns>The cleared rows</returns>
-		public IList<int> CollapseAll(bool sendEvent = true)
+		public IList<int> CollapseAll(bool scored = true)
 		{
 			IList<int> clears = CheckClears();
 			// if the previous frame had a drop that cleared resolve the clear
@@ -196,8 +205,7 @@ namespace Tetris
 			{
 				collapse( i );
 			}
-			if(clears.Count > 0 && sendEvent && RowCollapsed != null ) RowCollapsed( this, new RowCollapseEventArgs( clears ) );
-            if(clears.Count > 0 && BoardChanged != null) BoardChanged(this, EventArgs.Empty);
+			if(clears.Count > 0 && RowCollapsed != null ) RowCollapsed( this, new RowCollapseEventArgs( clears, scored ) );
 
             return clears;
 		}
